@@ -1,32 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:travel_app2/app/routes/app_pages.dart';
+
 class RegisterController extends GetxController {
+
+
   final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final mobileController = TextEditingController(); // ✅ Add this
+  final emailOrMobileController = TextEditingController();
   final passwordController = TextEditingController();
 
-  var isLoading = false.obs;
+  void register() {
+    String name = nameController.text.trim();
+    String emailOrMobile = emailOrMobileController.text.trim();
+    String password = passwordController.text.trim();
 
-  void register() async {
-    isLoading.value = true;
-    await Future.delayed(const Duration(seconds: 2));
+    if (name.isEmpty || emailOrMobile.isEmpty || password.isEmpty) {
+      Fluttertoast.showToast(msg: 'Please fill all fields');
+      return;
+    }
 
-    isLoading.value = false;
-    Get.snackbar('Success', 'Registered successfully!');
-    Get.toNamed('/login');
-  }
+    bool isEmail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+        .hasMatch(emailOrMobile);
+    bool isMobile = RegExp(r'^\d{10}$').hasMatch(emailOrMobile);
 
-  void goToLogin() {
-    Get.toNamed('/login');
+    if (!isEmail && !isMobile) {
+      Fluttertoast.showToast(msg: 'Enter valid email or mobile number');
+      return;
+    }
+
+    String type = isEmail ? 'email' : 'mobile';
+
+    // Simulate register API call
+    Fluttertoast.showToast(
+      msg: 'Registering with $type: $emailOrMobile',
+    );
+
+    // TODO: Make actual API call here
   }
 
   @override
   void onClose() {
     nameController.dispose();
-    emailController.dispose();
-    mobileController.dispose(); // ✅ Dispose here too
+    emailOrMobileController.dispose();
     passwordController.dispose();
     super.onClose();
   }

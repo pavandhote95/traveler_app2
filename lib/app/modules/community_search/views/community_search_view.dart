@@ -54,7 +54,7 @@ class CommunitySearchView extends GetView<CommunitySearchController> {
                   fillColor: const Color(0xFF1C1C1E),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(color: Colors.grey.shade600), // Default border color
+                    borderSide: BorderSide(color: Colors.grey.shade600),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -65,72 +65,32 @@ class CommunitySearchView extends GetView<CommunitySearchController> {
                     borderSide: BorderSide(color: Colors.grey.shade400, width: 0.1),
                   ),
                 ),
-
               ),
             ),
           ),
           const SizedBox(height: 10),
           Expanded(
-            child: Obx(() {
-              if (controller.filteredCommunities.isEmpty) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/search_image.png',
-                        width: 180,
-                        color: Colors.tealAccent,
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        "No results found",
-                        style: TextStyle(color: Colors.grey.shade500),
-                      ),
-                    ],
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/search_image.png',
+                    width: 180,
+                    color: Colors.tealAccent,
                   ),
-                );
-              }
-
-              return ListView.builder(
-                itemCount: controller.filteredCommunities.length,
-                itemBuilder: (context, index) {
-                  final community = controller.filteredCommunities[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Card(
-                      color: const Color(0xFF1F1F1F),
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
-                        side: const BorderSide(color:Colors.grey, width: 0.3),
-                      ),
-                      child: ListTile(
-                        leading: const CircleAvatar(
-                          backgroundImage: AssetImage('assets/images/travel_icon.png'),
-                          backgroundColor: Colors.transparent,
-                        ),
-                        title: Text(
-                          community.name,
-                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
-                        ),
-                        subtitle: Text(
-                          community.description,
-                          style: TextStyle(color: Colors.grey.shade400),
-                        ),
-                        trailing: const Icon(Icons.arrow_forward_ios, color: Colors.tealAccent, size: 16),
-                        onTap: () {
-                          // Navigate to community details (optional)
-                        },
-                      ),
-                    ),
-                  );
-                },
-              );
-            }),
+                  const SizedBox(height: 12),
+                  Text(
+                    "No results found",
+                    style: TextStyle(color: Colors.grey.shade500),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
+
     );
   }
 }

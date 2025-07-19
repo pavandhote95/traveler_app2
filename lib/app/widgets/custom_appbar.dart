@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HeaderWidget extends StatelessWidget {
+class HeaderWidget extends StatefulWidget {
   const HeaderWidget({super.key});
+  @override
+  State<HeaderWidget> createState() => _HeaderWidgetState();
+
+}
+
+class _HeaderWidgetState extends State<HeaderWidget> {
+  bool isToggled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -45,23 +52,34 @@ class HeaderWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+
                 ],
               ),
             ],
           ),
         ),
 
+        // DM icon + Toggle
+        Row(
+          children: [
+            Switch(
+              value: isToggled,
+              onChanged: (value) {
+                setState(() {
+                  isToggled = value;
+                });
+              },
+              activeColor: Colors.tealAccent,
+            ),
+            const SizedBox(width: 10),
+            Icon(
+              Icons.telegram_outlined,
+              size: 60,
+              color: Colors.tealAccent[700],
+            ),
 
-
-
-        Center(
-          child: Icon(
-            Icons.telegram_outlined,
-            size: 60,
-            color: Colors.tealAccent[700],
-          ),
+          ],
         ),
-
       ],
     );
   }

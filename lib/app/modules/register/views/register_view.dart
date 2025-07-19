@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:travel_app2/app/routes/app_pages.dart';
+import '../controllers/register_controller.dart';
+
 
 class RegisterView extends StatelessWidget {
   RegisterView({super.key});
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController mobileController = TextEditingController(); // ✅ Added
-  final TextEditingController passwordController = TextEditingController();
+  final RegisterController controller = Get.put(RegisterController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: const Color(0xFF121212),
       body: AnimatedContainer(
         duration: const Duration(seconds: 3),
@@ -37,7 +36,6 @@ class RegisterView extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 80),
-
                     Text(
                       'Traveler',
                       style: GoogleFonts.poppins(
@@ -56,68 +54,37 @@ class RegisterView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 40),
-
                     // Full Name
                     TextField(
-                      controller: nameController,
+                      controller: controller.nameController,
                       keyboardType: TextInputType.name,
                       style: const TextStyle(color: Colors.white),
                       decoration: inputDecoration(Icons.person, 'Full Name'),
                     ),
                     const SizedBox(height: 20),
+                    // Combined Email or Mobile
                     TextField(
-                      controller: mobileController,
-                      keyboardType: TextInputType.phone,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: inputDecoration(Icons.phone, 'Mobile Number'),
-                    ),
-                    const SizedBox(height: 20),
-                    // Email
-                    TextField(
-                      controller: emailController,
+                      controller: controller.emailOrMobileController,
                       keyboardType: TextInputType.emailAddress,
                       style: const TextStyle(color: Colors.white),
-                      decoration: inputDecoration(Icons.email, 'Email Address'),
+                      decoration: inputDecoration(Icons.alternate_email, 'Email or Phone'),
                     ),
                     const SizedBox(height: 20),
-
-                    // ✅ Mobile Number
-
-
                     // Password
                     TextField(
-                      controller: passwordController,
+                      controller: controller.passwordController,
                       obscureText: true,
                       style: const TextStyle(color: Colors.white),
                       decoration: inputDecoration(Icons.lock, 'Password'),
                     ),
                     const SizedBox(height: 30),
-
                     // Register Button
                     SizedBox(
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () {
-                          final name = nameController.text.trim();
-                          final email = emailController.text.trim();
-                          final mobile = mobileController.text.trim();
-                          final password = passwordController.text.trim();
-
-                          if (name.isEmpty ||
-                              email.isEmpty ||
-                              !email.contains('@') ||
-                              mobile.length < 8 ||
-                              password.length < 6) {
-                            Get.snackbar(
-                              'Invalid Input',
-                              'Please enter valid details in all fields.',
-                              backgroundColor: Colors.redAccent,
-                              colorText: Colors.white,
-                            );
-                          } else {
-                            Get.toNamed(Routes.HOME);
-                          }
+                          controller.register();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.tealAccent[700],
@@ -136,7 +103,6 @@ class RegisterView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-
                     // Divider
                     Row(
                       children: [
@@ -152,7 +118,6 @@ class RegisterView extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 20),
-
                     // Google Login Button
                     SizedBox(
                       width: double.infinity,
@@ -160,9 +125,11 @@ class RegisterView extends StatelessWidget {
                       child: OutlinedButton.icon(
                         icon: Image.asset('assets/icons/google.png', height: 24),
                         onPressed: () {
-                          Get.snackbar('Google Login', 'Coming soon!',
-                              backgroundColor: Colors.blueGrey,
-                              colorText: Colors.white);
+                          Fluttertoast.showToast(
+                            msg: 'Google Login Coming soon!',
+                            backgroundColor: Colors.blueGrey,
+                            textColor: Colors.white,
+                          );
                         },
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: Colors.white24),
@@ -178,7 +145,6 @@ class RegisterView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-
                     // Apple Login Button
                     SizedBox(
                       width: double.infinity,
@@ -186,9 +152,11 @@ class RegisterView extends StatelessWidget {
                       child: OutlinedButton.icon(
                         icon: Image.asset('assets/icons/apple.png', height: 24),
                         onPressed: () {
-                          Get.snackbar('Apple Login', 'Coming soon!',
-                              backgroundColor: Colors.blueGrey,
-                              colorText: Colors.white);
+                          Fluttertoast.showToast(
+                            msg: 'Apple Login Coming soon!',
+                            backgroundColor: Colors.blueGrey,
+                            textColor: Colors.white,
+                          );
                         },
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: Colors.white24),
@@ -204,7 +172,6 @@ class RegisterView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 30),
-
                     // Already have an account?
                     GestureDetector(
                       onTap: () {
@@ -212,14 +179,14 @@ class RegisterView extends StatelessWidget {
                       },
                       child: RichText(
                         text: TextSpan(
-                          text: "Already have an account ? ",
+                          text: "Already have an account? ",
                           style: GoogleFonts.poppins(
                             color: Colors.white60,
                             fontSize: 14,
                           ),
                           children: [
                             TextSpan(
-                              text: ' Login',
+                              text: 'Login',
                               style: GoogleFonts.poppins(
                                 color: Colors.tealAccent,
                                 fontWeight: FontWeight.w600,
@@ -230,7 +197,6 @@ class RegisterView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-
                     // Terms
                     Text(
                       'By registering, you agree to our Terms & Privacy Policy',
