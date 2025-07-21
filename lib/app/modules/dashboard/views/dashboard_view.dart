@@ -76,6 +76,7 @@ class DashboardView extends GetView<DashboardController> {
                     GButton(
                       icon: CupertinoIcons.house_fill,
                       text: 'Home',
+                      
                     ),
                     GButton(
                       icon: CupertinoIcons.search,

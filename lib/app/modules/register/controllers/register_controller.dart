@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:travel_app2/app/constants/my_toast.dart';
 import 'package:travel_app2/app/services/api_service.dart';
 import 'package:travel_app2/app/routes/app_pages.dart';
 
@@ -23,7 +24,7 @@ class RegisterController extends GetxController {
     debugPrint("Password: $password");
 
     if (name.isEmpty || emailOrPhone.isEmpty || password.isEmpty) {
-      Fluttertoast.showToast(msg: 'Please fill all fields');
+    CustomToast.showErrorHome(Get.context!,'Please fill all fields');
       return;
     }
 
@@ -34,7 +35,7 @@ class RegisterController extends GetxController {
     debugPrint("Is Mobile: $isMobile");
 
     if (!isEmail && !isMobile) {
-      Fluttertoast.showToast(msg: 'Enter a valid email or 10-digit phone number');
+    CustomToast.showErrorHome(Get.context! ,'Enter a valid email or 10-digit phone number');
       return;
     }
 
@@ -69,11 +70,22 @@ class RegisterController extends GetxController {
       }
 
       if (response.statusCode == 201) {
-        Fluttertoast.showToast(msg: "Registered Successfully");
+        debugPrint("Registration Successful: $responseData");
+       
+        // Fluttertoast.showToast(msg: "Registered Successfully");
+        CustomToast.showSuccess(
+         Get.context!,  "Registered Successfully",
+    
+        );
+
         Get.offAllNamed(Routes.LOGIN);
       } else {
         String errorMessage = responseData['message'] ?? 'Registration failed';
-        Fluttertoast.showToast(msg: errorMessage);
+
+        CustomToast.showError(
+          Get.context!, errorMessage,
+        );
+        debugPrint("Registration Failed: $errorMessage");
         debugPrint("API Error: $errorMessage");
       }
     } catch (e) {

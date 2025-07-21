@@ -11,12 +11,12 @@ class ForgotPasswordController extends GetxController {
     final input = emailOrPhoneController.text.trim();
 
     if (input.isEmpty) {
-      CustomToast.showError(Get.context!, "Please enter your email or mobile number");
+      CustomToast.showErrorHome(Get.context!, "Please enter your email or mobile number");
       return;
     }
 
     if (!_isValidEmail(input) && !_isValidPhone(input)) {
-      CustomToast.showError(Get.context!, "Please enter a valid email or 10-digit mobile number");
+      CustomToast.showErrorHome(Get.context!, "Please enter a valid email or 10-digit mobile number");
       return;
     }
 

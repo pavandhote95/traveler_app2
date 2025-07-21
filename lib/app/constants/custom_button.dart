@@ -30,7 +30,7 @@ class CustomButton extends StatelessWidget {
             backgroundColor: backgroundColor,
             disabledBackgroundColor: backgroundColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(5),
             ),
           ),
           child: isLoading.value
