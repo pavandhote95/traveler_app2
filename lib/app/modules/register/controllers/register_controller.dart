@@ -1,47 +1,92 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:travel_app2/app/services/api_service.dart';
+import 'package:travel_app2/app/routes/app_pages.dart';
 
 class RegisterController extends GetxController {
-
-
   final nameController = TextEditingController();
-  final emailOrMobileController = TextEditingController();
+  final emailOrPhoneController = TextEditingController();
   final passwordController = TextEditingController();
+  final isLoading = false.obs;
 
-  void register() {
+  final ApiService _apiService = Get.find<ApiService>();
+
+  void register() async {
     String name = nameController.text.trim();
-    String emailOrMobile = emailOrMobileController.text.trim();
+    String emailOrPhone = emailOrPhoneController.text.trim();
     String password = passwordController.text.trim();
 
-    if (name.isEmpty || emailOrMobile.isEmpty || password.isEmpty) {
+    debugPrint("Name: $name");
+    debugPrint("Email or Phone: $emailOrPhone");
+    debugPrint("Password: $password");
+
+    if (name.isEmpty || emailOrPhone.isEmpty || password.isEmpty) {
       Fluttertoast.showToast(msg: 'Please fill all fields');
       return;
     }
 
-    bool isEmail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-        .hasMatch(emailOrMobile);
-    bool isMobile = RegExp(r'^\d{10}$').hasMatch(emailOrMobile);
+    bool isEmail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(emailOrPhone);
+    bool isMobile = RegExp(r'^\d{10}$').hasMatch(emailOrPhone);
+
+    debugPrint("Is Email: $isEmail");
+    debugPrint("Is Mobile: $isMobile");
 
     if (!isEmail && !isMobile) {
-      Fluttertoast.showToast(msg: 'Enter valid email or mobile number');
+      Fluttertoast.showToast(msg: 'Enter a valid email or 10-digit phone number');
       return;
     }
 
-    String type = isEmail ? 'email' : 'mobile';
+    isLoading.value = true;
 
-    // Simulate register API call
-    Fluttertoast.showToast(
-      msg: 'Registering with $type: $emailOrMobile',
-    );
+    final Map<String, dynamic> body = {
+      "name": name,
+      "email": isEmail ? emailOrPhone : "",
+      "phone_number": isMobile ? emailOrPhone : "",
+      "password": password,
+      "password_confirmation": password
+    };
 
-    // TODO: Make actual API call here
+    debugPrint("Request Body: ${jsonEncode(body)}");
+
+    try {
+      final response = await _apiService.registerUser(body);
+
+      isLoading.value = false;
+
+      debugPrint("Status Code: ${response.statusCode}");
+      debugPrint("Raw Response: ${response.body}");
+
+      Map<String, dynamic> responseData = {};
+      try {
+        responseData = jsonDecode(response.body);
+        debugPrint("Decoded Response: $responseData");
+      } catch (e) {
+        Fluttertoast.showToast(msg: 'Invalid response format');
+        debugPrint("JSON Decode Error: $e");
+        return;
+      }
+
+      if (response.statusCode == 201) {
+        Fluttertoast.showToast(msg: "Registered Successfully");
+        Get.offAllNamed(Routes.LOGIN);
+      } else {
+        String errorMessage = responseData['message'] ?? 'Registration failed';
+        Fluttertoast.showToast(msg: errorMessage);
+        debugPrint("API Error: $errorMessage");
+      }
+    } catch (e) {
+      isLoading.value = false;
+      Fluttertoast.showToast(msg: 'Error: ${e.toString()}');
+      debugPrint("API Call Exception: $e");
+    }
   }
 
   @override
   void onClose() {
     nameController.dispose();
-    emailOrMobileController.dispose();
+    emailOrPhoneController.dispose();
     passwordController.dispose();
     super.onClose();
   }

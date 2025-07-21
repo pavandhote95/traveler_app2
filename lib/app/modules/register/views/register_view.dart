@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:travel_app2/app/constants/custom_button.dart';
 import 'package:travel_app2/app/routes/app_pages.dart';
 import '../controllers/register_controller.dart';
-
 
 class RegisterView extends StatelessWidget {
   RegisterView({super.key});
@@ -62,9 +62,9 @@ class RegisterView extends StatelessWidget {
                       decoration: inputDecoration(Icons.person, 'Full Name'),
                     ),
                     const SizedBox(height: 20),
-                    // Combined Email or Mobile
+                    // Email or Phone
                     TextField(
-                      controller: controller.emailOrMobileController,
+                      controller: controller.emailOrPhoneController,
                       keyboardType: TextInputType.emailAddress,
                       style: const TextStyle(color: Colors.white),
                       decoration: inputDecoration(Icons.alternate_email, 'Email or Phone'),
@@ -79,29 +79,13 @@ class RegisterView extends StatelessWidget {
                     ),
                     const SizedBox(height: 30),
                     // Register Button
-                    SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          controller.register();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.tealAccent[700],
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: Text(
-                          'Register',
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
+const SizedBox(height: 30),
+CustomButton(
+  isLoading: controller.isLoading,
+  onPressed: controller.register,
+  text: 'Register',
+),
+                   
                     const SizedBox(height: 20),
                     // Divider
                     Row(

@@ -10,6 +10,8 @@ import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
 import '../modules/expertsprofile/bindings/expertsprofile_binding.dart';
 import '../modules/expertsprofile/views/expertsprofile_view.dart';
+import '../modules/forgot_password/bindings/forgot_password_binding.dart';
+import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -21,7 +23,7 @@ import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/otp/bindings/otp_binding.dart';
 import '../modules/otp/views/otp_view.dart';
 import '../modules/post_quesions/bindings/post_quesions_binding.dart';
-import '../modules/post_quesions/views/post_quesions_view.dart';
+import '../modules/post_quesions/views/bottom_sheet_questions.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
@@ -104,8 +106,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.POST_QUESIONS,
-      page: () => const PostQuesionsView(),
+      page: () => BottomSheetQuestionsView(),
       binding: PostQuesionsBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGOT_PASSWORD,
+      page: () =>  ForgotPasswordView(),
+      binding: ForgotPasswordBinding(),
     ),
   ];
 }

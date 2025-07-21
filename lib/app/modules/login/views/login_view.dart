@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travel_app2/app/constants/custom_button.dart';
+import 'package:travel_app2/app/modules/forgot_password/views/forgot_password_view.dart';
+import 'package:travel_app2/app/modules/otp/views/otp_view.dart';
 
 import '../controllers/login_controller.dart';
 
@@ -67,45 +70,36 @@ class LoginView extends GetView<LoginController> {
                       style: const TextStyle(color: Colors.white),
                       decoration: inputDecoration('Enter Password', Icons.lock),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 10),
+                    // Forgot Password
+Align(
+  alignment: Alignment.centerRight,
+  child: TextButton(
+    onPressed:(){
+      Get.to(() => ForgotPasswordView());
+
+    },
+    child: Text(
+      'Forgot Password?',
+      style: GoogleFonts.poppins(
+        color: Colors.tealAccent,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+  ),
+),
+const SizedBox(height: 10),
+
 
                     // Login Button
-                    Obx(() {
-                      return SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (!controller.isLoading.value) {
-                              controller.login();
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.tealAccent[700],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          child: controller.isLoading.value
-                              ? const SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2.5,
-                            ),
-                          )
-                              : Text(
-                            'Login',
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
+       CustomButton(
+  isLoading: controller.isLoading,
+  onPressed: controller.login,
+  text: 'Login',
+  backgroundColor: Colors.tealAccent[700]!,
+  textColor: Colors.white,
+),
 
                     const SizedBox(height: 20),
 

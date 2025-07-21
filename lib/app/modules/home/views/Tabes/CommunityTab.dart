@@ -1,12 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:swipe_cards/swipe_cards.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
-import '../../../post_quesions/views/post_quesions_view.dart';
+
+import '../../../post_quesions/views/bottom_sheet_questions.dart';
 class PostModel {
     final String username;
     final String userImage;
@@ -187,22 +186,17 @@ class _CommunityTabState extends State<CommunityTab> {
             _swipeItems.add(
                 SwipeItem(
                     content: posts[i],
-                    likeAction: () {
-                        if (currentIndex < posts.length - 1) {
-                            setState(() {
-                                currentIndex++;
-                                initializeSwipeEngine();
-                            });
-                        }
-                    },
-                    nopeAction: () {
-                        if (currentIndex > 0) {
-                            setState(() {
-                                currentIndex--;
-                                initializeSwipeEngine();
-                            });
-                        }
-                    },
+                 likeAction: () {
+  setState(() {
+    currentIndex = (currentIndex + 1);
+  });
+},
+nopeAction: () {
+  setState(() {
+    currentIndex = (currentIndex + 1).clamp(0, posts.length - 1);
+  });
+},
+
                 ),
             );
         }
@@ -263,7 +257,7 @@ class _CommunityTabState extends State<CommunityTab> {
                         shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                         ),
-                        builder: (context) => const PostQuesionsView(),
+                        builder: (context) =>  BottomSheetQuestionsView(),
                     );
 
                     // TODO: Navigate to post creation screen

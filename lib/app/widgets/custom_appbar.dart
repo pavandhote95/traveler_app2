@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travel_app2/app/constants/my_toast.dart';
+import 'package:travel_app2/app/widgets/custom_appbar_controller.dart';
 
-class HeaderWidget extends StatefulWidget {
-  const HeaderWidget({super.key});
-  @override
-  State<HeaderWidget> createState() => _HeaderWidgetState();
 
-}
-
-class _HeaderWidgetState extends State<HeaderWidget> {
-  bool isToggled = false;
+class HeaderWidget extends StatelessWidget {
+  HeaderWidget({super.key});
+  final locationController = Get.put(LocationController());
+  final RxBool isToggled = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,8 @@ class _HeaderWidgetState extends State<HeaderWidget> {
       children: [
         const CircleAvatar(
           radius: 26,
-          backgroundImage: NetworkImage('https://randomuser.me/api/portraits/men/11.jpg'),
+          backgroundImage:
+              NetworkImage('https://randomuser.me/api/portraits/men/11.jpg'),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -40,46 +40,53 @@ class _HeaderWidgetState extends State<HeaderWidget> {
               const SizedBox(height: 6),
               Row(
                 children: [
-                  const Icon(Icons.location_on, color: Colors.tealAccent, size: 18),
+                  const Icon(Icons.location_on,
+                      color: Colors.tealAccent, size: 18),
                   const SizedBox(width: 4),
                   Expanded(
-                    child: Text(
-                      'New Delhi, India',
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.poppins(
-                        fontSize: 13,
-                        color: Colors.grey[400],
-                      ),
-                    ),
+                    child: Obx(() => Text(
+                          locationController.currentAddress.value,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.poppins(
+                            fontSize: 13,
+                            color: Colors.grey[400],
+                          ),
+                        )),
                   ),
-
                 ],
               ),
             ],
           ),
         ),
+Obx(() => Row(
+  children: [
+    Switch(
+      value: isToggled.value,
+      onChanged: (value) {
+        isToggled.value = value;
 
-        // DM icon + Toggle
-        Row(
-          children: [
-            Switch(
-              value: isToggled,
-              onChanged: (value) {
-                setState(() {
-                  isToggled = value;
-                });
-              },
-              activeColor: Colors.tealAccent,
-            ),
-            const SizedBox(width: 10),
-            Icon(
-              Icons.telegram_outlined,
-              size: 60,
-              color: Colors.tealAccent[700],
-            ),
+        if (value) {
+          // ✅ Show custom success toast
+          CustomToast.showSuccessHome(context, "Traveling mode is ON");
+          locationController.getCurrentLocation();
+        } else {
+          // ❌ Show custom error toast
+          CustomToast.showErrorHome(context, "Traveling mode is OFF");
+        }
+      },
+      activeColor: Colors.tealAccent,
+    ),
+    const SizedBox(width: 10),
+    Icon(
+      Icons.telegram_outlined,
+      size: 60,
+      color: Colors.tealAccent[700],
+    ),
+  ],
+))
 
-          ],
-        ),
+
+
       ],
     );
   }

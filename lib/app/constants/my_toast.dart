@@ -78,21 +78,42 @@ class CustomToast {
     });
   }
 
-  static void showError(BuildContext context, String message, {bool isTop = false}) {
+  static void showErrorHome(BuildContext context, String message, {bool isTop = false}) {
     show(
       context,
       message: message,
-      backgroundColor: Colors.red,
+      backgroundColor: Colors.grey,
+      textColor: Colors.black,
+      isTop: isTop,
+    );
+  }
+    static void showError(BuildContext context, String message, {bool isTop = false}) {
+    show(
+      context,
+      message: message,
+      backgroundColor: Colors.redAccent,
+      textColor: Colors.black,
       isTop: isTop,
     );
   }
 
+  static void showSuccessHome(BuildContext context, String message, {bool isTop = false}) {
+    show(
+      context,
+      message: message,
+      backgroundColor: Colors.tealAccent,
+      textColor: Colors.black,
+      isTop: isTop,
+    );
+  }
+    
   static void showSuccess(BuildContext context, String message, {bool isTop = false}) {
     show(
       context,
       message: message,
       backgroundColor: Colors.green,
+      textColor: Colors.black,
       isTop: isTop,
     );
   }
-}
+  }

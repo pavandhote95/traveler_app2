@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:travel_app2/app/routes/app_pages.dart'; // Change as per your project
+import 'package:travel_app2/app/constants/my_toast.dart';
+import 'package:travel_app2/app/routes/app_pages.dart';
 
 class OtpController extends GetxController {
   final RxInt secondsRemaining = 30.obs;
+  final RxBool isLoading = false.obs; // 👈 Add loading state
+
   Timer? _timer;
 
   // OTP input boxes
@@ -29,19 +32,22 @@ class OtpController extends GetxController {
     });
   }
 
-  void resendOtp() {
-    Get.snackbar("OTP Sent", "A new OTP has been sent.",
-        backgroundColor: Colors.green, colorText: Colors.white);
+  void resendOtp(BuildContext context) {
+    CustomToast.showSuccess(context, "A new OTP has been sent.");
     startTimer();
   }
 
-  void verify4DigitOtp() {
+  void verify4DigitOtp(BuildContext context) async {
     String otp = otpControllers.map((e) => e.text).join();
+
     if (otp.length == 4) {
-      Get.offAllNamed(Routes.DASHBOARD); // Adjust route as per your setup
+      isLoading.value = true;
+      await Future.delayed(const Duration(seconds: 2)); // Simulate API call
+
+      isLoading.value = false;
+      Get.offAllNamed(Routes.DASHBOARD);
     } else {
-      Get.snackbar("Invalid OTP", "Enter the complete 4-digit OTP.",
-          backgroundColor: Colors.redAccent, colorText: Colors.white);
+      CustomToast.showErrorHome(context, "Enter the complete 4-digit OTP");
     }
   }
 

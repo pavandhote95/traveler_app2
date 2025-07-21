@@ -14,6 +14,7 @@ class HomeView extends GetView<HomeController> {
  HomeController controller = Get.put(HomeController());
 
   HomeView({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
             ),
-            title: const HeaderWidget(),
+            title:  HeaderWidget(),
             toolbarHeight: 90,
             bottom: TabBar(
               controller: controller.tabController,

@@ -1,0 +1,160 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:travel_app2/app/modules/post_quesions/controllers/bottom_sheet_controller.dart';
+
+
+class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
+ BottomSheetQuestionsController controller = Get.put(BottomSheetQuestionsController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: const Color(0xFF0F2027),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+        left: 16,
+        right: 16,
+        top: 24,
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildTextField(),
+            const SizedBox(height: 35),
+            _buildDropdown(["Japan", "India", "USA"]),
+            const SizedBox(height: 35),
+            _buildImagePicker(),
+            const SizedBox(height: 35),
+            SafeArea(
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Use controller.questionText, selectedLocation, selectedImage
+                    print("Post Submitted");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.tealAccent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                    child: Text("Add Post", style: TextStyle(color: Colors.black)),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 35),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField() {
+    return TextField(
+      onChanged: controller.updateQuestion,
+      maxLines: 3,
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        labelText: "Ask a question post something",
+        labelStyle: const TextStyle(color: Colors.tealAccent),
+        hintText: "Ask a question post something",
+        hintStyle: TextStyle(color: Colors.grey.shade500),
+        filled: true,
+        fillColor: const Color(0xFF1F1F1F),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.grey),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.teal),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDropdown(List<String> items) {
+    return Obx(() => DropdownButtonFormField<String>(
+          value: controller.selectedLocation?.value == '' ? null : controller.selectedLocation?.value,
+          dropdownColor: const Color(0xFF1F1F1F),
+          style: const TextStyle(color: Colors.white),
+          decoration: InputDecoration(
+            labelText: "Tag Location for better reach (optional)",
+            labelStyle: const TextStyle(color: Colors.tealAccent),
+            filled: true,
+            fillColor: const Color(0xFF1F1F1F),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.tealAccent),
+            ),
+          ),
+          items: items
+              .map((item) => DropdownMenuItem(value: item, child: Text(item)))
+              .toList(),
+          onChanged: controller.updateLocation,
+        ));
+  }
+
+  Widget _buildImagePicker() {
+    return Obx(() {
+      final image = controller.selectedImage.value;
+      return GestureDetector(
+        onTap: controller.pickImage,
+        child: image == null
+            ? Container(
+                height: 50,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF1F1F1F),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: const Center(
+                  child: Text(
+                    "+ Add Image",
+                    style: TextStyle(color: Colors.tealAccent),
+                  ),
+                ),
+              )
+            : Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.file(
+                      image,
+                      width: double.infinity,
+                      height: 180,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: GestureDetector(
+                      onTap: controller.clearImage,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.black54,
+                        ),
+                        child: const Icon(Icons.close, color: Colors.white, size: 20),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+      );
+    });
+  }
+}

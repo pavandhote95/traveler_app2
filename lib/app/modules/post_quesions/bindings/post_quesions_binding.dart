@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 
-import '../controllers/post_quesions_controller.dart';
+import '../controllers/bottom_sheet_controller.dart';
 
 class PostQuesionsBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<PostQuesionsController>(
-      () => PostQuesionsController(),
+    Get.lazyPut<BottomSheetQuestionsController>(
+      () => BottomSheetQuestionsController(),
     );
   }
 }

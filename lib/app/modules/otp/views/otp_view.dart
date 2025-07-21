@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travel_app2/app/constants/custom_button.dart';
+import 'package:travel_app2/app/modules/register/controllers/register_controller.dart';
 import '../controllers/otp_controller.dart';
 
 class OtpView extends GetView<OtpController> {
-  const OtpView({super.key}); // Stateless, no controller init here!
+  const OtpView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<FocusNode> focusNodes =
-    List.generate(4, (_) => FocusNode(), growable: false);
+    final List<FocusNode> focusNodes = List.generate(4, (_) => FocusNode());
 
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
-        resizeToAvoidBottomInset: false
-,
-        body: AnimatedContainer(
+      resizeToAvoidBottomInset: false,
+      body: AnimatedContainer(
         duration: const Duration(seconds: 3),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -53,6 +53,7 @@ class OtpView extends GetView<OtpController> {
                 ),
                 const SizedBox(height: 40),
 
+                // OTP input fields
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: List.generate(4, (index) {
@@ -92,49 +93,38 @@ class OtpView extends GetView<OtpController> {
 
                 const SizedBox(height: 20),
 
+                // Resend OTP timer or button
                 Obx(() => controller.secondsRemaining.value > 0
                     ? Text(
-                  'Resend code in 00:${controller.secondsRemaining.value.toString().padLeft(2, '0')}',
-                  style: GoogleFonts.poppins(
-                    color: Colors.white54,
-                    fontSize: 14,
-                  ),
-                )
+                        'Resend code in 00:${controller.secondsRemaining.value.toString().padLeft(2, '0')}',
+                        style: GoogleFonts.poppins(
+                          color: Colors.white54,
+                          fontSize: 14,
+                        ),
+                      )
                     : TextButton(
-                  onPressed: controller.resendOtp,
-                  child: Text(
-                    'Resend OTP',
-                    style: GoogleFonts.poppins(
-                      color: Colors.tealAccent,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                )),
+                        onPressed: () => controller.resendOtp(context),
+                        child: Text(
+                          'Resend OTP',
+                          style: GoogleFonts.poppins(
+                            color: Colors.tealAccent,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      )),
 
                 const SizedBox(height: 30),
 
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: controller.verify4DigitOtp,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.tealAccent[700],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: Text(
-                      'Verify',
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
+                // Verify Button
+            CustomButton(
+  isLoading:controller.isLoading,
+  onPressed: () => controller.verify4DigitOtp(context),
+  text: 'Verify',
+  backgroundColor: Colors.tealAccent[700]!,
+
+),
+
               ],
             ),
           ),
