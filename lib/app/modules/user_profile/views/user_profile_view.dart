@@ -1,7 +1,7 @@
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+
 
 import '../../../constants/text_fonts.dart';
 

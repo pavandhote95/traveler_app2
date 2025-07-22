@@ -8,7 +8,7 @@ class LoginController extends GetxController {
 
   var isLoading = false.obs;
 
-  void login() async {
+  void login() async { 
 
 
 

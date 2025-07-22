@@ -82,8 +82,8 @@ class CustomToast {
     show(
       context,
       message: message,
-      backgroundColor: Colors.grey,
-      textColor: Colors.black,
+      backgroundColor:  const Color(0xFF1E1E1E),
+      textColor: Colors.white,
       isTop: isTop,
     );
   }
@@ -101,8 +101,8 @@ class CustomToast {
     show(
       context,
       message: message,
-      backgroundColor: Colors.tealAccent,
-      textColor: Colors.black,
+      backgroundColor: Colors.tealAccent.shade700,
+      textColor: Colors.white,
       isTop: isTop,
     );
   }
@@ -111,8 +111,8 @@ class CustomToast {
     show(
       context,
       message: message,
-      backgroundColor: Colors.green,
-      textColor: Colors.black,
+      backgroundColor: Colors.tealAccent.shade700,
+      textColor: Colors.white,
       isTop: isTop,
     );
   }

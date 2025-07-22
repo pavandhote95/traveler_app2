@@ -118,7 +118,7 @@ CustomButton(
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: Colors.white24),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(5),
                           ),
                           foregroundColor: Colors.white,
                         ),
@@ -145,7 +145,7 @@ CustomButton(
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: Colors.white24),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(5),
                           ),
                           foregroundColor: Colors.white,
                         ),
@@ -208,7 +208,7 @@ CustomButton(
       hintText: hint,
       hintStyle: const TextStyle(color: Colors.white38),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(5),
         borderSide: BorderSide.none,
       ),
     );
