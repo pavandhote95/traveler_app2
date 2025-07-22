@@ -24,7 +24,7 @@ class RegisterController extends GetxController {
     debugPrint("Password: $password");
 
     if (name.isEmpty || emailOrPhone.isEmpty || password.isEmpty) {
-      Fluttertoast.showToast(msg: 'Please fill all fields');
+    CustomToast.showErrorHome(Get.context!,'Please fill all fields');
       return;
     }
 
@@ -35,7 +35,7 @@ class RegisterController extends GetxController {
     debugPrint("Is Mobile: $isMobile");
 
     if (!isEmail && !isMobile) {
-      Fluttertoast.showToast(msg: 'Enter a valid email or 10-digit phone number');
+    CustomToast.showErrorHome(Get.context! ,'Enter a valid email or 10-digit phone number');
       return;
     }
 
@@ -69,13 +69,23 @@ class RegisterController extends GetxController {
         return;
       }
 
-      if (response.statusCode == 20) {
-              CustomToast.showError(Get.context!, "Registered Successfully");
-   
+      if (response.statusCode == 201) {
+        debugPrint("Registration Successful: $responseData");
+       
+        // Fluttertoast.showToast(msg: "Registered Successfully");
+        CustomToast.showSuccess(
+         Get.context!,  "Registered Successfully",
+    
+        );
+
         Get.offAllNamed(Routes.LOGIN);
       } else {
         String errorMessage = responseData['message'] ?? 'Registration failed';
-        Fluttertoast.showToast(msg: errorMessage);
+
+        CustomToast.showError(
+          Get.context!, errorMessage,
+        );
+        debugPrint("Registration Failed: $errorMessage");
         debugPrint("API Error: $errorMessage");
       }
     } catch (e) {
@@ -91,6 +101,5 @@ class RegisterController extends GetxController {
     emailOrPhoneController.dispose();
     passwordController.dispose();
     super.onClose();
-
   }
 }
