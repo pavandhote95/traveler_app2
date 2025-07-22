@@ -17,9 +17,6 @@ class LoginController extends GetxController {
 
 
 
-// Simulate login delay
-
-      // Navigate to OTP screen or dashboard
       Get.toNamed(Routes.OTP);
 
   }

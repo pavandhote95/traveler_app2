@@ -6,8 +6,9 @@ import 'package:travel_app2/app/services/api_service.dart';
 
 void main() {
   Get.put(ApiService());
-  runApp(MyApp());
+  runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -17,11 +18,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black,
-        textTheme: GoogleFonts.montserratTextTheme(ThemeData.dark().textTheme),
+        textTheme: GoogleFonts.interTextTheme( // Using Inter
+          ThemeData.dark().textTheme,
+        ).apply(
+          fontFamilyFallback: ['SF Pro', 'Roboto'], // fallback order
+        ),
       ),
       initialRoute: Routes.SPLASH,
       getPages: AppPages.routes,
     );
-    //i love coding
   }
 }

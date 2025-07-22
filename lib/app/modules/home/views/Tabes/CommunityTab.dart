@@ -1,11 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:swipe_cards/swipe_cards.dart';
+import 'package:travel_app2/app/constants/app_color.dart';
+import 'package:travel_app2/app/modules/post_quesions/views/bottom_sheet_questions.dart';
 
 
-import '../../../post_quesions/views/bottom_sheet_questions.dart';
 class PostModel {
     final String username;
     final String userImage;
@@ -178,30 +178,27 @@ class _CommunityTabState extends State<CommunityTab> {
             commentText: 'NYC is always alive 🗽',
         ),
     ];
-    void initializeSwipeEngine() {
-        _swipeItems = [];
-        for (int i = currentIndex;
-        i < posts.length && i < currentIndex + posts.length;
-        i++) {
-            _swipeItems.add(
-                SwipeItem(
-                    content: posts[i],
-                 likeAction: () {
-  setState(() {
-    currentIndex = (currentIndex + 1);
-  });
-},
-nopeAction: () {
-  setState(() {
-    currentIndex = (currentIndex + 1).clamp(0, posts.length - 1);
-  });
-},
+  void initializeSwipeEngine() {
+    _swipeItems = posts.map((post) {
+      return SwipeItem(
+        content: post,
+        likeAction: () {
+          setState(() {
+            currentIndex = (currentIndex ++).clamp(0, posts.length);
+          });
+        },
+        nopeAction: () {
+          setState(() {
+            currentIndex = (currentIndex --).clamp(0, posts.length);
+          });
+        },
+      );
+    }).toList();
 
-                ),
-            );
-        }
-        _matchEngine = MatchEngine(swipeItems: _swipeItems);
-    }
+    _matchEngine = MatchEngine(swipeItems: _swipeItems);
+  }
+
+    
 
     @override
     void initState() {
@@ -262,7 +259,7 @@ nopeAction: () {
 
                     // TODO: Navigate to post creation screen
                 },
-                backgroundColor: Colors.tealAccent[700],
+                backgroundColor:AppColors.floatingButton,
                 child: const Icon(Icons.add, color: Colors.black, size: 30)
 
             ),
