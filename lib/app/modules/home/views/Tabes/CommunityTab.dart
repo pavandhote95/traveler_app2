@@ -209,39 +209,29 @@ class _CommunityTabState extends State<CommunityTab> {
     @override
     Widget build(BuildContext context) {
         return Scaffold(
-            backgroundColor: const Color(0xFF121212),
-            body: AnimatedContainer(
-                duration: const Duration(seconds: 3),
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Color(0xFF1B1B1B), Colors.black, Color(0xFF0F2027)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                    ),
-                ),
-                child: SafeArea(
-                    child: SwipeCards(
-                        matchEngine: _matchEngine,
-                        itemBuilder: (context, index) {
-                            final postIndex = currentIndex + index;
-                            if (postIndex < posts.length) {
-                                return _buildPostCard(posts[postIndex], postIndex);
-                            } else {
-                                return const SizedBox.shrink();
-                            }
-                        },
-                        onStackFinished: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("🎉 End of posts")),
-                            );
-                            setState(() {
-                                currentIndex = 0;
-                                initializeSwipeEngine();
-                            });
-                        },
-                        upSwipeAllowed: false,
-                        fillSpace: true,
-                    ),
+            backgroundColor: AppColors.mainbg,
+            body: SafeArea(
+                child: SwipeCards(
+                    matchEngine: _matchEngine,
+                    itemBuilder: (context, index) {
+                        final postIndex = currentIndex + index;
+                        if (postIndex < posts.length) {
+                            return _buildPostCard(posts[postIndex], postIndex);
+                        } else {
+                            return const SizedBox.shrink();
+                        }
+                    },
+                    onStackFinished: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("🎉 End of posts")),
+                        );
+                        setState(() {
+                            currentIndex = 0;
+                            initializeSwipeEngine();
+                        });
+                    },
+                    upSwipeAllowed: false,
+                    fillSpace: true,
                 ),
             ),
 
@@ -275,7 +265,7 @@ class _CommunityTabState extends State<CommunityTab> {
         return Card(
             elevation: 5,
             margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
-            color: const Color(0xFF232526),
+            color: AppColors.cardbg,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
                 side: const BorderSide(color:Colors.grey, width: 0.4),

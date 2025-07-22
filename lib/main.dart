@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travel_app2/app/constants/app_color.dart';
 import 'package:travel_app2/app/routes/app_pages.dart';
 import 'package:travel_app2/app/services/api_service.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: AppColors.mainbg,
         textTheme: GoogleFonts.interTextTheme( // Using Inter
           ThemeData.dark().textTheme,
         ).apply(
