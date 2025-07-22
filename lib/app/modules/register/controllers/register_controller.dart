@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:travel_app2/app/constants/my_toast.dart';
 import 'package:travel_app2/app/services/api_service.dart';
 import 'package:travel_app2/app/routes/app_pages.dart';
 
@@ -68,8 +69,9 @@ class RegisterController extends GetxController {
         return;
       }
 
-      if (response.statusCode == 201) {
-        Fluttertoast.showToast(msg: "Registered Successfully");
+      if (response.statusCode == 20) {
+              CustomToast.showError(Get.context!, "Registered Successfully");
+   
         Get.offAllNamed(Routes.LOGIN);
       } else {
         String errorMessage = responseData['message'] ?? 'Registration failed';
@@ -89,5 +91,6 @@ class RegisterController extends GetxController {
     emailOrPhoneController.dispose();
     passwordController.dispose();
     super.onClose();
+
   }
 }
