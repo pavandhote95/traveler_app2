@@ -9,13 +9,14 @@ import 'package:travel_app2/app/modules/forgot_password/views/forgot_password_vi
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
-  const LoginView({super.key});
+   LoginView({super.key});
+   LoginController controller = LoginController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-        backgroundColor: AppColors.mainbg,
+        backgroundColor: AppColors.mainBg,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -70,7 +71,7 @@ class LoginView extends GetView<LoginController> {
           child: Text(
             'Forgot Password?',
             style: GoogleFonts.poppins(
-      color: Colors.tealAccent,
+      color: AppColors.buttonBg,
       fontSize: 14,
       fontWeight: FontWeight.w500,
             ),
@@ -85,7 +86,7 @@ class LoginView extends GetView<LoginController> {
         isLoading: controller.isLoading,
         onPressed: controller.login,
         text: 'Login',
-        backgroundColor: Colors.tealAccent[700]!,
+
         textColor: Colors.white,
       ),
       
@@ -136,7 +137,7 @@ class LoginView extends GetView<LoginController> {
                           TextSpan(
                             text: ' Sign Up',
                             style: GoogleFonts.poppins(
-                              color: Colors.tealAccent,
+                              color: AppColors.buttonBg,
                               fontWeight: FontWeight.w600,
                             ),
                           ),

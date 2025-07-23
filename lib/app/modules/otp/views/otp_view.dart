@@ -14,7 +14,7 @@ class OtpView extends GetView<OtpController> {
     final List<FocusNode> focusNodes = List.generate(4, (_) => FocusNode());
 
     return Scaffold(
-      backgroundColor: AppColors.mainbg,
+      backgroundColor: AppColors.mainBg,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
@@ -95,7 +95,7 @@ class OtpView extends GetView<OtpController> {
                       child: Text(
                         'Resend OTP',
                         style: GoogleFonts.poppins(
-                          color: Colors.tealAccent,
+                          color: AppColors.buttonBg,
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
@@ -109,7 +109,7 @@ class OtpView extends GetView<OtpController> {
         isLoading:controller.isLoading,
         onPressed: () => controller.verify4DigitOtp(context),
         text: 'Verify',
-        backgroundColor: Colors.tealAccent[700]!,
+
       
       ),
       

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:travel_app2/app/constants/app_color.dart';
 
 import '../../community_search/views/community_search_view.dart';
 import '../../home/views/home_view.dart';
@@ -68,9 +69,9 @@ class DashboardView extends GetView<DashboardController> {
                   tabBorderRadius: 16,
                       backgroundColor: Color(0xFF232526),
 
-                      color: Colors.tealAccent,
+                      color: AppColors.buttonBg,
                   activeColor: Colors.black,
-                  tabBackgroundColor: Color(0xFF00BFA5),
+                  tabBackgroundColor:AppColors.buttonBg,
 
                   tabs: const [
                     GButton(

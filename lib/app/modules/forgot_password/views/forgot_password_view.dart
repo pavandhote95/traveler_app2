@@ -75,10 +75,10 @@ class ForgotPasswordView extends StatelessWidget {
                 const SizedBox(height: 30),
         
    CustomButton(
-  text: 'Send OTP',
+  text: 'reset password',
   isLoading:controller.isLoading,
   onPressed:  controller.sendOtp,
-    backgroundColor: Colors.tealAccent[700]!,
+
 )
 
               ],

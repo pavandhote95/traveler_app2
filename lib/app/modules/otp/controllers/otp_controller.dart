@@ -45,6 +45,7 @@ class OtpController extends GetxController {
       await Future.delayed(const Duration(seconds: 2)); // Simulate API call
 
       isLoading.value = false;
+          CustomToast.showSuccess(Get.context!, 'Login Successfull');
       Get.offAllNamed(Routes.DASHBOARD);
     } else {
       CustomToast.showErrorHome(context, "Enter the complete 4-digit OTP");

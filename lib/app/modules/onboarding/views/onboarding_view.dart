@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app2/app/constants/app_color.dart';
+import '../../../constants/app_color.dart';
+import '../../../constants/custom_button.dart';
 import '../controllers/onboarding_controller.dart';
 
 class OnboardingView extends GetView<OnboardingController> {
@@ -10,7 +12,7 @@ class OnboardingView extends GetView<OnboardingController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:AppColors.mainbg,
+      backgroundColor:AppColors.mainBg,
       body: SafeArea(
         child: Column(
           children: [
@@ -32,7 +34,7 @@ class OnboardingView extends GetView<OnboardingController> {
                               : index == 1
                               ? Icons.people_alt
                               : Icons.support_agent,
-                          color: Colors.tealAccent,
+                          color: AppColors.buttonBg,
                           size: 120,
                         ),
                         const SizedBox(height: 40),
@@ -72,7 +74,7 @@ class OnboardingView extends GetView<OnboardingController> {
                   width: controller.currentPage.value == index ? 24 : 8,
                   decoration: BoxDecoration(
                     color: controller.currentPage.value == index
-                        ? Colors.tealAccent
+                        ? AppColors.buttonBg
                         : Colors.white24,
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -81,35 +83,21 @@ class OnboardingView extends GetView<OnboardingController> {
             )),
       
             const SizedBox(height: 40),
-      
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Obx(() => SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: controller.nextPage,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.tealAccent[700],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: Text(
-                    controller.currentPage.value ==
-                        controller.pages.length - 1
-                        ? 'Get Started'
-                        : 'Continue',
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              )),
+              child: CustomButton(
+                isLoading: false.obs, // Agar loading control chahiye to controller se connect karo
+                onPressed: controller.nextPage,
+                text: controller.currentPage.value == controller.pages.length - 1
+                    ? 'Get Started'
+                    : 'Continue',
+                backgroundColor: AppColors.buttonBg,
+                textColor: Colors.black,
+              ),
             ),
-      
+
+
             const SizedBox(height: 40),
           ],
         ),

@@ -15,7 +15,7 @@ class RegisterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    backgroundColor: AppColors.mainbg,
+    backgroundColor: AppColors.mainBg,
       body: Center(
         child: SafeArea(
           child: Padding(
@@ -151,7 +151,7 @@ class RegisterView extends StatelessWidget {
                     },
                     child: RichText(
                       text: TextSpan(
-                        text: "Already have an account? ",
+                        text: "Already have an account ?  ",
                         style: GoogleFonts.poppins(
                           color: Colors.white60,
                           fontSize: 14,
@@ -160,7 +160,7 @@ class RegisterView extends StatelessWidget {
                           TextSpan(
                             text: 'Login',
                             style: GoogleFonts.poppins(
-                              color: Colors.tealAccent,
+                              color: AppColors.buttonBg,
                               fontWeight: FontWeight.w600,
                             ),
                           ),

@@ -10,7 +10,7 @@ class SplashView extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.mainbg,
+      backgroundColor: AppColors.mainBg,
       body: AnimatedBuilder(
         animation: controller.animationController,
         builder: (context, child) {

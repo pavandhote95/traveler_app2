@@ -1,9 +1,6 @@
 import 'package:get/get.dart';
-
 import '../modules/Experts/bindings/experts_binding.dart';
 import '../modules/Experts/views/experts_view.dart';
-import '../modules/bottomnavigationbar/bindings/bottomnavigationbar_binding.dart';
-import '../modules/bottomnavigationbar/views/bottomnavigationbar_view.dart';
 import '../modules/community_search/bindings/community_search_binding.dart';
 import '../modules/community_search/views/community_search_view.dart';
 import '../modules/dashboard/bindings/dashboard_binding.dart';
@@ -26,6 +23,8 @@ import '../modules/post_quesions/bindings/post_quesions_binding.dart';
 import '../modules/post_quesions/views/bottom_sheet_questions.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/reset_password/bindings/reset_password_binding.dart';
+import '../modules/reset_password/views/reset_password_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/user_profile/bindings/user_profile_binding.dart';
@@ -111,8 +110,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.FORGOT_PASSWORD,
-      page: () =>  ForgotPasswordView(),
+      page: () => ForgotPasswordView(),
       binding: ForgotPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESET_PASSWORD,
+      page: () =>  ResetPasswordView(),
+      binding: ResetPasswordBinding(),
     ),
   ];
 }

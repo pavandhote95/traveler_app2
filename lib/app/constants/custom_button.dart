@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'app_color.dart';
+
 class CustomButton extends StatelessWidget {
   final RxBool isLoading;
   final VoidCallback onPressed;
@@ -14,7 +16,7 @@ class CustomButton extends StatelessWidget {
     required this.isLoading,
     required this.onPressed,
     required this.text,
-    this.backgroundColor = const Color(0xFF00BFA6), // Default TealAccent
+    this.backgroundColor = AppColors.buttonBg, // Default TealAccent
     this.textColor = Colors.white,
   }) : super(key: key);
 

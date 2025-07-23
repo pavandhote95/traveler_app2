@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app2/app/constants/app_color.dart';
 
 class CustomToast {
   static void show(
@@ -82,7 +83,7 @@ class CustomToast {
     show(
       context,
       message: message,
-      backgroundColor:  const Color(0xFF1E1E1E),
+      backgroundColor:   Colors.blueGrey,
       textColor: Colors.white,
       isTop: isTop,
     );
@@ -101,7 +102,7 @@ class CustomToast {
     show(
       context,
       message: message,
-      backgroundColor: Colors.tealAccent.shade700,
+      backgroundColor: AppColors.buttonBg,
       textColor: Colors.white,
       isTop: isTop,
     );
@@ -111,7 +112,7 @@ class CustomToast {
     show(
       context,
       message: message,
-      backgroundColor: Colors.tealAccent.shade700,
+      backgroundColor: Colors.green,
       textColor: Colors.white,
       isTop: isTop,
     );

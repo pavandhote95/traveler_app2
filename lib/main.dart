@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: AppColors.mainbg,
+        scaffoldBackgroundColor: AppColors.mainBg,
         textTheme: GoogleFonts.interTextTheme( // Using Inter
           ThemeData.dark().textTheme,
         ).apply(

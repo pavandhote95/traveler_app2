@@ -17,7 +17,7 @@ class HomeView extends GetView<HomeController> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-    backgroundColor: AppColors.mainbg,
+    backgroundColor: AppColors.mainBg,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
@@ -65,7 +65,7 @@ class HomeView extends GetView<HomeController> {
           controller: controller.tabController,
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            const CommunityTab(), 
+             CommunityTab(), 
                
             Expertstab(),
           ],
