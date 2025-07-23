@@ -4,9 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app2/app/constants/app_color.dart';
 import '../controllers/splash_controller.dart';
 
+
 class SplashView extends GetView<SplashController> {
   const SplashView({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

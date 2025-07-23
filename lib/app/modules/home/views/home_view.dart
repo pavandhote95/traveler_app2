@@ -3,22 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app2/app/constants/app_color.dart';
-
 import 'package:travel_app2/app/modules/home/controllers/home_controller.dart';
 import '../../../widgets/custom_appbar.dart';
-
 import 'Tabes/CommunityTab.dart';
 import 'Tabes/ExpertsTab.dart';
 
 class HomeView extends GetView<HomeController> {
-
  HomeController controller = Get.put(HomeController());
-
   HomeView({super.key});
-  
-
   @override
   Widget build(BuildContext context) {
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -70,7 +65,8 @@ class HomeView extends GetView<HomeController> {
           controller: controller.tabController,
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            const CommunityTab(),
+            const CommunityTab(), 
+               
             Expertstab(),
           ],
         ),
