@@ -18,7 +18,7 @@ class CommunityTab extends StatefulWidget {
     CommunityTab({super.key});
 
   @override
-  State<CommunityTab> createState() => _CommunityTabState();
+  State<CommunityTab> createState() => _CommunityTabState();  
 }
 
 class _CommunityTabState extends State<CommunityTab> {
