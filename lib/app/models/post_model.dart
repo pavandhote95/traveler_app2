@@ -1,27 +1,44 @@
-// lib/app/modules/community/models/post_model.dart
-
-class PostModel {
-  final String username;
-  final String userImage;
+// lib/models/api_post_model.dart
+class ApiPostModel {
+  final int id;
+  final String question;
   final String location;
-  final String time;
-  final String postText;
-  final String postImage;
-  final int likes;
-  final String commentUser;
-  final String commentUserImage; // ✅ This must exist!
-  final String commentText;
+  final String status;
+  final String image;
+  final String userId;
+  final String createdAt;
 
-  PostModel({
-    required this.username,
-    required this.userImage,
+  ApiPostModel({
+    required this.id,
+    required this.question,
     required this.location,
-    required this.time,
-    required this.postText,
-    required this.postImage,
-    required this.likes,
-    required this.commentUser,
-    required this.commentUserImage, // ✅ Make sure this matches the key
-    required this.commentText,
+    required this.status,
+    required this.image,
+    required this.userId,
+    required this.createdAt,
   });
+
+  factory ApiPostModel.fromJson(Map<String, dynamic> json) {
+    return ApiPostModel(
+      id: json['id'] ?? 0,
+      question: json['question'] ?? '',
+      location: json['location'] ?? '',
+      status: json['status'] ?? '',
+      image: json['image'] ?? '',
+      userId: json['user_id'] ?? '',
+      createdAt: json['created_at'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'question': question,
+      'location': location,
+      'status': status,
+      'image': image,
+      'user_id': userId,
+      'created_at': createdAt,
+    };
+  }
 }
