@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:travel_app2/app/constants/app_color.dart';
+import 'package:travel_app2/app/constants/custom_button.dart';
 import 'package:travel_app2/app/modules/post_quesions/controllers/bottom_sheet_controller.dart';
 
 
 class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
- BottomSheetQuestionsController controller = Get.put(BottomSheetQuestionsController());
+  BottomSheetQuestionsView({Key? key}) : super(key: key) {
+    Get.put(BottomSheetQuestionsController()); // Initialize controller
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,26 +30,20 @@ class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
             const SizedBox(height: 35),
             _buildImagePicker(),
             const SizedBox(height: 35),
-            SafeArea(
-              child: Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Use controller.questionText, selectedLocation, selectedImage
-                    print("Post Submitted");
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.tealAccent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                    child: Text("Add Post", style: TextStyle(color: Colors.black)),
-                  ),
-                ),
-              ),
-            ),
+       SafeArea(
+  child: Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 0.0),
+    child: CustomButton(
+      isLoading: controller.isLoading,
+      onPressed: controller.submitPost,
+      text: "Add Post",
+ 
+      textColor: Colors.black,
+    ),
+  ),
+),
+
+           
             const SizedBox(height: 35),
           ],
         ),
@@ -60,7 +58,7 @@ class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
         labelText: "Ask a question post something",
-        labelStyle: const TextStyle(color: Colors.tealAccent),
+        labelStyle: const TextStyle(color: AppColors.buttonBg),
         hintText: "Ask a question post something",
         hintStyle: TextStyle(color: Colors.grey.shade500),
         filled: true,
@@ -72,7 +70,7 @@ class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.teal),
+          borderSide: const BorderSide(color: AppColors.buttonBg),
         ),
       ),
     );
@@ -85,7 +83,7 @@ class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
           style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
             labelText: "Tag Location for better reach (optional)",
-            labelStyle: const TextStyle(color: Colors.tealAccent),
+            labelStyle: const TextStyle(color: AppColors.buttonBg),
             filled: true,
             fillColor: const Color(0xFF1F1F1F),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -95,7 +93,7 @@ class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.tealAccent),
+              borderSide: const BorderSide(color:  AppColors.buttonBg),
             ),
           ),
           items: items
@@ -122,7 +120,7 @@ class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
                 child: const Center(
                   child: Text(
                     "+ Add Image",
-                    style: TextStyle(color: Colors.tealAccent),
+                    style: TextStyle(color: AppColors.buttonBg),
                   ),
                 ),
               )

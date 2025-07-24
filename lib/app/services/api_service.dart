@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 class ApiService extends GetxService {
   final String baseUrl = 'https://kotiboxglobaltech.com/travel_app/api';
@@ -68,6 +70,80 @@ class ApiService extends GetxService {
       return response;
     } catch (e) {
       throw Exception('Failed to send forgot password request: $e');
+    }
+  }
+
+  // ✅ Get Posts
+  Future<List<dynamic>> fetchPosts() async {
+    final url = Uri.parse('$baseUrl/posts');
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Accept': 'application/json',
+        },
+      );
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return data['data'];
+      } else {
+        throw Exception('Failed to load posts: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Network issue: $e');
+    }
+  }
+
+  // ✅ Add Post
+  Future<http.Response> addPost({
+    required String question,
+    required String location,
+    File? imageFile,
+  }) async {
+    print('Preparing multipart request for addPost...');
+    var headers = {
+      'Authorization': 'Bearer 8hDPsXafMMddwV4sTi3gEzHerwvpIIRdtRvR2eNR67fa9356', // Replace with actual token
+    };
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('https://kotiboxglobaltech.com/travel_app/api/posts'),
+    );
+
+    // Add form fields
+    request.fields.addAll({
+      'question': question,
+      'location': location,
+    });
+
+    // Add image file if provided
+    if (imageFile != null) {
+      print('Adding image file: ${imageFile.path}');
+      request.files.add(
+        await http.MultipartFile.fromPath('image', imageFile.path),
+      );
+    } else {
+      print('No image file provided');
+    }
+
+    // Add headers
+    request.headers.addAll(headers);
+    print('Request headers: ${request.headers}');
+    print('Request fields: ${request.fields}');
+
+    try {
+      print('Sending multipart request...');
+      http.StreamedResponse streamedResponse = await request.send();
+      print('Received response with status code: ${streamedResponse.statusCode}');
+
+      // Convert StreamedResponse to Response for easier handling
+      final response = await http.Response.fromStream(streamedResponse);
+      print('Response body: ${response.body}');
+
+      return response;
+    } catch (e) {
+      print('Error sending multipart request: $e');
+      rethrow; // Rethrow to be handled by the caller
     }
   }
 }
