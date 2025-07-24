@@ -24,75 +24,60 @@ class DashboardView extends GetView<DashboardController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const      Color(0xFF0F2027),
+      backgroundColor: const  Color.fromARGB(255, 23, 23, 23),
       body: Obx(() => _pages[controller.selectedIndex.value]),
-      bottomNavigationBar:        AnimatedContainer(
-        duration: const Duration(seconds: 3),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-
-            colors: [
-              Color(0xFF232526),
-              Color(0xFF232526),
-              Color(0xFF232526),
-            ],
-
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: SafeArea(
-          child: Container(
-
-            decoration: BoxDecoration(
-              color:Color(0xFF232526),
-
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 20,
-                  color: Colors.black.withOpacity(0.1),
-                )
-              ],
+      bottomNavigationBar:        SafeArea(
+        child: Container(
+      
+          decoration: BoxDecoration(
+            color:Color.fromARGB(255, 23, 23, 23),
+      
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Obx(
-                    () => GNav(
-                  selectedIndex: controller.selectedIndex.value,
-                  onTabChange: controller.changeTab,
-                  gap: 8,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  tabBorderRadius: 16,
-                      backgroundColor: Color(0xFF232526),
-
-                      color: AppColors.buttonBg,
-                  activeColor: Colors.black,
-                  tabBackgroundColor:AppColors.buttonBg,
-
-                  tabs: const [
-                    GButton(
-                      icon: CupertinoIcons.house_fill,
-                      text: 'Home',
-                      
-                    ),
-                    GButton(
-                      icon: CupertinoIcons.search,
-                      text: 'Search',
-                    ),
-                    GButton(
-                      icon: CupertinoIcons.bell,
-                      text: 'Notifications',
-                    ),
-                    GButton(
-                      icon: CupertinoIcons.person,
-                      text: 'Profile',
-                    ),
-                  ],
-                ),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 20,
+                color: Colors.black.withOpacity(0.1),
+              )
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Obx(
+                  () => GNav(
+                selectedIndex: controller.selectedIndex.value,
+                onTabChange: controller.changeTab,
+                gap: 8,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                tabBorderRadius: 16,
+               
+                    
+      
+                    color: AppColors.buttonBg,
+                activeColor: Colors.black,
+                tabBackgroundColor:AppColors.buttonBg,
+      
+                tabs: const [
+                  GButton(
+                    icon: CupertinoIcons.house_fill,
+                    text: 'Home',
+                    
+                  ),
+                  GButton(
+                    icon: CupertinoIcons.search,
+                    text: 'Search',
+                  ),
+                  GButton(
+                    icon: CupertinoIcons.bell,
+                    text: 'Notifications',
+                  ),
+                  GButton(
+                    icon: CupertinoIcons.person,
+                    text: 'Profile',
+                  ),
+                ],
               ),
             ),
           ),

@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.interTextTheme( // Using Inter
           ThemeData.dark().textTheme,
         ).apply(
-          fontFamilyFallback: ['SF Pro', 'Roboto'], // fallback order
+          fontFamilyFallback: [ 'Roboto'], // fallback order
         ),
       ),
       initialRoute: Routes.SPLASH,

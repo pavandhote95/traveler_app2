@@ -12,7 +12,7 @@ class CommunityTab extends StatefulWidget {
   const CommunityTab({super.key});
 
   @override
-  State<CommunityTab> createState() => _CommunityTabState();  
+  State<CommunityTab> createState() => _CommunityTabState();
 }
 
 class _CommunityTabState extends State<CommunityTab> {
@@ -25,7 +25,9 @@ class _CommunityTabState extends State<CommunityTab> {
       body: SafeArea(
         child: Obx(() {
           if (controller.posts.isEmpty) {
-            return const Center(child: CircularProgressIndicator(color: AppColors.buttonBg,));
+            return const Center(
+              child: CircularProgressIndicator(color: AppColors.buttonBg),
+            );
           }
 
           return SwipeCards(
@@ -64,12 +66,13 @@ class _CommunityTabState extends State<CommunityTab> {
   Widget _buildPostCard(PostModel post, int index) {
     final lines = post.question.split('\n');
     final isExpanded = controller.isExpanded[index] ?? false;
-    final displayText =
-        isExpanded || lines.length <= 4 ? post.question : lines.take(4).join('\n');
+    final displayText = isExpanded || lines.length <= 4
+        ? post.question
+        : lines.take(4).join('\n');
 
     return Card(
       elevation: 5,
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       color: AppColors.cardBg,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
@@ -86,8 +89,9 @@ class _CommunityTabState extends State<CommunityTab> {
                 children: [
                   const CircleAvatar(
                     radius: 24,
-                    backgroundImage:
-                        NetworkImage('https://randomuser.me/api/portraits/men/10.jpg'),
+                    backgroundImage: NetworkImage(
+                      'https://randomuser.me/api/portraits/men/10.jpg',
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Column(
@@ -95,22 +99,33 @@ class _CommunityTabState extends State<CommunityTab> {
                     children: [
                       Row(
                         children: [
-                          Text('Traveler',
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                  color: Colors.white)),
+                          Text(
+                            'Traveler',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              color: AppColors.nameText,
+                            ),
+                          ),
                           const SizedBox(width: 4),
-                          const Icon(Icons.verified, size: 18, color: Colors.blue),
+                          const Icon(
+                            Icons.verified,
+                            size: 18,
+                            color: Colors.blue,
+                          ),
                         ],
                       ),
-                      Text('${post.location} · ${post.createdAt.substring(0, 10)}',
-                          style: GoogleFonts.montserrat(
-                              fontSize: 14, color: Colors.grey[500])),
+                      Text(
+                        '${post.location} · ${post.createdAt.substring(0, 10)}',
+                        style: GoogleFonts.roboto(
+                          fontSize: 14,
+                          color: AppColors.locationTimeText,
+                        ),
+                      ),
                     ],
                   ),
                   const Spacer(),
-                  const Icon(Icons.more_horiz, color: Colors.white),
+                  const Icon(Icons.more_horiz, color: AppColors.buttonBg),
                 ],
               ),
               const SizedBox(height: 16),
@@ -125,18 +140,22 @@ class _CommunityTabState extends State<CommunityTab> {
                         children: [
                           TextSpan(
                             text: displayText,
-                            style: GoogleFonts.montserrat(
-                                fontSize: 18, color: Colors.white),
+                            style: GoogleFonts.roboto(
+                              fontSize: 15,
+                              color: AppColors.postText,
+                            ),
                           ),
                           if (lines.length > 4)
                             TextSpan(
                               text: isExpanded ? '\nShow Less' : '\nShow More',
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 16,
-                                  color: AppColors.buttonBg,
-                                  fontWeight: FontWeight.w600),
+                              style: GoogleFonts.roboto(
+                                fontSize: 15,
+                                color: AppColors.showMoreText,
+                                fontWeight: FontWeight.w600,
+                              ),
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () => controller.toggleExpanded(index),
+                                ..onTap = () =>
+                                    controller.toggleExpanded(index),
                             ),
                         ],
                       ),
@@ -146,8 +165,12 @@ class _CommunityTabState extends State<CommunityTab> {
                   // Post image
                   ClipRRect(
                     borderRadius: BorderRadius.circular(16),
-                    child: Image.network(post.image,
-                        height: 180, width: double.infinity, fit: BoxFit.cover),
+                    child: Image.network(
+                      post.image,
+                      height: 180,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ],
               ),
@@ -155,16 +178,21 @@ class _CommunityTabState extends State<CommunityTab> {
               // Likes / Comments / Share Row
               Row(
                 children: [
-                  const Icon(Icons.favorite_border, color: Colors.white),
+                  const Icon(Icons.favorite_border, color: AppColors.iconLike),
                   const SizedBox(width: 8),
-                  Text('124 Likes', // Placeholder
-                      style: GoogleFonts.montserrat(color: Colors.white)),
+                  Text(
+                    '124 Likes', // Placeholder
+                    style: GoogleFonts.roboto(color: Colors.white),
+                  ),
                   const SizedBox(width: 20),
-                  const Icon(Icons.comment_outlined, color: Colors.white),
+                  const Icon(Icons.comment_outlined, color: AppColors.iconReply),
                   const SizedBox(width: 8),
-                  Text('Replies', style: GoogleFonts.montserrat(color: Colors.white)),
+                  Text(
+                    'Replies',
+                    style: GoogleFonts.roboto(color:Colors.white),
+                  ),
                   const Spacer(),
-                  const Icon(Icons.share_outlined, color: Colors.white),
+                  const Icon(Icons.share_outlined, color: AppColors.iconShare),
                 ],
               ),
               const SizedBox(height: 16),
@@ -174,26 +202,33 @@ class _CommunityTabState extends State<CommunityTab> {
                 children: [
                   const CircleAvatar(
                     radius: 22,
-                    backgroundImage:
-                        NetworkImage('https://randomuser.me/api/portraits/men/12.jpg'),
+                    backgroundImage: NetworkImage(
+                      'https://randomuser.me/api/portraits/men/12.jpg',
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.grey[800],
+                        color: AppColors.commentBg,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Ravi Verma',
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.bold, color: Colors.white)),
+                          Text(
+                            'Ravi Verma',
+                            style: GoogleFonts.roboto(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.commentorName,
+                            ),
+                          ),
                           const SizedBox(height: 6),
-                          Text('I also want to go there!',
-                              style: GoogleFonts.montserrat(color: Colors.white)),
+                          Text(
+                            'I also want to go there!',
+                            style: GoogleFonts.roboto(color: AppColors.commentText),
+                          ),
                         ],
                       ),
                     ),
@@ -206,22 +241,24 @@ class _CommunityTabState extends State<CommunityTab> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const CircleAvatar(
-                      radius: 20,
-                      backgroundImage:
-                          NetworkImage("https://randomuser.me/api/portraits/men/1.jpg")),
+                    radius: 20,
+                    backgroundImage: NetworkImage(
+                      "https://randomuser.me/api/portraits/men/1.jpg",
+                    ),
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
-                        color: Colors.grey[850],
+                        color: AppColors.commentBg,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: TextField(
                         style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           hintText: 'Add a comment...',
-                          hintStyle: GoogleFonts.montserrat(color: Colors.grey),
+                          hintStyle: GoogleFonts.roboto(color: AppColors.commentPlaceholder),
                           border: InputBorder.none,
                         ),
                       ),
@@ -231,7 +268,8 @@ class _CommunityTabState extends State<CommunityTab> {
                     icon: const Icon(Icons.send, color: AppColors.buttonBg),
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Comment sent')));
+                        const SnackBar(content: Text('Comment sent')),
+                      );
                     },
                   ),
                 ],

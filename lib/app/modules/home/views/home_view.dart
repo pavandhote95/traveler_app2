@@ -20,14 +20,14 @@ class HomeView extends GetView<HomeController> {
     backgroundColor: AppColors.mainBg,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.mainBg,
           elevation: 1,
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color(0xFF1B1B1B),
-                  Color(0xFF1B1B1B),
+              AppColors.mainBg,
+              AppColors.mainBg,
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
