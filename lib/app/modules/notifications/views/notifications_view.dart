@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app2/app/constants/app_color.dart';
-<<<<<<< HEAD
 
-=======
->>>>>>> 12b7e7d3efdce159be9ebf5dd7056fa6dbe67c07
-
+import '../../../constants/text_fonts.dart';
 import '../controllers/notifications_controller.dart';
 
 class NotificationView extends StatelessWidget {
@@ -23,19 +20,12 @@ class NotificationView extends StatelessWidget {
         elevation: 0.5,
         title: Text(
           'Notifications',
-<<<<<<< HEAD
-          style: GoogleFonts.roboto(
-            fontSize: 20,
-            fontWeight:  FontWeight.bold,
-            color: AppColors.buttonBg,
-=======
           style: KTextStyle.montSerrat(
             fs: 20,
             fw: FontWeight.bold,
             c: AppColors.buttonBg,
->>>>>>> 12b7e7d3efdce159be9ebf5dd7056fa6dbe67c07
           ),
-        ), 
+        ),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -75,8 +65,7 @@ class NotificationView extends StatelessWidget {
                   leading: const Icon(Icons.notifications, color: AppColors.buttonBg),
                   title: Text(
                     notification.title,
-                    style: GoogleFonts.roboto(
-                      
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
@@ -86,12 +75,12 @@ class NotificationView extends StatelessWidget {
                     children: [
                       Text(
                         notification.message,
-                        style: GoogleFonts.roboto(color: Colors.grey.shade400),
+                        style: TextStyle(color: Colors.grey.shade400),
                       ),
                       const SizedBox(height: 6),
                       Text(
                         notification.time,
-                        style: GoogleFonts.roboto(
+                        style: GoogleFonts.montserrat(
                           color: Colors.grey,
                           fontSize: 12,
                         ),

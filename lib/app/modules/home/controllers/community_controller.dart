@@ -9,7 +9,7 @@ import '../views/community_model.dart';
 class CommunityController extends GetxController {
   RxList<PostModel> posts = <PostModel>[].obs;
   RxInt currentIndex = 0.obs;
-  Map<int, bool> isExpanded = {};
+ var isExpanded = <int, bool>{};
   late MatchEngine matchEngine;
 
   final ApiService apiService = Get.find<ApiService>();
@@ -65,6 +65,5 @@ class CommunityController extends GetxController {
 
   void toggleExpanded(int index) {
     isExpanded[index] = !(isExpanded[index] ?? false);
-    update();
   }
 }
