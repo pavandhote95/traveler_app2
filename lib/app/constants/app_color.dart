@@ -7,9 +7,15 @@ class AppColors {
 
   // 🧱 Backgrounds
    // Soft pastel blue
+<<<<<<< HEAD
   static const Color mainBg = Color(0xFF0B1824);            // Dark Main BG
   static const Color cardBg = Color(0xFF00131A);           // Dark Card BG
   static const Color commentBg = Color(0xFF222222);         // Dark Comment BG
+=======
+  static const Color mainBg = Color(0xFF051924);            // Dark Main BG
+  static const Color cardBg = Color.fromARGB(255, 1, 24, 30);            // Dark Card BG
+  static const Color commentBg =Color.fromARGB(255, 6, 31, 43);         // Dark Comment BG
+>>>>>>> 12b7e7d3efdce159be9ebf5dd7056fa6dbe67c07
 
   // 📝 Text Colors
   static const Color textPrimary = Color(0xFF0F172A);
@@ -31,7 +37,11 @@ class AppColors {
   static const Color iconLike = Color(0xFF00E0FF);         // Like icon
   static const Color iconReply = Color(0xFF00E0FF);        // Reply icon (same as Like)
   static const Color iconShare = Color(0xFFB0B0B0);        // Share icon (subtle gray)
+<<<<<<< HEAD
   static const Color buttonBg =Color(0xFF10CEDC);    // FAB background (aqua)
+=======
+  static const Color buttonBg =  Color(0xFF00D1D8); // FAB background (aqua)
+>>>>>>> 12b7e7d3efdce159be9ebf5dd7056fa6dbe67c07
 
   // Optionally you can add a glow or shadow color if needed later
 }

@@ -14,53 +14,79 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
 
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
+ return DefaultTabController(
+  length: 2,
+  child: Scaffold(
     backgroundColor: AppColors.mainBg,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: AppColors.mainBg,
-          elevation: 1,
-          flexibleSpace: Container(
+    appBar: AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: AppColors.mainBg,
+      elevation: 0,
+      flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+            // Top (bluish navy)
+               Color.fromARGB(255, 8, 37, 47),
+                 Color(0xFF0D192F),  //// Almost black bottom
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+      ),
+      title: HeaderWidget(),
+      toolbarHeight: 90,
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(48),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-              AppColors.mainBg,
-              AppColors.mainBg,
+              Color.fromARGB(255, 8, 37, 47),// Top (bluish navy)
+                  Color(0xFF0A1323), // Bottom
                 ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
             ),
-          ),
-          title:  HeaderWidget(),
-          toolbarHeight: 90,
-          bottom: TabBar(
-            controller: controller.tabController,
-            labelColor: Colors.white,
-            dividerColor: Colors.transparent,
-            unselectedLabelColor: Colors.white54,
-            labelStyle: GoogleFonts.poppins(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+            child: TabBar(
+              controller: controller.tabController,
+              labelColor: Colors.white,
+              unselectedLabelColor: Color.fromARGB(255, 121, 141, 158),
+              dividerColor: Colors.transparent,
+              labelStyle: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+              unselectedLabelStyle: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
+              indicator: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 18, 61, 78), // Start of selected tab
+                    Color.fromARGB(255, 8, 37, 47),  // End of selected tab
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+              ),
+              indicatorSize: TabBarIndicatorSize.tab,
+              tabs: const [
+                Tab(text: "Community"),
+                Tab(text: "Experts"),
+              ],
             ),
-            unselectedLabelStyle: GoogleFonts.poppins(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-            ),
-            indicator: const BoxDecoration(
-              color: Color(0xFF2A2A2A),
-              borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
-            ),
-            indicatorSize: TabBarIndicatorSize.tab,
-            tabs: const [
-              Tab(text: "Community"),
-              Tab(text: "Experts"),
-            ],
           ),
         ),
-      
+      ),
+    ),
+
         body: TabBarView(
           controller: controller.tabController,
           physics: const NeverScrollableScrollPhysics(),

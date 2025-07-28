@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app2/app/constants/app_color.dart';
 import 'package:travel_app2/app/constants/my_toast.dart';
+import 'package:travel_app2/app/modules/home/controllers/community_controller.dart';
 import 'package:travel_app2/app/widgets/custom_appbar_controller.dart';
 
 
@@ -31,10 +32,11 @@ class HeaderWidget extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Hi, Bidyawant!',
-                  style: GoogleFonts.poppins(
+                  style:TextStyle(
+                    fontFamily: 'SFPro',
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    color: AppColors.buttonBg,
                   ),
                 ),
               ),
@@ -48,7 +50,8 @@ class HeaderWidget extends StatelessWidget {
                     child: Obx(() => Text(
                           locationController.currentAddress.value,
                           overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.poppins(
+                          style: TextStyle(
+                            fontFamily: 'SFPro',
                             fontSize: 13,
                             color: Colors.grey[400],
                           ),
@@ -60,37 +63,65 @@ class HeaderWidget extends StatelessWidget {
           ),
         ),
 Obx(() => Row(
+  crossAxisAlignment: CrossAxisAlignment.center,
   children: [
-   Transform.scale(
-  scale: 1.1, // 🔍 Increase this value to enlarge
-  child: Switch(
-    value: isToggled.value,
-    onChanged: (value) {
-      isToggled.value = value;
+    Theme(
+      data: Theme.of(context).copyWith(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        switchTheme: SwitchThemeData(
+          thumbColor: MaterialStateProperty.resolveWith<Color>((states) {
+            if (states.contains(MaterialState.selected)) {
+              return Colors.blueGrey; // ON
+            }
+            return AppColors.buttonBg; // OFF
+          }),
+          trackColor: MaterialStateProperty.resolveWith<Color>((states) {
+            if (states.contains(MaterialState.selected)) {
+              return AppColors.buttonBg;
+            }
+            return AppColors.buttonBg.withOpacity(0.3);
+          }),
+          trackOutlineColor: MaterialStateProperty.all(AppColors.buttonBg),
+          overlayColor: MaterialStateProperty.all(Colors.transparent),
+        ),
+      ),
+      child: Transform.scale(
+        scale: 1.1,
+        child: Switch(
+          value: isToggled.value,
+          onChanged: (value) async {
+            isToggled.value = value;
 
-      if (value) {
-        CustomToast.showSuccessHome(context, "Traveling mode is ON");
-        locationController.getCurrentLocation();
-      } else {
-        CustomToast.showErrorHome(context, "Traveling mode is OFF");
-      }
-    },
-    activeColor: AppColors.buttonBg,
-    inactiveThumbColor: const Color.fromARGB(255, 92, 91, 91),
-    inactiveTrackColor: AppColors.buttonBg,
-  ),
-)
-,
+            final communityController = Get.find<CommunityController>();
+
+            if (value) {
+              CustomToast.showSuccessHome(context, "Traveling mode is ON");
+              await locationController.getCurrentLocation();
+
+              final city = locationController.city.value;
+              if (city.isNotEmpty) {
+                communityController.fetchPostsByLocation(city);
+              }
+            } else {
+              CustomToast.showErrorHome(context, "Traveling mode is OFF");
+              communityController.fetchPosts();
+            }
+          },
+        ),
+      ),
+    ),
     const SizedBox(width: 10),
-Icon(
-  Icons.telegram,
-  size: 45,
-  color: AppColors.buttonBg,
-),
-
+    Image.asset(
+      'assets/icons/telegram.png', // 🧠 Replace with your image path
+      height: 40,
+      width: 40,
+      fit: BoxFit.contain,
+      color: AppColors.buttonBg,
+    ),
   ],
 ))
-
 
 
       ],

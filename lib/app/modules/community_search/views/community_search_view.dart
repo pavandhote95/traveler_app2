@@ -15,15 +15,24 @@ class CommunitySearchView extends GetView<CommunitySearchController> {
     return Scaffold(
       backgroundColor: AppColors.mainBg, // Match dashboard background
       appBar: AppBar(
+<<<<<<< HEAD
         backgroundColor:AppColors.mainBg,
 
+=======
+        backgroundColor: const Color(0xFF232526),
+        foregroundColor: AppColors.buttonBg,
+>>>>>>> 12b7e7d3efdce159be9ebf5dd7056fa6dbe67c07
         elevation: 0.5,
         title: Text(
           'Explore Communities',
           style: KTextStyle.montSerrat(
             fs: 20,
             fw: FontWeight.bold,
+<<<<<<< HEAD
             c: AppColors.buttonBg
+=======
+            c: AppColors.buttonBg,
+>>>>>>> 12b7e7d3efdce159be9ebf5dd7056fa6dbe67c07
           ),
         ),
         centerTitle: true,

@@ -1,9 +1,12 @@
+
+// === location_controller.dart ===
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
 class LocationController extends GetxController {
   var currentAddress = 'Fetching location...'.obs;
+  var city = ''.obs;
 
   @override
   void onInit() {
@@ -35,16 +38,13 @@ class LocationController extends GetxController {
       return;
     }
 
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
 
     if (placemarks.isNotEmpty) {
       final place = placemarks.first;
-      currentAddress.value =
-          '${place.locality}, ${place.administrativeArea}, ${place.country}';
+      currentAddress.value = '${place.locality}, ${place.administrativeArea}, ${place.country}';
+      city.value = place.locality ?? 'Unknown';
     }
   }
 }

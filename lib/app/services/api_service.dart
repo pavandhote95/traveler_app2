@@ -73,26 +73,42 @@ class ApiService extends GetxService {
     }
   }
 
-  // ✅ Get Posts
   Future<List<dynamic>> fetchPosts() async {
-    final url = Uri.parse('$baseUrl/posts');
-    try {
-      final response = await http.get(
-        url,
-        headers: {
-          'Accept': 'application/json',
-        },
-      );
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return data['data'];
+    final url = Uri.parse("https://kotiboxglobaltech.com/travel_app/api/posts");
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      if (jsonResponse['status'] == true) {
+        return jsonResponse['data'];
       } else {
-        throw Exception('Failed to load posts: ${response.statusCode}');
+        throw Exception(jsonResponse['message']);
       }
-    } catch (e) {
-      throw Exception('Network issue: $e');
+    } else {
+      throw Exception('Failed to fetch posts');
     }
   }
+
+  Future<List<dynamic>> fetchPostsByLocation(String location) async {
+    final url = Uri.parse("https://kotiboxglobaltech.com/travel_app/api/posts/location");
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'location': location}),
+    );
+
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      if (jsonResponse['status'] == true) {
+        return jsonResponse['data'];
+      } else {
+        throw Exception(jsonResponse['message']);
+      }
+    } else {
+      throw Exception('Failed to fetch location posts');
+    }
+  }
+
 
   // ✅ Add Post
   Future<http.Response> addPost({
@@ -146,4 +162,6 @@ class ApiService extends GetxService {
       rethrow; // Rethrow to be handled by the caller
     }
   }
+
+
 }

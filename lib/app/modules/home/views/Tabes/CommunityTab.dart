@@ -73,10 +73,10 @@ class _CommunityTabState extends State<CommunityTab> {
     return Card(
       elevation: 5,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      color: AppColors.cardBg,
+      color: const Color.fromARGB(255, 4, 20, 29),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
-        side: const BorderSide(color: Colors.grey, width: 0.4),
+        side: const BorderSide(color: AppColors.buttonBg, width: 0.2),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
@@ -100,32 +100,36 @@ class _CommunityTabState extends State<CommunityTab> {
                       Row(
                         children: [
                           Text(
-                            'Traveler',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
+                            'Kunal Patel',
+                            style: GoogleFonts.inter(
+                         
+                              fontWeight: FontWeight.w700,
                               fontSize: 18,
                               color: AppColors.nameText,
                             ),
                           ),
-                          const SizedBox(width: 4),
+                          const SizedBox(width: 8),
                           const Icon(
                             Icons.verified,
-                            size: 18,
-                            color: Colors.blue,
+                            size: 22,
+                            color: AppColors.buttonBg,
                           ),
                         ],
                       ),
                       Text(
                         '${post.location} · ${post.createdAt.substring(0, 10)}',
-                        style: GoogleFonts.roboto(
+                        style: GoogleFonts.inter(
+                             
+                              fontWeight: FontWeight.w400,
+                        
                           fontSize: 14,
-                          color: AppColors.locationTimeText,
+                          color: AppColors.buttonBg,
                         ),
                       ),
                     ],
                   ),
                   const Spacer(),
-                  const Icon(Icons.more_horiz, color: AppColors.buttonBg),
+                  const Icon(Icons.more_horiz, color:Colors.white),
                 ],
               ),
               const SizedBox(height: 16),
@@ -140,15 +144,17 @@ class _CommunityTabState extends State<CommunityTab> {
                         children: [
                           TextSpan(
                             text: displayText,
-                            style: GoogleFonts.roboto(
-                              fontSize: 15,
+                            style: GoogleFonts.inter(
+                                    fontSize: 19,
                               color: AppColors.postText,
+                              fontWeight: FontWeight.w500
                             ),
                           ),
-                          if (lines.length > 4)
+                          if (lines.length > 3)
                             TextSpan(
                               text: isExpanded ? '\nShow Less' : '\nShow More',
-                              style: GoogleFonts.roboto(
+                              style: TextStyle(
+                                fontFamily: 'SFPro',
                                 fontSize: 15,
                                 color: AppColors.showMoreText,
                                 fontWeight: FontWeight.w600,
@@ -178,18 +184,43 @@ class _CommunityTabState extends State<CommunityTab> {
               // Likes / Comments / Share Row
               Row(
                 children: [
-                  const Icon(Icons.favorite_border, color: AppColors.iconLike),
+                  Container(
+                    width: 27,
+                    height: 27,
+                    child: Image.asset(
+                      'assets/icons/fav.png',
+           // optional: apply white tint
+                      fit: BoxFit.contain,
+                    ),
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     '124 Likes', // Placeholder
-                    style: GoogleFonts.roboto(color: Colors.white),
+                    style: TextStyle(
+                      fontFamily: 'SFPro',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
                   ),
                   const SizedBox(width: 20),
-                  const Icon(Icons.comment_outlined, color: AppColors.iconReply),
+                  Container(
+                    width: 27,
+                    height: 27,
+                    child: Image.asset(
+                      'assets/icons/message.png',
+               // optional: apply white tint
+                      fit: BoxFit.contain,
+                    ),
+                  ),
                   const SizedBox(width: 8),
                   Text(
-                    'Replies',
-                    style: GoogleFonts.roboto(color:Colors.white),
+                    'Reply',
+                    style: TextStyle(
+                      color: AppColors.iconReply,
+                      fontFamily: 'SFPro',
+                      fontSize: 16
+                    ),
                   ),
                   const Spacer(),
                   const Icon(Icons.share_outlined, color: AppColors.iconShare),
@@ -211,23 +242,31 @@ class _CommunityTabState extends State<CommunityTab> {
                     child: Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: AppColors.commentBg,
+                        color: const Color.fromARGB(255, 21, 29, 32),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Ravi Verma',
-                            style: GoogleFonts.roboto(
+                            'Tanya Dutta',
+                            style: TextStyle(
+                              fontFamily: 'SFPro',
                               fontWeight: FontWeight.bold,
                               color: AppColors.commentorName,
+                              fontSize: 18
                             ),
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            'I also want to go there!',
-                            style: GoogleFonts.roboto(color: AppColors.commentText),
+                            "it's my dream to visit there someday!",
+                            style: TextStyle(
+                                          
+                             fontWeight: FontWeight.w500,
+                          fontFamily: 'SFPro',
+                    fontSize: 16,
+                              color: AppColors.commentText,
+                            ),
                           ),
                         ],
                       ),
@@ -251,14 +290,20 @@ class _CommunityTabState extends State<CommunityTab> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
-                        color: AppColors.commentBg,
+                        color: const Color.fromARGB(255, 16, 28, 33),
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: TextField(
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'SFPro',
+                        ),
                         decoration: InputDecoration(
                           hintText: 'Add a comment...',
-                          hintStyle: GoogleFonts.roboto(color: AppColors.commentPlaceholder),
+                          hintStyle: TextStyle(
+                            fontFamily: 'SFPro',
+                            color: AppColors.commentPlaceholder,
+                          ),
                           border: InputBorder.none,
                         ),
                       ),

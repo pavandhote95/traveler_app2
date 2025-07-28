@@ -29,7 +29,7 @@ class SplashView extends GetView<SplashController> {
                     shadows: [
                       Shadow(
                         blurRadius: 20,
-                        color: Colors.tealAccent.withOpacity(0.5),
+                        color: AppColors.buttonBg.withOpacity(0.5),
                         offset: const Offset(0, 0),
                       ),
                     ],
