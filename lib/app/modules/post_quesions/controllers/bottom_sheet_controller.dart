@@ -86,6 +86,7 @@ class BottomSheetQuestionsController extends GetxController {
       print('API response status code: ${response.statusCode}');
       if (response.statusCode == 200 || response.statusCode == 201 || response.statusCode == 202) {
         print('Post created successfully');
+               Get.back();
         Get.snackbar('Success', 'Post created successfully',
             backgroundColor: Colors.green, colorText: Colors.white);
 
@@ -93,7 +94,7 @@ class BottomSheetQuestionsController extends GetxController {
         try {
           print('Fetching updated posts after successful submission...');
           await communityController.fetchPosts();
-          Get.back();
+   
           print('Updated posts fetched successfully');
         } catch (e) {
           print('Error fetching updated posts: $e');

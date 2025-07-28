@@ -32,8 +32,7 @@ class HeaderWidget extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Hi, Bidyawant!',
-                  style:TextStyle(
-                    fontFamily: 'SFPro',
+                  style:GoogleFonts.openSans(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: AppColors.buttonBg,
@@ -50,8 +49,7 @@ class HeaderWidget extends StatelessWidget {
                     child: Obx(() => Text(
                           locationController.currentAddress.value,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontFamily: 'SFPro',
+                          style: GoogleFonts.openSans(
                             fontSize: 13,
                             color: Colors.grey[400],
                           ),
@@ -65,6 +63,15 @@ class HeaderWidget extends StatelessWidget {
 Obx(() => Row(
   crossAxisAlignment: CrossAxisAlignment.center,
   children: [
+    Text(
+      isToggled.value ? "Travel\nMode" : "Home\nMode",
+      style: GoogleFonts.openSans(
+        fontSize: 13,
+        fontWeight: FontWeight.w600,
+        color: AppColors.buttonBg,
+      ),
+    ),
+    const SizedBox(width: 6),
     Theme(
       data: Theme.of(context).copyWith(
         splashColor: Colors.transparent,
@@ -88,7 +95,7 @@ Obx(() => Row(
         ),
       ),
       child: Transform.scale(
-        scale: 1.1,
+        scale: 0.9,
         child: Switch(
           value: isToggled.value,
           onChanged: (value) async {
@@ -99,7 +106,6 @@ Obx(() => Row(
             if (value) {
               CustomToast.showSuccessHome(context, "Traveling mode is ON");
               await locationController.getCurrentLocation();
-
               final city = locationController.city.value;
               if (city.isNotEmpty) {
                 communityController.fetchPostsByLocation(city);
@@ -112,14 +118,15 @@ Obx(() => Row(
         ),
       ),
     ),
-    const SizedBox(width: 10),
+    const SizedBox(width: 5),
     Image.asset(
-      'assets/icons/telegram.png', // 🧠 Replace with your image path
-      height: 40,
-      width: 40,
+      'assets/icons/telegram.png',
+      height: 35,
+      width: 35,
       fit: BoxFit.contain,
       color: AppColors.buttonBg,
     ),
+    const SizedBox(width: 8),
   ],
 ))
 

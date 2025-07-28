@@ -37,7 +37,7 @@ class LoginController extends GetxController {
       isLoading.value = false;
 
       if (response.statusCode == 200) {
-        CustomToast.showSuccess(Get.context!, data['message'] ?? 'Please Enter Otp');
+        CustomToast.showSuccess(Get.context!,  'Please Enter Otp');
         Get.toNamed(Routes.OTP);
       } else {
         CustomToast.showError(Get.context!, data['message'] ?? 'Login Failed');

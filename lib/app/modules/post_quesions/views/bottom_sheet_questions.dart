@@ -1,13 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:travel_app2/app/constants/app_color.dart';
 import 'package:travel_app2/app/constants/custom_button.dart';
 import 'package:travel_app2/app/modules/post_quesions/controllers/bottom_sheet_controller.dart';
 
-
 class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
   BottomSheetQuestionsView({Key? key}) : super(key: key) {
-    Get.put(BottomSheetQuestionsController()); // Initialize controller
+    Get.put(BottomSheetQuestionsController());
   }
 
   @override
@@ -24,45 +25,40 @@ class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+      
             _buildTextField(),
-            const SizedBox(height: 35),
-            _buildDropdown(["Japan", "India", "USA"]),
-            const SizedBox(height: 35),
+            const SizedBox(height: 20),
             _buildImagePicker(),
-            const SizedBox(height: 35),
-       SafeArea(
-  child: Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 0.0),
-    child: CustomButton(
-      isLoading: controller.isLoading,
-      onPressed: controller.submitPost,
-      text: "Add Post",
- 
-      textColor: Colors.black,
-    ),
-  ),
-),
-
-           
-            const SizedBox(height: 35),
+            const SizedBox(height: 20),
+            _buildDropdown(["Japan", "India", "USA"]),
+            const SizedBox(height: 30),
+            SafeArea(
+              child: CustomButton(
+                isLoading: controller.isLoading,
+                onPressed: controller.submitPost,
+                text: "Post",
+                textColor: Colors.black,
+              ),
+            ),
+            const SizedBox(height: 16),
           ],
         ),
       ),
     );
   }
 
+
   Widget _buildTextField() {
     return TextField(
       onChanged: controller.updateQuestion,
-      maxLines: 3,
+      maxLines: 5,
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
-        labelText: "Ask a question post something",
-        labelStyle: const TextStyle(color: AppColors.buttonBg),
         hintText: "Ask a question post something",
-        hintStyle: TextStyle(color: Colors.grey.shade500),
+        hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 16),
         filled: true,
         fillColor: const Color(0xFF1F1F1F),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -82,10 +78,11 @@ class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
           dropdownColor: const Color(0xFF1F1F1F),
           style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
-            labelText: "Tag Location for better reach (optional)",
+            labelText: "Add Location (optional)",
             labelStyle: const TextStyle(color: AppColors.buttonBg),
             filled: true,
             fillColor: const Color(0xFF1F1F1F),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -93,7 +90,7 @@ class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color:  AppColors.buttonBg),
+              borderSide: const BorderSide(color: AppColors.buttonBg),
             ),
           ),
           items: items
@@ -129,7 +126,7 @@ class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.file(
-                      image,
+                      File(image.path),
                       width: double.infinity,
                       height: 180,
                       fit: BoxFit.cover,

@@ -18,35 +18,41 @@ class CommunityTab extends StatefulWidget {
 class _CommunityTabState extends State<CommunityTab> {
   final controller = Get.put(CommunityController());
 
-  @override
+  @override  
   Widget build(BuildContext context) {
+    final iskeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
-      backgroundColor: AppColors.mainBg,
-      body: SafeArea(
-        child: Obx(() {
-          if (controller.posts.isEmpty) {
-            return const Center(
-              child: CircularProgressIndicator(color: AppColors.buttonBg),
-            );
-          }
+      //backgroundColor: AppColors.mainBg,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(colors: [AppColors.centerleft , AppColors.centerright],begin: Alignment.centerLeft , end: Alignment.centerRight)
+        ),
+        child: SafeArea(
+          child: Obx(() {
+            if (controller.posts.isEmpty) {
+              return const Center(
+                child: CircularProgressIndicator(color: AppColors.buttonBg),
+              );
+            }
 
-          return SwipeCards(
-            matchEngine: controller.matchEngine,
-            itemBuilder: (context, index) {
-              // Use modulo to loop through posts
-              final postIndex = index % controller.posts.length;
-              return _buildPostCard(controller.posts[postIndex], postIndex);
-            },
-            onStackFinished: () {
-              // No need to call restartPosts here since we use modulo for infinite looping
-              controller.reset();
-            },
-            upSwipeAllowed: false,
-            fillSpace: true,
-          );
-        }),
+            return SwipeCards(
+              matchEngine: controller.matchEngine,
+              itemBuilder: (context, index) {
+                // Use modulo to loop through posts
+                final postIndex = index % controller.posts.length;
+                return _buildPostCard(controller.posts[postIndex], postIndex);
+              },
+              onStackFinished: () {
+                // No need to call restartPosts here since we use modulo for infinite looping
+                controller.reset();
+              },
+              upSwipeAllowed: false,
+              fillSpace: true,
+            );
+          }),
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton:iskeyboard ? SizedBox.shrink() : FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
             context: context,
@@ -66,6 +72,8 @@ class _CommunityTabState extends State<CommunityTab> {
   Widget _buildPostCard(PostModel post, int index) {
     final lines = post.question.split('\n');
     final isExpanded = controller.isExpanded[index] ?? false;
+  //  bool isExpanded = false;
+    final maxline = 3;
     final displayText = isExpanded || lines.length <= 4
         ? post.question
         : lines.take(4).join('\n');
@@ -101,7 +109,7 @@ class _CommunityTabState extends State<CommunityTab> {
                         children: [
                           Text(
                             'Kunal Patel',
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.openSans(
                          
                               fontWeight: FontWeight.w700,
                               fontSize: 18,
@@ -137,35 +145,71 @@ class _CommunityTabState extends State<CommunityTab> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: 300,
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: displayText,
-                            style: GoogleFonts.inter(
-                                    fontSize: 19,
-                              color: AppColors.postText,
-                              fontWeight: FontWeight.w500
-                            ),
-                          ),
-                          if (lines.length > 3)
-                            TextSpan(
-                              text: isExpanded ? '\nShow Less' : '\nShow More',
-                              style: TextStyle(
-                                fontFamily: 'SFPro',
-                                fontSize: 15,
-                                color: AppColors.showMoreText,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () =>
-                                    controller.toggleExpanded(index),
-                            ),
-                        ],
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // RichText(
+                      //   text: TextSpan(
+                      //     children: [
+                      //       TextSpan(
+                      //         text:
+                      //         displayText,
+                      //         style: GoogleFonts.inter(
+                      //                 fontSize: 19,
+                      //           color: AppColors.postText,
+                      //           fontWeight: FontWeight.w500
+                      //         ),
+                      //       ),
+                      //         TextSpan(
+                      //           recognizer: TapGestureRecognizer()
+                      //             ..onTap = () {
+                      //               // controller.toggleExpanded(index)
+                      //               // setState(() {
+                      //               //   isExpanded = !isExpanded;
+                      //               // });
+                      //             },
+                      //           text: isExpanded ? '\nShow Less' : '\nShow More',
+                      //           style: TextStyle(
+                      //             fontFamily: 'SFPro',
+                      //             fontSize: 15,
+                      //             color: AppColors.showMoreText,
+                      //             fontWeight: FontWeight.w600,
+                      //           ),
+                      //
+                      //         ),
+                      //
+                      //     ],
+                      //   ),
+                      // ),
+                  
+                      Text(
+                        displayText,
+                        maxLines: isExpanded ? 5 : maxline,
+                        overflow: isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+                        style: GoogleFonts.openSans(
+                          fontSize: 19,
+                          color: AppColors.postText,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
+                      SizedBox(height: 4),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                           controller.toggleExpanded(index);
+                          });
+                        },
+                        child: Text(
+                          isExpanded ? 'Show Less' : 'Show More',
+                          style: GoogleFonts.inter(
+                            fontSize: 15,
+                            color: AppColors.showMoreText,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                  
+                    ],
                   ),
                   const SizedBox(height: 16),
                   // Post image

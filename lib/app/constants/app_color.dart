@@ -20,7 +20,8 @@ class AppColors {
   static const Color commentorName = Color(0xFFFFFFFF);     // Comment: Name
   static const Color commentText = Color(0xFFCCCCCC);       // Comment: Text
   static const Color commentPlaceholder = Color(0xFF777777); // Comment: Placeholder
-
+static const Color centerleft = Color(0xFF01121c);
+  static const Color centerright = Color(0xFF001B26);
   // ✅ Status Colors
   static const Color success = Color(0xFF10B981);
   static const Color warning = Color(0xFFF59E0B);
