@@ -16,14 +16,14 @@ class CommunitySearchView extends GetView<CommunitySearchController> {
       backgroundColor: const Color(0xFF0F2027), // Match dashboard background
       appBar: AppBar(
         backgroundColor: const Color(0xFF232526),
-        foregroundColor: Colors.tealAccent,
+        foregroundColor: AppColors.buttonBg,
         elevation: 0.5,
         title: Text(
           'Explore Communities',
           style: KTextStyle.montSerrat(
             fs: 20,
             fw: FontWeight.bold,
-            c: Colors.tealAccent,
+            c: AppColors.buttonBg,
           ),
         ),
         centerTitle: true,
@@ -48,7 +48,7 @@ class CommunitySearchView extends GetView<CommunitySearchController> {
                 decoration: InputDecoration(
                   hintText: 'Search destinations or interests...',
                   hintStyle: TextStyle(color: Colors.grey.shade500),
-                  prefixIcon: const Icon(CupertinoIcons.search, color: Colors.tealAccent),
+                  prefixIcon: const Icon(CupertinoIcons.search, color: AppColors.buttonBg),
                   contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 14),
                   filled: true,
                   fillColor: const Color(0xFF1C1C1E),
@@ -77,7 +77,7 @@ class CommunitySearchView extends GetView<CommunitySearchController> {
                   Image.asset(
                     'assets/images/search_image.png',
                     width: 180,
-                    color: Colors.tealAccent,
+                    color: AppColors.buttonBg,
                   ),
                   const SizedBox(height: 12),
                   Text(

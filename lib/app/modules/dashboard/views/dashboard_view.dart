@@ -24,13 +24,13 @@ class DashboardView extends GetView<DashboardController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const  Color.fromARGB(255, 23, 23, 23),
+      backgroundColor: const        Color.fromARGB(255, 8, 37, 47),
       body: Obx(() => _pages[controller.selectedIndex.value]),
       bottomNavigationBar:        SafeArea(
         child: Container(
       
           decoration: BoxDecoration(
-            color:Color.fromARGB(255, 23, 23, 23),
+            color:        Color.fromARGB(255, 3, 21, 26), 
       
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15),

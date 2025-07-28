@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travel_app2/app/constants/app_color.dart';
 
 
 import '../../../constants/text_fonts.dart';
@@ -50,14 +51,14 @@ class _UserProfileViewState extends State<UserProfileView> {
       backgroundColor: const Color(0xFF0F2027), // same as NotificationView
       appBar: AppBar(
         backgroundColor: const Color(0xFF232526),
-        foregroundColor: Colors.tealAccent,
+        foregroundColor: AppColors.buttonBg,
         elevation: 0.5,
         title: Text(
           'Profile',
           style: KTextStyle.montSerrat(
             fs: 20,
             fw: FontWeight.bold,
-            c: Colors.tealAccent,
+            c: AppColors.buttonBg,
           ),
         ),
         centerTitle: true,
@@ -102,7 +103,7 @@ class _UserProfileViewState extends State<UserProfileView> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             decoration: BoxDecoration(
-              color: Colors.tealAccent.shade700,
+              color: AppColors.buttonBg,
               borderRadius: BorderRadius.circular(8),
             ),
             child: TextButton(
@@ -146,7 +147,7 @@ class _UserProfileViewState extends State<UserProfileView> {
               shape: BoxShape.circle,
             ),
             padding: const EdgeInsets.all(12),
-            child: const Icon(Icons.campaign, color: Colors.tealAccent, size: 28),
+            child: const Icon(Icons.campaign, color: AppColors.buttonBg, size: 28),
           ),
           const SizedBox(width: 12),
           Column(
@@ -197,7 +198,7 @@ class _UserProfileViewState extends State<UserProfileView> {
                 color: Colors.white,
               ),
             ),
-            trailing: const Icon(Icons.chevron_right, color: Colors.tealAccent),
+            trailing: const Icon(Icons.chevron_right, color: AppColors.buttonBg),
           ),
         ),
       ).toList(),
@@ -211,7 +212,7 @@ class _UserProfileViewState extends State<UserProfileView> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
         decoration: BoxDecoration(
-          color: Colors.tealAccent.shade700,
+          color: AppColors.buttonBg.withOpacity(0.1),
           borderRadius: BorderRadius.circular(8),
         ),
         child: TextButton(

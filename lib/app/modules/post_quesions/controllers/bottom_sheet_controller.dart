@@ -2,7 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:travel_app2/app/modules/home/controllers/community_controller.dart';
 import 'package:travel_app2/app/services/api_service.dart';
+
+
+
 
 class BottomSheetQuestionsController extends GetxController {
   final Rx<File?> selectedImage = Rx<File?>(null);
@@ -13,7 +17,7 @@ class BottomSheetQuestionsController extends GetxController {
   final RxBool isPickingImage = false.obs;
     final isLoading = false.obs;
 // Flag to track image picking state
-
+  final CommunityController communityController = Get.find<CommunityController>();
 
   Future<void> pickImage() async {
     if (isPickingImage.value) {
@@ -88,7 +92,8 @@ class BottomSheetQuestionsController extends GetxController {
         // Fetch updated posts
         try {
           print('Fetching updated posts after successful submission...');
-          await _apiService.fetchPosts();
+          await communityController.fetchPosts();
+          Get.back();
           print('Updated posts fetched successfully');
         } catch (e) {
           print('Error fetching updated posts: $e');
