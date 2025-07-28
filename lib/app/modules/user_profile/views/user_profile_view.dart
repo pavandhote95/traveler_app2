@@ -28,6 +28,7 @@ class PostModel {
     required this.commentUser,
     required this.commentUserImage,
     required this.commentText,
+    
   });
 }
 class UserProfileView extends StatefulWidget {

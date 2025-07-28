@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app2/app/constants/app_color.dart';
-import '../../../constants/app_color.dart';
 import '../../../constants/custom_button.dart';
 import '../controllers/onboarding_controller.dart';
 

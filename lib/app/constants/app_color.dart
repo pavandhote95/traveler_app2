@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -6,8 +7,8 @@ class AppColors {
 
   // 🧱 Backgrounds
    // Soft pastel blue
-  static const Color mainBg = Color(0xFF0D0D0D);            // Dark Main BG
-  static const Color cardBg = Color(0xFF1A1A1A);            // Dark Card BG
+  static const Color mainBg = Color(0xFF0B1824);            // Dark Main BG
+  static const Color cardBg = Color(0xFF00131A);           // Dark Card BG
   static const Color commentBg = Color(0xFF222222);         // Dark Comment BG
 
   // 📝 Text Colors
@@ -30,7 +31,7 @@ class AppColors {
   static const Color iconLike = Color(0xFF00E0FF);         // Like icon
   static const Color iconReply = Color(0xFF00E0FF);        // Reply icon (same as Like)
   static const Color iconShare = Color(0xFFB0B0B0);        // Share icon (subtle gray)
-  static const Color buttonBg = Color(0xFF00E0FF);    // FAB background (aqua)
+  static const Color buttonBg =Color(0xFF10CEDC);    // FAB background (aqua)
 
   // Optionally you can add a glow or shadow color if needed later
 }

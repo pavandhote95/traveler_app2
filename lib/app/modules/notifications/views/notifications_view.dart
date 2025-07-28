@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travel_app2/app/constants/app_color.dart';
 
-import '../../../constants/text_fonts.dart';
+
 import '../controllers/notifications_controller.dart';
 
 class NotificationView extends StatelessWidget {
@@ -15,16 +16,16 @@ class NotificationView extends StatelessWidget {
       backgroundColor: const Color(0xFF0F2027),
       appBar: AppBar(
         backgroundColor: const Color(0xFF232526),
-        foregroundColor: Colors.tealAccent,
+        foregroundColor: AppColors.buttonBg,
         elevation: 0.5,
         title: Text(
           'Notifications',
-          style: KTextStyle.montSerrat(
-            fs: 20,
-            fw: FontWeight.bold,
-            c: Colors.tealAccent,
+          style: GoogleFonts.roboto(
+            fontSize: 20,
+            fontWeight:  FontWeight.bold,
+            color: AppColors.buttonBg,
           ),
-        ),
+        ), 
         centerTitle: true,
       ),
       body: Obx(() {
@@ -36,7 +37,7 @@ class NotificationView extends StatelessWidget {
                 Image.asset(
                   'assets/images/search_image.png',
                   width: 180,
-                  color: Colors.tealAccent,
+                  color: AppColors.buttonBg,
                 ),
                 const SizedBox(height: 12),
                 Text(
@@ -61,10 +62,11 @@ class NotificationView extends StatelessWidget {
                   side: const BorderSide(color:Colors.grey, width: 0.4),
                 ),
                 child: ListTile(
-                  leading: const Icon(Icons.notifications, color: Colors.tealAccent),
+                  leading: const Icon(Icons.notifications, color: AppColors.buttonBg),
                   title: Text(
                     notification.title,
-                    style: const TextStyle(
+                    style: GoogleFonts.roboto(
+                      
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
@@ -74,19 +76,19 @@ class NotificationView extends StatelessWidget {
                     children: [
                       Text(
                         notification.message,
-                        style: TextStyle(color: Colors.grey.shade400),
+                        style: GoogleFonts.roboto(color: Colors.grey.shade400),
                       ),
                       const SizedBox(height: 6),
                       Text(
                         notification.time,
-                        style: GoogleFonts.montserrat(
+                        style: GoogleFonts.roboto(
                           color: Colors.grey,
                           fontSize: 12,
                         ),
                       ),
                     ],
                   ),
-                  trailing: const Icon(Icons.arrow_forward_ios, color: Colors.tealAccent, size: 16),
+                  trailing: const Icon(Icons.arrow_forward_ios, color: AppColors.buttonBg, size: 16),
                   onTap: () {
                     // Navigate to detailed view or perform action
                   },

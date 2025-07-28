@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:travel_app2/app/modules/home/controllers/community_controller.dart';
 import 'package:travel_app2/app/services/api_service.dart';
 
 class BottomSheetQuestionsController extends GetxController {
@@ -60,56 +61,57 @@ class BottomSheetQuestionsController extends GetxController {
     questionText.value = value;
   }
 
-  Future<void> submitPost() async {
-    print('Submitting post...');
-    print('Question: ${questionText.value}, Location: ${selectedLocation!.value}, Image: ${selectedImage.value?.path}');
+Future<void> submitPost() async {
+  print('Submitting post...');
+  print('Question: ${questionText.value}, Location: ${selectedLocation!.value}, Image: ${selectedImage.value?.path}');
 
-    if (questionText.value.isEmpty || selectedLocation!.value.isEmpty) {
-      print('Validation failed: Empty question or location');
-      Get.snackbar('Error', 'Please fill in both question and location fields',
-          backgroundColor: Colors.red, colorText: Colors.white);
-      return;
-    }
-
-    try {
-      print('Calling API to add post...');
-      final response = await _apiService.addPost(
-        question: questionText.value,
-        location: selectedLocation!.value,
-        imageFile: selectedImage.value,
-      );
-
-      print('API response status code: ${response.statusCode}');
-      if (response.statusCode == 200 || response.statusCode == 201 || response.statusCode == 202) {
-        print('Post created successfully');
-        Get.snackbar('Success', 'Post created successfully',
-            backgroundColor: Colors.green, colorText: Colors.white);
-
-        // Fetch updated posts
-        try {
-          print('Fetching updated posts after successful submission...');
-          await _apiService.fetchPosts();
-          print('Updated posts fetched successfully');
-        } catch (e) {
-          print('Error fetching updated posts: $e');
-          Get.snackbar('Warning', 'Post created but failed to fetch updated posts: $e',
-              backgroundColor: Colors.orange, colorText: Colors.white);
-        }
-
-        // Clear fields after successful submission
-        questionText.value = '';
-        selectedLocation!.value = '';
-        selectedImage.value = null;
-        print('Fields cleared after successful submission');
-      } else {
-        print('Failed to create post: ${response.statusCode} - ${response.reasonPhrase}');
-        Get.snackbar('Error', 'Failed to create post: ${response.statusCode} - ${response.reasonPhrase}',
-            backgroundColor: Colors.red, colorText: Colors.white);
-      }
-    } catch (e) {
-      print('Error during post submission: $e');
-      Get.snackbar('Error', 'Failed to create post: $e',
-          backgroundColor: Colors.red, colorText: Colors.white);
-    }
+  if (questionText.value.isEmpty || selectedLocation!.value.isEmpty) {
+    print('Validation failed: Empty question or location');
+    Get.snackbar('Error', 'Please fill in both question and location fields',
+        backgroundColor: Colors.red, colorText: Colors.white);
+    return;
   }
+
+  try {
+    print('Calling API to add post...');
+    final response = await _apiService.addPost(
+      question: questionText.value,
+      location: selectedLocation!.value,
+      imageFile: selectedImage.value,
+    );
+
+    print('API response status code: ${response.statusCode}');
+    if (response.statusCode == 200 || response.statusCode == 201 || response.statusCode == 202) {
+      print('Post created successfully');
+      Get.snackbar('Success', 'Post created successfully',
+          backgroundColor: Colors.green, colorText: Colors.white);
+
+      // ✅ Fetch updated posts from CommunityController
+      try {
+        print('Fetching updated posts after successful submission...');
+        final communityController = Get.find<CommunityController>();
+        await communityController.fetchPosts();
+        print('Updated posts fetched successfully');
+      } catch (e) {
+        print('Error fetching updated posts: $e');
+        Get.snackbar('Warning', 'Post created but failed to fetch updated posts: $e',
+            backgroundColor: Colors.orange, colorText: Colors.white);
+      }
+
+      // ✅ Clear fields
+      questionText.value = '';
+      selectedLocation!.value = '';
+      selectedImage.value = null;
+      print('Fields cleared after successful submission');
+    } else {
+      print('Failed to create post: ${response.statusCode} - ${response.reasonPhrase}');
+      Get.snackbar('Error', 'Failed to create post: ${response.statusCode} - ${response.reasonPhrase}',
+          backgroundColor: Colors.red, colorText: Colors.white);
+    }
+  } catch (e) {
+    print('Error during post submission: $e');
+    Get.snackbar('Error', 'Failed to create post: $e',
+        backgroundColor: Colors.red, colorText: Colors.white);
+  }
+}
 }
