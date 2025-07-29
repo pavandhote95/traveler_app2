@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:travel_app2/app/constants/my_toast.dart'; // ✅ Import toast
+import 'package:get_storage/get_storage.dart';
+import 'package:travel_app2/app/constants/my_toast.dart';
 import 'package:travel_app2/app/services/api_service.dart';
 import '../../../routes/app_pages.dart';
-
 
 class LoginController extends GetxController {
   final emailOrPhoneController = TextEditingController();
@@ -12,6 +12,7 @@ class LoginController extends GetxController {
 
   final isLoading = false.obs;
   final apiService = Get.find<ApiService>();
+  final box = GetStorage();
 
   void login() async {
     final input = emailOrPhoneController.text.trim();
@@ -37,16 +38,37 @@ class LoginController extends GetxController {
       isLoading.value = false;
 
       if (response.statusCode == 200) {
-        CustomToast.showSuccess(Get.context!,  'Please Enter Otp');
-        Get.toNamed(Routes.OTP);
+        final token = data['token'];
+        if (token != null) {
+          box.write('token', token); // ✅ Store token locally
+          debugPrint("📦 Token saved: $token");
+
+          CustomToast.showSuccess(Get.context!, 'Login successful');
+
+          // 👉 Navigate to OTP or Home screen based on flow
+  Get.toNamed(Routes.OTP, arguments: {
+  'input': input,
+  'isPhone': isPhone,
+  'token': token, // ✅ Pass the real token to OTP screen
+});
+        } else {
+          CustomToast.showError(Get.context!, 'Token not found');
+        }
       } else {
         CustomToast.showError(Get.context!, data['message'] ?? 'Login Failed');
       }
     } catch (e) {
       isLoading.value = false;
-      CustomToast.showError(Get.context!, 'Something went wrong. Try again.');
       debugPrint("Login Exception: $e");
+      CustomToast.showError(Get.context!, 'Something went wrong. Try again.');
     }
+  }
+
+  void logout() {
+    box.remove('token'); // ❌ Clear token
+    debugPrint("🔒 Token removed");
+    Get.offAllNamed(Routes.LOGIN); // 🔄 Navigate to login screen
+    CustomToast.showSuccess(Get.context!, 'Logged out successfully');
   }
 
   void loginWithGoogle() {

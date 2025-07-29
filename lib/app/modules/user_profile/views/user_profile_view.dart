@@ -1,66 +1,22 @@
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app2/app/constants/app_color.dart';
+import '../controllers/user_profile_controller.dart';
 
-
-import '../../../constants/text_fonts.dart';
-
-class PostModel {
-  final String username;
-  final String userImage;
-  final String location;
-  final String time;
-  final String postText;
-  final String postImage;
-  final int likes;
-  final String commentUser;
-  final String commentUserImage;
-  final String commentText;
-
-  PostModel({
-    required this.username,
-    required this.userImage,
-    required this.location,
-    required this.time,
-    required this.postText,
-    required this.postImage,
-    required this.likes,
-    required this.commentUser,
-    required this.commentUserImage,
-    required this.commentText,
-    
-  });
-}
-class UserProfileView extends StatefulWidget {
+class UserProfileView extends GetView<UserProfileController> {
   const UserProfileView({super.key});
-
-  @override
-  State<UserProfileView> createState() => _UserProfileViewState();
-}
-
-class _UserProfileViewState extends State<UserProfileView> {
-  final bool _isEditing = false;
-  final String _userBio =
-      'Avid traveler exploring the world one city at a time. Love capturing moments and sharing stories from my journeys!';
-  final int _countriesVisited = 12;
-  final int _tripsTaken = 25;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F2027), // same as NotificationView
+      backgroundColor: const Color(0xFF0D0D0D), // Main background
       appBar: AppBar(
-        backgroundColor: const Color(0xFF232526),
-        foregroundColor: AppColors.buttonBg,
-        elevation: 0.5,
+        backgroundColor: AppColors.appbar,
+        elevation: 0,
         title: Text(
-          'Profile',
-          style: KTextStyle.montSerrat(
-            fs: 20,
-            fw: FontWeight.bold,
-            c: AppColors.buttonBg,
-          ),
+          "My Profile",
+          style: GoogleFonts.poppins(color: Colors.white),
         ),
         centerTitle: true,
       ),
@@ -69,6 +25,7 @@ class _UserProfileViewState extends State<UserProfileView> {
           child: Column(
             children: [
               _buildTopHeader(),
+              _buildStatsCard(),
               _buildPromoCard(),
               _buildProfileOptionList(),
               _buildLogoutButton(),
@@ -81,89 +38,105 @@ class _UserProfileViewState extends State<UserProfileView> {
 
   Widget _buildTopHeader() {
     return Container(
-      width: double.infinity,
-      color: const Color(0xFF232526),
-      padding: const EdgeInsets.symmetric(vertical: 24),
-      child: Column(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      child: Row(
         children: [
           const CircleAvatar(
-            radius: 32,
-            backgroundImage:
-            NetworkImage("https://randomuser.me/api/portraits/men/51.jpg"),
+            radius: 30,
+            backgroundImage: AssetImage('assets/profile.jpg'),
           ),
-          const SizedBox(height: 12),
-          Text(
-            'Veeti Seppanen',
-            style: GoogleFonts.montserrat(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-            decoration: BoxDecoration(
-              color: AppColors.buttonBg,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: TextButton(
-              onPressed: () {
-                // TODO: Navigate to edit profile page
-              },
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.zero, // to keep container padding consistent
-                minimumSize: Size.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              child: Text(
-                'Edit Profile',
-                style: GoogleFonts.montserrat(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
+          const SizedBox(width: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Hello, Pavan!",
+                style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
                 ),
               ),
-            ),
-          ),
+              Text(
+                "Traveler",
+                style: GoogleFonts.poppins(
+                  fontSize: 13,
+                  color: Colors.grey.shade400,
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
   }
 
-
-  Widget _buildPromoCard() {
+  Widget _buildStatsCard() {
     return Container(
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: const Color(0xFF1F1F1F),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade600, width: 0.6),
+        border: Border.all(color: Colors.grey.shade800, width: 0.6),
+      ),
+      child: Obx(() => Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildStatItem("Posts", controller.totalPosts.value),
+              _buildStatItem("Answers", controller.totalAnswers.value),
+              _buildStatItem(
+                  "Points",
+                  (controller.totalPosts.value * 50) +
+                      (controller.totalAnswers.value * 10)),
+            ],
+          )),
+    );
+  }
+
+  Widget _buildStatItem(String label, int value) {
+    return Column(
+      children: [
+        Text(
+          "$value",
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: GoogleFonts.poppins(
+            fontSize: 12,
+            color: Colors.grey.shade500,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPromoCard() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.redAccent.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.orange.shade100.withOpacity(0.2),
-              shape: BoxShape.circle,
-            ),
-            padding: const EdgeInsets.all(12),
-            child: const Icon(Icons.campaign, color: AppColors.buttonBg, size: 28),
-          ),
+          const Icon(Icons.card_giftcard_rounded, color: Colors.redAccent),
           const SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Promo & Update",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white)),
-              const SizedBox(height: 4),
-              Text("Sapendisse dictum quam non",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 13, color: Colors.grey.shade400)),
-            ],
+          Expanded(
+            child: Text(
+              "Get rewards by completing your travel profile.",
+              style: GoogleFonts.poppins(
+                fontSize: 13,
+                color: Colors.white,
+              ),
+            ),
           ),
         ],
       ),
@@ -171,70 +144,48 @@ class _UserProfileViewState extends State<UserProfileView> {
   }
 
   Widget _buildProfileOptionList() {
-    final List<String> options = [
-      "Change Password",
-      "Invite Friends",
-      "Credits & Coupons",
-      "Help Center",
-      "Payments",
-      "Settings",
-      "Newsletter"
-    ];
-
     return Column(
-      children: options.map(
-            (option) => Card(
-          color: const Color(0xFF2A2A2A), // Notification card background
-          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-                side: const BorderSide(color:Colors.grey, width: 0.4),
-              ),
-          child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            title: Text(
-              option,
-              style: GoogleFonts.montserrat(
-                fontSize: 16,
-                color: Colors.white,
-              ),
-            ),
-            trailing: const Icon(Icons.chevron_right, color: AppColors.buttonBg),
-          ),
-        ),
-      ).toList(),
+      children: [
+        _buildOptionTile(Icons.person, "Edit Profile", () {
+          // Navigate to Edit Profile
+        }),
+        _buildOptionTile(Icons.settings, "Settings", () {
+          // Navigate to Settings
+        }),
+        _buildOptionTile(Icons.verified_user, "My Badges", () {}),
+        _buildOptionTile(Icons.help_outline, "Help & Support", () {}),
+      ],
     );
   }
 
+  Widget _buildOptionTile(IconData icon, String title, VoidCallback onTap) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.white),
+      title: Text(
+        title,
+        style: GoogleFonts.poppins(color: Colors.white),
+      ),
+      trailing: const Icon(Icons.chevron_right, color: Colors.white),
+      onTap: onTap,
+    );
+  }
 
   Widget _buildLogoutButton() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-        decoration: BoxDecoration(
-          color: AppColors.buttonBg.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: TextButton(
-          onPressed: () {
-            // TODO: Handle logout logic here
-          },
-          style: TextButton.styleFrom(
-            padding: EdgeInsets.zero,
-            minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
-          child: Text(
-            "Logout",
-            style: GoogleFonts.montserrat(
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-            ),
+      padding: const EdgeInsets.symmetric(vertical: 24.0),
+      child: TextButton.icon(
+        onPressed: () {
+          // Add logout logic
+        },
+        icon: const Icon(Icons.logout, color: Colors.redAccent),
+        label: Text(
+          "Logout",
+          style: GoogleFonts.poppins(
+            color: Colors.redAccent,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),
     );
   }
-
 }

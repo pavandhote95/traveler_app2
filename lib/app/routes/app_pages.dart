@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import '../modules/Experts/bindings/experts_binding.dart';
 import '../modules/Experts/views/experts_view.dart';
 import '../modules/community_search/bindings/community_search_binding.dart';
@@ -29,6 +30,8 @@ import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/user_profile/bindings/user_profile_binding.dart';
 import '../modules/user_profile/views/user_profile_view.dart';
+import '../modules/y/bindings/y_binding.dart';
+import '../modules/y/views/y_view.dart';
 
 part 'app_routes.dart';
 
@@ -100,7 +103,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.USER_PROFILE,
-      page: () => const UserProfileView(),
+      page: () => UserProfileView(),
       binding: UserProfileBinding(),
     ),
     GetPage(
@@ -115,8 +118,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.RESET_PASSWORD,
-      page: () =>  ResetPasswordView(),
+      page: () => ResetPasswordView(),
       binding: ResetPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.Y,
+      page: () => const YView(),
+      binding: YBinding(),
     ),
   ];
 }

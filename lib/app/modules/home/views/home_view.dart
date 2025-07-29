@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app2/app/constants/app_color.dart';
 import 'package:travel_app2/app/modules/home/controllers/home_controller.dart';
 import '../../../widgets/custom_appbar.dart';
@@ -20,7 +19,7 @@ class HomeView extends GetView<HomeController> {
     appBar: AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: AppColors.mainBg,
-      elevation: 0,
+      elevation: 5,
       flexibleSpace: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -34,20 +33,11 @@ class HomeView extends GetView<HomeController> {
         ),
       ),
       title: HeaderWidget(),
-      toolbarHeight: 90,
+      toolbarHeight: 110,
       
     ),
 
-        body: TabBarView(
-          controller: controller.tabController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-             CommunityTab(), 
-               
-            Expertstab(),
-          ],
-        ),
-      
+        body:   CommunityTab(), 
       
       ),
     );

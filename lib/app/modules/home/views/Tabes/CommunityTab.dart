@@ -22,35 +22,30 @@ class _CommunityTabState extends State<CommunityTab> {
   Widget build(BuildContext context) {
     final iskeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
-      //backgroundColor: AppColors.mainBg,
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(colors: [AppColors.centerleft , AppColors.centerright],begin: Alignment.centerLeft , end: Alignment.centerRight)
-        ),
-        child: SafeArea(
-          child: Obx(() {
-            if (controller.posts.isEmpty) {
-              return const Center(
-                child: CircularProgressIndicator(color: AppColors.buttonBg),
-              );
-            }
-
-            return SwipeCards(
-              matchEngine: controller.matchEngine,
-              itemBuilder: (context, index) {
-                // Use modulo to loop through posts
-                final postIndex = index % controller.posts.length;
-                return _buildPostCard(controller.posts[postIndex], postIndex);
-              },
-              onStackFinished: () {
-                // No need to call restartPosts here since we use modulo for infinite looping
-                controller.reset();
-              },
-              upSwipeAllowed: false,
-              fillSpace: true,
+      backgroundColor: AppColors.mainBg,
+      body: SafeArea(
+        child: Obx(() {
+          if (controller.posts.isEmpty) {
+            return const Center(
+              child: CircularProgressIndicator(color: AppColors.buttonBg),
             );
-          }),
-        ),
+          }
+      
+          return SwipeCards(
+            matchEngine: controller.matchEngine,
+            itemBuilder: (context, index) {
+              // Use modulo to loop through posts
+              final postIndex = index % controller.posts.length;
+              return _buildPostCard(controller.posts[postIndex], postIndex);
+            },
+            onStackFinished: () {
+              // No need to call restartPosts here since we use modulo for infinite looping
+              controller.reset();
+            },
+            upSwipeAllowed: false,
+            fillSpace: true,
+          );
+        }),
       ),
       floatingActionButton:iskeyboard ? SizedBox.shrink() : FloatingActionButton(
         onPressed: () {
@@ -81,7 +76,7 @@ class _CommunityTabState extends State<CommunityTab> {
     return Card(
       elevation: 5,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      color: const Color.fromARGB(255, 4, 20, 29),
+      color:  AppColors.cardBg,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
         side: const BorderSide(color: AppColors.buttonBg, width: 0.2),

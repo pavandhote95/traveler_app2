@@ -32,7 +32,8 @@ class DashboardView extends GetView<DashboardController> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-            
+            height: 50,
+            width: 50,
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
                 color: AppColors.buttonBg,
@@ -48,12 +49,13 @@ class DashboardView extends GetView<DashboardController> {
               child: const Icon(
                 CupertinoIcons.star_fill,
                 color: Colors.black,
-                size: 28,
+                size: 20,
               ),
             ),
             const SizedBox(height: 4),
             Text(
-              'Expert',
+              'Expert\nTraveler',
+                textAlign: TextAlign.center,
               style: TextStyle(
                 color: AppColors.buttonBg,
                 fontSize: 12,

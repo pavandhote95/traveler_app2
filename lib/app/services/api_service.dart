@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
+
 
 class ApiService extends GetxService {
   final String baseUrl = 'https://kotiboxglobaltech.com/travel_app/api';
+  
 
   // ✅ Register User
   Future<http.Response> registerUser(Map<String, dynamic> body) async {
@@ -162,6 +163,24 @@ class ApiService extends GetxService {
       rethrow; // Rethrow to be handled by the caller
     }
   }
+
+  Future<http.Response> logoutUser(String token) async {
+  final url = Uri.parse('$baseUrl/logout');
+
+  try {
+    final response = await http.post(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Accept': 'application/json',
+      },
+    );
+    return response;
+  } catch (e) {
+    throw Exception('Failed to logout: $e');
+  }
+}
+
 
 
 }

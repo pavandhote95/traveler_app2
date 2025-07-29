@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:travel_app2/app/constants/app_color.dart';
 
 class ExpertProfilePage extends StatelessWidget {
   final String expertImage;
@@ -29,9 +30,9 @@ class ExpertProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1E1E1E),
+      backgroundColor: AppColors.mainBg,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF2A2A2A),
+        backgroundColor: AppColors.mainBg,
         title: Text(
           'Expert Profile',
           style: GoogleFonts.poppins(
@@ -87,7 +88,7 @@ class ExpertProfilePage extends StatelessWidget {
                   style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Colors.tealAccent,
+                    color: AppColors.buttonBg,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -131,11 +132,11 @@ class ExpertProfilePage extends StatelessWidget {
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    const Icon(Icons.map, color: Colors.tealAccent, size: 18),
+                    const Icon(Icons.map, color:AppColors.buttonBg, size: 18),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(itinerary,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.openSans(
                               color: Colors.white60, fontSize: 13)),
                     ),
                   ],
@@ -144,7 +145,7 @@ class ExpertProfilePage extends StatelessWidget {
                 Row(
                   children: [
                     const Icon(Icons.people,
-                        color: Colors.greenAccent, size: 18),
+                        color: AppColors.buttonBg, size: 18),
                     const SizedBox(width: 6),
                     Text('Guided $totalTravelers+ travelers',
                         style: GoogleFonts.poppins(
@@ -185,10 +186,10 @@ class ExpertProfilePage extends StatelessWidget {
                 icon: const Icon(Icons.chat),
                 label: Text(
                   'Chat with Expert',
-                  style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                  style: GoogleFonts.openSans(fontWeight: FontWeight.w600),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
+                  backgroundColor: AppColors.buttonBg,
                   foregroundColor: Colors.white,
                   padding:
                   const EdgeInsets.symmetric(horizontal: 24, vertical: 14),

@@ -1,11 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:travel_app2/app/routes/app_pages.dart';
+import 'package:flutter/material.dart';
 
 class SplashController extends GetxController with GetSingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<double> scaleAnimation;
   late Animation<double> fadeAnimation;
+
+  final box = GetStorage();
 
   @override
   void onInit() {
@@ -27,7 +30,17 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
     animationController.forward();
 
     Future.delayed(const Duration(seconds: 2), () {
-      Get.offNamed(Routes.ONBOARDING);
+      final isFirstTime = box.read('isFirstTime') ?? true;
+      final isLoggedIn = box.read('isLoggedIn') ?? false;
+
+      if (isFirstTime) {
+        box.write('isFirstTime', false); // set once only
+        Get.offAllNamed(Routes.ONBOARDING);
+      } else if (isLoggedIn) {
+        Get.offAllNamed(Routes.DASHBOARD);
+      } else {
+        Get.offAllNamed(Routes.LOGIN);
+      }
     });
   }
 

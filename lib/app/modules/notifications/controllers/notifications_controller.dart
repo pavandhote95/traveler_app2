@@ -42,11 +42,7 @@ class NotificationController extends GetxController {
         message: "Unusual login activity detected.",
         time: "5 hours ago",
       ),
-      NotificationModel(
-        title: "New Message",
-        message: "You have a new message from Priya.",
-        time: "6 hours ago",
-      ),
+
 
       NotificationModel(
         title: "Offer Unlocked",

@@ -13,17 +13,17 @@ class CommunitySearchView extends GetView<CommunitySearchController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F2027), // Match dashboard background
+      backgroundColor: AppColors.mainBg, // Match dashboard background
       appBar: AppBar(
-        backgroundColor: const Color(0xFF232526),
+        backgroundColor: AppColors.appbar,
         foregroundColor: AppColors.buttonBg,
-        elevation: 0.5,
+        elevation: 2,
         title: Text(
           'Explore Communities',
           style: KTextStyle.montSerrat(
             fs: 20,
             fw: FontWeight.bold,
-            c: AppColors.buttonBg,
+            c: AppColors.titleText,
           ),
         ),
         centerTitle: true,

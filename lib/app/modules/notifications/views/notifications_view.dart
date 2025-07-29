@@ -13,85 +13,99 @@ class NotificationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F2027),
+      backgroundColor: const Color(0xFF0D0D0D), // Instagram-style dark background
       appBar: AppBar(
-        backgroundColor: const Color(0xFF232526),
-        foregroundColor: AppColors.buttonBg,
-        elevation: 0.5,
+        backgroundColor: AppColors.appbar,
+        foregroundColor: Colors.white,
+        elevation: 4,
         title: Text(
           'Notifications',
           style: KTextStyle.montSerrat(
             fs: 20,
             fw: FontWeight.bold,
-            c: AppColors.buttonBg,
+            c: Colors.white,
           ),
         ),
         centerTitle: true,
       ),
       body: Obx(() {
+        
         if (controller.notifications.isEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+        
                 Image.asset(
                   'assets/images/search_image.png',
                   width: 180,
-                  color: AppColors.buttonBg,
+                  color: Colors.white24,
                 ),
                 const SizedBox(height: 12),
                 Text(
                   "No notifications",
-                  style: TextStyle(color: Colors.grey.shade500),
+                  style: TextStyle(color: Colors.grey.shade600),
                 ),
               ],
             ),
           );
         }
-        return ListView.builder(
+        return ListView.separated(
           itemCount: controller.notifications.length,
+          separatorBuilder: (_, __) => const Divider(color: Colors.white12, thickness: 0.2, indent: 72),
           itemBuilder: (context, index) {
             final notification = controller.notifications[index];
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Card(
-                color: const Color(0xFF1F1F1F),
-                elevation: 6,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  side: const BorderSide(color:Colors.grey, width: 0.4),
-                ),
-                child: ListTile(
-                  leading: const Icon(Icons.notifications, color: AppColors.buttonBg),
-                  title: Text(
-                    notification.title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Leading Icon (like avatar or Instagram bell icon)
+                  const CircleAvatar(
+                    radius: 22,
+                    backgroundColor: Colors.white10,
+                    child: Icon(Icons.notifications_none, color: Colors.white),
+                  ),
+                  const SizedBox(width: 12),
+
+                  // Notification content
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            text: notification.title,
+                            style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              fontSize: 15,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: ' ${notification.message}',
+                                style: GoogleFonts.montserrat(
+                                  color: Colors.grey.shade400,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          notification.time,
+                          style: GoogleFonts.montserrat(
+                            color: Colors.grey.shade600,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        notification.message,
-                        style: TextStyle(color: Colors.grey.shade400),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        notification.time,
-                        style: GoogleFonts.montserrat(
-                          color: Colors.grey,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                  trailing: const Icon(Icons.arrow_forward_ios, color: AppColors.buttonBg, size: 16),
-                  onTap: () {
-                    // Navigate to detailed view or perform action
-                  },
-                ),
+                  const SizedBox(width: 6),
+                  const Icon(Icons.more_vert, color: Colors.white24, size: 18),
+                ],
               ),
             );
           },

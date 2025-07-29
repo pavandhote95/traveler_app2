@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:travel_app2/app/routes/app_pages.dart';
 
 class OnboardingController extends GetxController {
   final PageController pageController = PageController();
   final RxInt currentPage = 0.obs;
+
+  final box = GetStorage();
 
   final List<Map<String, String>> pages = [
     {
@@ -32,6 +35,7 @@ class OnboardingController extends GetxController {
         curve: Curves.easeInOut,
       );
     } else {
+      // Optional: box.write('isFirstTime', false); already handled in splash
       Get.offAllNamed(Routes.LOGIN);
     }
   }
