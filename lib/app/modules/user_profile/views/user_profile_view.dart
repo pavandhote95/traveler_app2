@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -46,10 +47,12 @@ class UserProfileView extends GetView<UserProfileController> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       child: Row(
         children: [
-          const CircleAvatar(
-            radius: 35,
-            backgroundImage: AssetImage('assets/profile.jpg'),
-          ),
+          const  CircleAvatar(
+                    radius: 32,
+                    backgroundImage: CachedNetworkImageProvider(
+                      'https://randomuser.me/api/portraits/men/10.jpg',
+                    ),
+                  ),
           const SizedBox(width: 16),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

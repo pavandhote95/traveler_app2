@@ -78,7 +78,7 @@ class DashboardView extends GetView<DashboardController> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _buildTabIcon(CupertinoIcons.house_fill, 0),
-                _buildTabIcon(CupertinoIcons.search, 1),
+              Obx(() =>     _buildTabIcon(CupertinoIcons.search, 1)),
                 const SizedBox(width: 48), // Space for FAB
                 _buildTabIcon(CupertinoIcons.bell, 3),
                 _buildTabIcon(CupertinoIcons.person, 4),
@@ -93,16 +93,29 @@ class DashboardView extends GetView<DashboardController> {
     );
   }
 
-  Widget _buildTabIcon(IconData icon, int index) {
-    return GestureDetector(
-      onTap: () => controller.changeTab(index),
-      child: Icon(
-        icon,
-        color: controller.selectedIndex.value == index
-            ? AppColors.buttonBg
-            : Colors.white.withOpacity(0.5),
-        size: 28,
-      ),
-    );
-  }
+Widget _buildTabIcon(IconData icon, int index) {
+  bool isActive = controller.selectedIndex.value == index;
+  Color iconColor = isActive
+      ? AppColors.buttonBg
+      : Colors.white.withOpacity(0.5);
+
+  return GestureDetector(
+    onTap: () => controller.changeTab(index),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          icon,
+          color: iconColor,
+          size: 26,
+        ),
+        const SizedBox(height: 4),
+      
+      ],
+    ),
+  );
+}
+
+
+
 }

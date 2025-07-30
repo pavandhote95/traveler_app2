@@ -11,9 +11,9 @@ class CommunityController extends GetxController {
   RxInt currentIndex = 0.obs;
   Map<int, bool> isExpanded = {};
   late MatchEngine matchEngine;
-
+  RxBool isSearchMode = false.obs;
   final ApiService apiService = Get.find<ApiService>();
-
+  
   @override
   void onInit() {
     super.onInit();
