@@ -9,28 +9,31 @@ class UserProfileController extends GetxController {
   final ApiService apiService = Get.find<ApiService>();
  final RxInt totalPosts = 5.obs;
   final RxInt totalAnswers = 12.obs;
-  void logoutUser() async {
-    final token = box.read('token');
-    print("📦 Token from storage: $token");
-     
+    final isLoading = false.obs;
+void logoutUser() async {
+  final token = box.read('token');
+  print("📦 Token from storage: $token");
 
-    if (token == null) {
-      CustomToast.showError(Get.context!, 'User not logged in');
-      return;
-    }
-
-    try {
-      final response = await apiService.logoutUser(token);
-      if (response.statusCode == 200) {
-        await box.erase();
-        CustomToast.showSuccess(Get.context!, 'Logout successful');
-        Get.offAllNamed(Routes.LOGIN);
-      } else {
-            Get.offAllNamed(Routes.LOGIN);
-        CustomToast.showError(Get.context!, 'Logout failed');
-      }
-    } catch (e) {
-      CustomToast.showError(Get.context!, 'Logout error: $e');
-    }
+  if (token == null) {
+    CustomToast.showError(Get.context!, 'User not logged in');
+    return;
   }
+
+  isLoading.value = true; 
+  try {
+    final response = await apiService.logoutUser(token);
+    if (response.statusCode == 200) {
+      await box.erase();
+      CustomToast.showSuccess(Get.context!, 'Logout successful');
+      Get.offAllNamed(Routes.LOGIN);
+    } else {
+      CustomToast.showError(Get.context!, 'Logout failed');
+    }
+  } catch (e) {
+    CustomToast.showError(Get.context!, 'Logout error: $e');
+  } finally {
+    isLoading.value = false; 
+  }
+}
+
 }

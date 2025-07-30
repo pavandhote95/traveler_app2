@@ -43,7 +43,7 @@ class LoginController extends GetxController {
           box.write('token', token); // ✅ Store token locally
           debugPrint("📦 Token saved: $token");
 
-          CustomToast.showSuccess(Get.context!, 'Login successful');
+          CustomToast.showSuccess(Get.context!, 'Enter OTP ');
 
           // 👉 Navigate to OTP or Home screen based on flow
   Get.toNamed(Routes.OTP, arguments: {

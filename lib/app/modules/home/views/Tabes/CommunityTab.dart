@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -92,7 +93,7 @@ class _CommunityTabState extends State<CommunityTab> {
                 children: [
                   const CircleAvatar(
                     radius: 24,
-                    backgroundImage: NetworkImage(
+                    backgroundImage: CachedNetworkImageProvider(
                       'https://randomuser.me/api/portraits/men/10.jpg',
                     ),
                   ),
@@ -249,7 +250,7 @@ class _CommunityTabState extends State<CommunityTab> {
                     child: Image.asset(
                       'assets/icons/message.png',
                // optional: apply white tint
-                      fit: BoxFit.contain,
+                
                     ),
                   ),
                   const SizedBox(width: 8),

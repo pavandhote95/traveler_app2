@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app2/app/constants/app_color.dart';
+import 'package:travel_app2/app/constants/custom_button.dart';
 import '../controllers/user_profile_controller.dart';
 
 class UserProfileView extends GetView<UserProfileController> {
-  const UserProfileView({super.key});
+  UserProfileView({super.key});
+
+  final UserProfileController controller = Get.put(UserProfileController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D0D), // Main background
+      backgroundColor: AppColors.mainBg,
       appBar: AppBar(
         backgroundColor: AppColors.appbar,
         elevation: 0,
@@ -23,10 +26,12 @@ class UserProfileView extends GetView<UserProfileController> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _buildTopHeader(),
               _buildStatsCard(),
               _buildPromoCard(),
+              const SizedBox(height: 8),
               _buildProfileOptionList(),
               _buildLogoutButton(),
             ],
@@ -42,7 +47,7 @@ class UserProfileView extends GetView<UserProfileController> {
       child: Row(
         children: [
           const CircleAvatar(
-            radius: 30,
+            radius: 35,
             backgroundImage: AssetImage('assets/profile.jpg'),
           ),
           const SizedBox(width: 16),
@@ -52,15 +57,16 @@ class UserProfileView extends GetView<UserProfileController> {
               Text(
                 "Hello, Pavan!",
                 style: GoogleFonts.poppins(
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
                 ),
               ),
+              const SizedBox(height: 4),
               Text(
                 "Traveler",
                 style: GoogleFonts.poppins(
-                  fontSize: 13,
+                  fontSize: 14,
                   color: Colors.grey.shade400,
                 ),
               ),
@@ -74,14 +80,21 @@ class UserProfileView extends GetView<UserProfileController> {
   Widget _buildStatsCard() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFF1F1F1F),
+        color: AppColors.mainBg,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade800, width: 0.6),
+        border: Border.all(color: AppColors.buttonBg, width: 0.2),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.buttonBg,
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
       child: Obx(() => Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _buildStatItem("Posts", controller.totalPosts.value),
               _buildStatItem("Answers", controller.totalAnswers.value),
@@ -100,17 +113,17 @@ class UserProfileView extends GetView<UserProfileController> {
         Text(
           "$value",
           style: GoogleFonts.poppins(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 6),
         Text(
           label,
           style: GoogleFonts.poppins(
-            fontSize: 12,
-            color: Colors.grey.shade500,
+            fontSize: 13,
+            color: Colors.grey.shade400,
           ),
         ),
       ],
@@ -122,8 +135,15 @@ class UserProfileView extends GetView<UserProfileController> {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.redAccent.withOpacity(0.15),
+        color: Colors.redAccent.withOpacity(0.12),
         borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.redAccent.withOpacity(0.2),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
       child: Row(
         children: [
@@ -133,7 +153,7 @@ class UserProfileView extends GetView<UserProfileController> {
             child: Text(
               "Get rewards by completing your travel profile.",
               style: GoogleFonts.poppins(
-                fontSize: 13,
+                fontSize: 14,
                 color: Colors.white,
               ),
             ),
@@ -144,17 +164,23 @@ class UserProfileView extends GetView<UserProfileController> {
   }
 
   Widget _buildProfileOptionList() {
-    return Column(
-      children: [
-        _buildOptionTile(Icons.person, "Edit Profile", () {
-          // Navigate to Edit Profile
-        }),
-        _buildOptionTile(Icons.settings, "Settings", () {
-          // Navigate to Settings
-        }),
-        _buildOptionTile(Icons.verified_user, "My Badges", () {}),
-        _buildOptionTile(Icons.help_outline, "Help & Support", () {}),
-      ],
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: BoxDecoration(
+        color: AppColors.mainBg,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        children: [
+          _buildOptionTile(Icons.person, "Edit Profile", () {}),
+          _buildDivider(),
+          _buildOptionTile(Icons.settings, "Settings", () {}),
+          _buildDivider(),
+          _buildOptionTile(Icons.verified_user, "My Badges", () {}),
+          _buildDivider(),
+          _buildOptionTile(Icons.help_outline, "Help & Support", () {}),
+        ],
+      ),
     );
   }
 
@@ -163,29 +189,33 @@ class UserProfileView extends GetView<UserProfileController> {
       leading: Icon(icon, color: Colors.white),
       title: Text(
         title,
-        style: GoogleFonts.poppins(color: Colors.white),
+        style: GoogleFonts.poppins(color: Colors.white, fontSize: 15),
       ),
       trailing: const Icon(Icons.chevron_right, color: Colors.white),
       onTap: onTap,
     );
   }
 
+  Widget _buildDivider() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: Divider(color: Colors.grey, thickness: 0.3),
+    );
+  }
+
   Widget _buildLogoutButton() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24.0),
-      child: TextButton.icon(
-        onPressed: () {
-          // Add logout logic
-        },
-        icon: const Icon(Icons.logout, color: Colors.redAccent),
-        label: Text(
-          "Logout",
-          style: GoogleFonts.poppins(
-            color: Colors.redAccent,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      child: SizedBox(
+        width: double.infinity,
+        child: CustomButton(
+        isLoading: controller.isLoading,
+        onPressed: controller.logoutUser,
+        text: 'Logout',
+
+        textColor: Colors.white,
       ),
+      )
     );
   }
 }

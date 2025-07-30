@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../modules/Experts/bindings/experts_binding.dart';
 import '../modules/Experts/views/experts_view.dart';
 import '../modules/community_search/bindings/community_search_binding.dart';
@@ -32,7 +31,6 @@ import '../modules/user_profile/bindings/user_profile_binding.dart';
 import '../modules/user_profile/views/user_profile_view.dart';
 import '../modules/y/bindings/y_binding.dart';
 import '../modules/y/views/y_view.dart';
-
 part 'app_routes.dart';
 
 class AppPages {
