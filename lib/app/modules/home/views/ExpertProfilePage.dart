@@ -169,8 +169,7 @@ class ExpertProfilePage extends StatelessWidget {
               ],
             ).animate().fadeIn(delay: 300.ms).slideX(begin: -0.3),
           ),
-
-          const Spacer(),
+SizedBox(height: 80,),
 
           // Chat Button Animated
           SafeArea(
@@ -190,11 +189,11 @@ class ExpertProfilePage extends StatelessWidget {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.buttonBg,
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppColors.appbar,
                   padding:
                   const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
               ).animate().fadeIn().slideX(begin: -0.2),

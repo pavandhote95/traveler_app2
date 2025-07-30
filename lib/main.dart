@@ -6,10 +6,10 @@ import 'package:travel_app2/app/constants/app_color.dart';
 import 'package:travel_app2/app/routes/app_pages.dart';
 import 'package:travel_app2/app/services/api_service.dart';
 
-void main() async{
+void main() async {
   Get.put(ApiService());
-    WidgetsFlutterBinding.ensureInitialized();
-   await GetStorage.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -22,14 +22,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: AppColors.mainBg,
-        textTheme: GoogleFonts.interTextTheme( // Using Inter
-          ThemeData.dark().textTheme,
-        ).apply(
-          fontFamilyFallback: [ 'Roboto'], // fallback order
-        ),
+        textTheme:
+            GoogleFonts.interTextTheme(
+              // Using Inter
+              ThemeData.dark().textTheme,
+            ).apply(
+              fontFamilyFallback: ['Roboto'], // fallback order
+            ),
       ),
       initialRoute: Routes.SPLASH,
       getPages: AppPages.routes,
     );
+    // I Love Coding I am a software Engineer
   }
 }

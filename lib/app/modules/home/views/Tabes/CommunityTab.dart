@@ -74,292 +74,295 @@ class _CommunityTabState extends State<CommunityTab> {
         ? post.question
         : lines.take(4).join('\n');
 
-    return Card(
-      elevation: 5,
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      color:  AppColors.cardBg,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-        side: const BorderSide(color: AppColors.buttonBg, width: 0.2),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header
-              Row(
-                children: [
-                  const CircleAvatar(
-                    radius: 24,
-                    backgroundImage: CachedNetworkImageProvider(
-                      'https://randomuser.me/api/portraits/men/10.jpg',
+    return SizedBox(
+      height: 650,
+      child: Card(
+        elevation: 5,
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        color:  AppColors.cardBg,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+          side: const BorderSide(color: AppColors.buttonBg, width: 0.2),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header
+                Row(
+                  children: [
+                    const CircleAvatar(
+                      radius: 24,
+                      backgroundImage: CachedNetworkImageProvider(
+                        'https://randomuser.me/api/portraits/men/10.jpg',
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'Kunal Patel',
-                            style: GoogleFonts.openSans(
-                         
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18,
-                              color: AppColors.nameText,
+                    const SizedBox(width: 12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Kunal Patel',
+                              style: GoogleFonts.openSans(
+                           
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                                color: AppColors.nameText,
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                          const Icon(
-                            Icons.verified,
-                            size: 22,
+                            const SizedBox(width: 8),
+                            const Icon(
+                              Icons.verified,
+                              size: 22,
+                              color: AppColors.buttonBg,
+                            ),
+                          ],
+                        ),
+                        Text(
+                          '${post.location} · ${post.createdAt.substring(0, 10)}',
+                          style: GoogleFonts.inter(
+                               
+                                fontWeight: FontWeight.w400,
+                          
+                            fontSize: 14,
                             color: AppColors.buttonBg,
                           ),
-                        ],
-                      ),
-                      Text(
-                        '${post.location} · ${post.createdAt.substring(0, 10)}',
-                        style: GoogleFonts.inter(
-                             
-                              fontWeight: FontWeight.w400,
-                        
-                          fontSize: 14,
-                          color: AppColors.buttonBg,
                         ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  const Icon(Icons.more_horiz, color:Colors.white),
-                ],
-              ),
-              const SizedBox(height: 16),
-              // Question text with Show More
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // RichText(
-                      //   text: TextSpan(
-                      //     children: [
-                      //       TextSpan(
-                      //         text:
-                      //         displayText,
-                      //         style: GoogleFonts.inter(
-                      //                 fontSize: 19,
-                      //           color: AppColors.postText,
-                      //           fontWeight: FontWeight.w500
-                      //         ),
-                      //       ),
-                      //         TextSpan(
-                      //           recognizer: TapGestureRecognizer()
-                      //             ..onTap = () {
-                      //               // controller.toggleExpanded(index)
-                      //               // setState(() {
-                      //               //   isExpanded = !isExpanded;
-                      //               // });
-                      //             },
-                      //           text: isExpanded ? '\nShow Less' : '\nShow More',
-                      //           style: TextStyle(
-                      //             fontFamily: 'SFPro',
-                      //             fontSize: 15,
-                      //             color: AppColors.showMoreText,
-                      //             fontWeight: FontWeight.w600,
-                      //           ),
-                      //
-                      //         ),
-                      //
-                      //     ],
-                      //   ),
-                      // ),
-                  
-                      Text(
-                        displayText,
-                        maxLines: isExpanded ? 5 : maxline,
-                        overflow: isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
-                        style: GoogleFonts.openSans(
-                          fontSize: 19,
-                          color: AppColors.postText,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                           controller.toggleExpanded(index);
-                          });
-                        },
-                        child: Text(
-                          isExpanded ? 'Show Less' : 'Show More',
-                          style: GoogleFonts.inter(
-                            fontSize: 15,
-                            color: AppColors.showMoreText,
-                            fontWeight: FontWeight.w600,
+                      ],
+                    ),
+                    const Spacer(),
+                    const Icon(Icons.more_horiz, color:Colors.white),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                // Question text with Show More
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // RichText(
+                        //   text: TextSpan(
+                        //     children: [
+                        //       TextSpan(
+                        //         text:
+                        //         displayText,
+                        //         style: GoogleFonts.inter(
+                        //                 fontSize: 19,
+                        //           color: AppColors.postText,
+                        //           fontWeight: FontWeight.w500
+                        //         ),
+                        //       ),
+                        //         TextSpan(
+                        //           recognizer: TapGestureRecognizer()
+                        //             ..onTap = () {
+                        //               // controller.toggleExpanded(index)
+                        //               // setState(() {
+                        //               //   isExpanded = !isExpanded;
+                        //               // });
+                        //             },
+                        //           text: isExpanded ? '\nShow Less' : '\nShow More',
+                        //           style: TextStyle(
+                        //             fontFamily: 'SFPro',
+                        //             fontSize: 15,
+                        //             color: AppColors.showMoreText,
+                        //             fontWeight: FontWeight.w600,
+                        //           ),
+                        //
+                        //         ),
+                        //
+                        //     ],
+                        //   ),
+                        // ),
+                    
+                        Text(
+                          displayText,
+                          maxLines: isExpanded ? 5 : maxline,
+                          overflow: isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+                          style: GoogleFonts.openSans(
+                            fontSize: 19,
+                            color: AppColors.postText,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                      ),
-                  
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  // Post image
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.network(
-                      post.image,
-                      height: 180,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              // Likes / Comments / Share Row
-              Row(
-                children: [
-                  Container(
-                    width: 27,
-                    height: 27,
-                    child: Image.asset(
-                      'assets/icons/fav.png',
-           // optional: apply white tint
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    '124 Likes', // Placeholder
-                    style: TextStyle(
-                      fontFamily: 'SFPro',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  Container(
-                    width: 27,
-                    height: 27,
-                    child: Image.asset(
-                      'assets/icons/message.png',
-               // optional: apply white tint
-                
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Reply',
-                    style: TextStyle(
-                      color: AppColors.iconReply,
-                      fontFamily: 'SFPro',
-                      fontSize: 16
-                    ),
-                  ),
-                  const Spacer(),
-                  const Icon(Icons.share_outlined, color: AppColors.iconShare),
-                ],
-              ),
-              const SizedBox(height: 16),
-              // Comment section (hardcoded sample)
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const CircleAvatar(
-                    radius: 22,
-                    backgroundImage: NetworkImage(
-                      'https://randomuser.me/api/portraits/men/12.jpg',
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 21, 29, 32),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Tanya Dutta',
-                            style: TextStyle(
-                              fontFamily: 'SFPro',
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.commentorName,
-                              fontSize: 18
+                        SizedBox(height: 4),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                             controller.toggleExpanded(index);
+                            });
+                          },
+                          child: Text(
+                            isExpanded ? 'Show Less' : 'Show More',
+                            style: GoogleFonts.inter(
+                              fontSize: 15,
+                              color: AppColors.showMoreText,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(height: 6),
-                          Text(
-                            "it's my dream to visit there someday!",
-                            style: TextStyle(
-                                          
-                             fontWeight: FontWeight.w500,
-                          fontFamily: 'SFPro',
-                    fontSize: 16,
-                              color: AppColors.commentText,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              // Add comment input
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const CircleAvatar(
-                    radius: 20,
-                    backgroundImage: NetworkImage(
-                      "https://randomuser.me/api/portraits/men/1.jpg",
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 16, 28, 33),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: TextField(
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'SFPro',
                         ),
-                        decoration: InputDecoration(
-                          hintText: 'Add a comment...',
-                          hintStyle: TextStyle(
+                    
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    // Post image
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.network(
+                        post.image,
+                 
+                        width: double.infinity,
+               
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                // Likes / Comments / Share Row
+                Row(
+                  children: [
+                    Container(
+                      width: 27,
+                      height: 27,
+                      child: Image.asset(
+                        'assets/icons/fav.png',
+             // optional: apply white tint
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      '124 Likes', // Placeholder
+                      style: TextStyle(
+                        fontFamily: 'SFPro',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Container(
+                      width: 27,
+                      height: 27,
+                      child: Image.asset(
+                        'assets/icons/message.png',
+                 // optional: apply white tint
+                  
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Reply',
+                      style: TextStyle(
+                        color: AppColors.iconReply,
+                        fontFamily: 'SFPro',
+                        fontSize: 16
+                      ),
+                    ),
+                    const Spacer(),
+                    const Icon(Icons.share_outlined, color: AppColors.iconShare),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                // Comment section (hardcoded sample)
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const CircleAvatar(
+                      radius: 22,
+                      backgroundImage: NetworkImage(
+                        'https://randomuser.me/api/portraits/men/12.jpg',
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 21, 29, 32),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Tanya Dutta',
+                              style: TextStyle(
+                                fontFamily: 'SFPro',
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.commentorName,
+                                fontSize: 18
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              "it's my dream to visit there someday!",
+                              style: TextStyle(
+                                            
+                               fontWeight: FontWeight.w500,
                             fontFamily: 'SFPro',
-                            color: AppColors.commentPlaceholder,
-                          ),
-                          border: InputBorder.none,
+                      fontSize: 16,
+                                color: AppColors.commentText,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.send, color: AppColors.buttonBg),
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Comment sent')),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+                const SizedBox(height: 20),
+                // Add comment input
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const CircleAvatar(
+                      radius: 20,
+                      backgroundImage: NetworkImage(
+                        "https://randomuser.me/api/portraits/men/1.jpg",
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 16, 28, 33),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: TextField(
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'SFPro',
+                          ),
+                          decoration: InputDecoration(
+                            hintText: 'Add a comment...',
+                            hintStyle: TextStyle(
+                              fontFamily: 'SFPro',
+                              color: AppColors.commentPlaceholder,
+                            ),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.send, color: AppColors.buttonBg),
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Comment sent')),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
