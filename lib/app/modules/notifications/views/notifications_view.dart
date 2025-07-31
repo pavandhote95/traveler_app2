@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app2/app/constants/app_color.dart';
-
-import '../../../constants/text_fonts.dart';
 import '../controllers/notifications_controller.dart';
 
 class NotificationView extends StatelessWidget {
@@ -15,22 +13,26 @@ Widget build(BuildContext context) {
   return Scaffold(
     backgroundColor: AppColors.mainBg,
     appBar: AppBar(
-      backgroundColor: AppColors.appbar,
+      automaticallyImplyLeading: false,
+                  backgroundColor: AppColors.mainBg,
+                  elevation: 5,
+                  flexibleSpace: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [AppColors.centerleft, AppColors.centerright],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                    ),
+                  ),
       foregroundColor: Colors.white,
-      elevation: 4,
+
       title: Text(
         'Notifications',
-        style: KTextStyle.montSerrat(
-          fs: 20,
-          fw: FontWeight.bold,
-          c: Colors.white,
-        ),
+        style: GoogleFonts.openSans(color: AppColors.titleText,fontSize: 20)
       ),
       centerTitle: true,
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(12),
-        child: SizedBox(height: 12), // 👈 space below AppBar
-      ),
+
     ),
     body: Obx(() {
       if (controller.notifications.isEmpty) {

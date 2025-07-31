@@ -1,5 +1,3 @@
-
-// === community_controller.dart ===
 import 'package:get/get.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:travel_app2/app/services/api_service.dart';
@@ -7,13 +5,16 @@ import 'package:travel_app2/app/services/api_service.dart';
 import '../views/community_model.dart';
 
 class CommunityController extends GetxController {
-  RxList<PostModel> posts = <PostModel>[].obs;
+  RxList<PostModel> allPosts = <PostModel>[].obs; // Store all posts (from fetchPosts)
+  RxList<PostModel> locationPosts = <PostModel>[].obs; // Store location-based posts
+  RxList<PostModel> filteredPosts = <PostModel>[].obs; // Store filtered posts for display
   RxInt currentIndex = 0.obs;
+  RxBool isTravelingMode = false.obs; // Track toggle state (Home vs Traveling)
   Map<int, bool> isExpanded = {};
   late MatchEngine matchEngine;
-  RxBool isSearchMode = false.obs;
   final ApiService apiService = Get.find<ApiService>();
-  
+  final RxString searchQuery = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -23,30 +24,57 @@ class CommunityController extends GetxController {
   Future<void> fetchPosts() async {
     try {
       final data = await apiService.fetchPosts();
-      posts.value = data.map((e) => PostModel.fromJson(e)).toList();
-      initializeSwipeEngine();
+      allPosts.value = data.map((e) => PostModel.fromJson(e)).toList();
+      updateFilteredPosts();
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load posts: \$e');
+      Get.snackbar('Error', 'Failed to load posts: $e');
     }
   }
 
   Future<void> fetchPostsByLocation(String location) async {
     try {
       final data = await apiService.fetchPostsByLocation(location);
-      posts.value = data.map((e) => PostModel.fromJson(e)).toList();
-      initializeSwipeEngine();
+      locationPosts.value = data.map((e) => PostModel.fromJson(e)).toList();
+      updateFilteredPosts();
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load location posts: \$e');
+      Get.snackbar('Error', 'Failed to load location posts: $e');
     }
+  }
+
+  void setTravelingMode(bool isTraveling) {
+    isTravelingMode.value = isTraveling;
+    updateFilteredPosts();
+  }
+
+  void updateFilteredPosts() {
+    // Determine which posts to display based on traveling mode
+    List<PostModel> basePosts = isTravelingMode.value ? locationPosts : allPosts;
+
+    // Apply search filter if there's a query
+    if (searchQuery.value.isEmpty) {
+      filteredPosts.assignAll(basePosts);
+    } else {
+      final lowerKeyword = searchQuery.value.toLowerCase();
+      filteredPosts.assignAll(basePosts.where((post) =>
+          post.question.toLowerCase().contains(lowerKeyword) ||
+          post.location.toLowerCase().contains(lowerKeyword)));
+    }
+
+    initializeSwipeEngine();
+  }
+
+  void searchPosts(String keyword) {
+    searchQuery.value = keyword;
+    updateFilteredPosts();
   }
 
   void initializeSwipeEngine() {
     final swipeItems = List.generate(
-      posts.length * 100,
+      filteredPosts.length * 100,
       (index) => SwipeItem(
-        content: posts[index % posts.length],
-        likeAction: () => incrementIndex(index % posts.length),
-        nopeAction: () => incrementIndex(index % posts.length),
+        content: filteredPosts[index % filteredPosts.length],
+        likeAction: () => incrementIndex(index % filteredPosts.length),
+        nopeAction: () => incrementIndex(index % filteredPosts.length),
       ),
     );
     matchEngine = MatchEngine(swipeItems: swipeItems);
@@ -54,7 +82,7 @@ class CommunityController extends GetxController {
   }
 
   void incrementIndex(int index) {
-    currentIndex.value = (index + 1) % posts.length;
+    currentIndex.value = (index + 1) % filteredPosts.length;
     update();
   }
 

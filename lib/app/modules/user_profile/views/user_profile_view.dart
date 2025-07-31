@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app2/app/constants/app_color.dart';
 import 'package:travel_app2/app/constants/custom_button.dart';
+import 'package:travel_app2/app/modules/edit_profile/views/edit_profile_view.dart';
 import '../controllers/user_profile_controller.dart';
 
 class UserProfileView extends GetView<UserProfileController> {
@@ -16,12 +17,21 @@ class UserProfileView extends GetView<UserProfileController> {
     return Scaffold(
       backgroundColor: AppColors.mainBg,
       appBar: AppBar(
-        backgroundColor: AppColors.appbar,
-        elevation: 0,
-        title: Text(
-          "My Profile",
-          style: GoogleFonts.poppins(color: Colors.white),
+        automaticallyImplyLeading: false,
+        backgroundColor: AppColors.mainBg,
+        elevation: 5,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [AppColors.centerleft, AppColors.centerright],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
+          ),
         ),
+        title: Text("My Profile",
+            style:
+                GoogleFonts.openSans(color: AppColors.titleText, fontSize: 20)),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -30,7 +40,6 @@ class UserProfileView extends GetView<UserProfileController> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _buildTopHeader(),
-              _buildStatsCard(),
               _buildPromoCard(),
               const SizedBox(height: 8),
               _buildProfileOptionList(),
@@ -44,94 +53,118 @@ class UserProfileView extends GetView<UserProfileController> {
 
   Widget _buildTopHeader() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-      child: Row(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const  CircleAvatar(
-                    radius: 32,
-                    backgroundImage: CachedNetworkImageProvider(
-                      'https://randomuser.me/api/portraits/men/10.jpg',
-                    ),
-                  ),
-          const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             children: [
-              Text(
-                "Hello, Pavan!",
-                style: GoogleFonts.poppins(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
+              const CircleAvatar(
+                radius: 40,
+                backgroundImage: CachedNetworkImageProvider(
+                  'https://randomuser.me/api/portraits/men/10.jpg',
                 ),
               ),
-              const SizedBox(height: 4),
-              Text(
-                "Traveler",
-                style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  color: Colors.grey.shade400,
-                ),
+              const SizedBox(width: 24),
+              Expanded(
+                child: Obx(() => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildStatColumn("Posts", controller.totalPosts.value),
+                        _buildStatColumn(
+                            "Answers", controller.totalAnswers.value),
+                        _buildStatColumn(
+                          "Points",
+                          (controller.totalPosts.value * 50) +
+                              (controller.totalAnswers.value * 10),
+                        ),
+                      ],
+                    )),
               ),
             ],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            "Pavan Dhote",
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            "Traveler | Explorer | Blogger",
+            style: GoogleFonts.poppins(
+              fontSize: 13,
+              color: Colors.grey.shade400,
+            ),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () {
+            Get.to(() => EditProfileView());
+              },
+              icon: const Icon(Icons.edit, size: 18, color: Colors.white),
+              label: Text(
+                "Edit Profile",
+                style: GoogleFonts.poppins(
+                  fontSize: 13,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: Colors.white24),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                backgroundColor: Colors.white.withOpacity(0.08),
+                padding: const EdgeInsets.symmetric(vertical: 10),
+              ),
+            ),
           )
         ],
       ),
     );
   }
-
-  Widget _buildStatsCard() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      padding: const EdgeInsets.symmetric(vertical: 16),
+Widget _buildStatColumn(String label, int value) {
+  return SizedBox(
+    width: 80,
+    height: 72,
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColors.mainBg,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.buttonBg, width: 0.2),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.buttonBg,
-            blurRadius: 6,
-            offset: const Offset(0, 3),
+        border: Border.all(color: Colors.white24),
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.white.withOpacity(0.05),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "$value",
+            style: GoogleFonts.poppins(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: GoogleFonts.poppins(
+              fontSize: 13,
+              color: Colors.grey.shade400,
+            ),
           ),
         ],
       ),
-      child: Obx(() => Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildStatItem("Posts", controller.totalPosts.value),
-              _buildStatItem("Answers", controller.totalAnswers.value),
-              _buildStatItem(
-                  "Points",
-                  (controller.totalPosts.value * 50) +
-                      (controller.totalAnswers.value * 10)),
-            ],
-          )),
-    );
-  }
-
-  Widget _buildStatItem(String label, int value) {
-    return Column(
-      children: [
-        Text(
-          "$value",
-          style: GoogleFonts.poppins(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          label,
-          style: GoogleFonts.poppins(
-            fontSize: 13,
-            color: Colors.grey.shade400,
-          ),
-        ),
-      ],
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildPromoCard() {
     return Container(
@@ -212,13 +245,12 @@ class UserProfileView extends GetView<UserProfileController> {
       child: SizedBox(
         width: double.infinity,
         child: CustomButton(
-        isLoading: controller.isLoading,
-        onPressed: controller.logoutUser,
-        text: 'Logout',
-
-        textColor: Colors.white,
+          isLoading: controller.isLoading,
+          onPressed: controller.logoutUser,
+          text: 'Logout',
+          textColor: Colors.white,
+        ),
       ),
-      )
     );
   }
 }

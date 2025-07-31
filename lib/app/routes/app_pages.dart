@@ -1,10 +1,13 @@
 import 'package:get/get.dart';
+
 import '../modules/Experts/bindings/experts_binding.dart';
 import '../modules/Experts/views/experts_view.dart';
 import '../modules/community_search/bindings/community_search_binding.dart';
 import '../modules/community_search/views/community_search_view.dart';
 import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
+import '../modules/edit_profile/bindings/edit_profile_binding.dart';
+import '../modules/edit_profile/views/edit_profile_view.dart';
 import '../modules/expertsprofile/bindings/expertsprofile_binding.dart';
 import '../modules/expertsprofile/views/expertsprofile_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
@@ -31,6 +34,7 @@ import '../modules/user_profile/bindings/user_profile_binding.dart';
 import '../modules/user_profile/views/user_profile_view.dart';
 import '../modules/y/bindings/y_binding.dart';
 import '../modules/y/views/y_view.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
@@ -123,6 +127,11 @@ class AppPages {
       name: _Paths.Y,
       page: () => const YView(),
       binding: YBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_PROFILE,
+      page: () =>  EditProfileView(),
+      binding: EditProfileBinding(),
     ),
   ];
 }

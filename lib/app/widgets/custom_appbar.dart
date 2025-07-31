@@ -53,7 +53,7 @@ class HeaderWidget extends StatelessWidget {
                   Expanded(
                     child: Obx(
                       () => Text(
-                        locationController.currentAddress.value,
+                        locationController.currentAddress.value,              
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.openSans(
                           fontSize: 13,
@@ -109,24 +109,27 @@ class HeaderWidget extends StatelessWidget {
                   scale: 0.9,
                   child: Switch(
                     value: isToggled.value,
-                    onChanged: (value) async {
-                      isToggled.value = value;
-                      final communityController = Get.find<CommunityController>();
+                 // Inside the Switch's onChanged callback in HeaderWidget
+onChanged: (value) async {
+  isToggled.value = value;
+  final communityController = Get.find<CommunityController>();
 
-                      if (value) {
-                        // Enable travel mode
-                        CustomToast.showSuccessHome(context, "Traveling mode is ON");
-                        await locationController.getCurrentLocation();
-                        final city = locationController.city.value;
-                        if (city.isNotEmpty) {
-                          communityController.fetchPostsByLocation(city);
-                        }
-                      } else {
-                        // Disable travel mode
-                        CustomToast.showErrorHome(context, "Traveling mode is OFF");
-                        communityController.fetchPosts();
-                      }
-                    },
+  communityController.setTravelingMode(value); // Notify controller of mode change
+
+  if (value) {
+    // Enable travel mode
+    CustomToast.showSuccessHome(context, "Traveling mode is ON");
+    await locationController.getCurrentLocation();
+    final city = locationController.city.value;
+    if (city.isNotEmpty) {
+      communityController.fetchPostsByLocation(city);
+    }
+  } else {
+    // Disable travel mode
+    CustomToast.showErrorHome(context, "Traveling mode is OFF");
+    communityController.fetchPosts();
+  }
+},
                   ),
                 ),
               ),

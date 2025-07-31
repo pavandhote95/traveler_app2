@@ -21,6 +21,7 @@ abstract class Routes {
   static const RESET_PASSWORD = _Paths.RESET_PASSWORD;
   static const USER_PROFILE_CONTROLLER = _Paths.USER_PROFILE_CONTROLLER;
   static const Y = _Paths.Y;
+  static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
 }
 
 abstract class _Paths {
@@ -44,4 +45,5 @@ abstract class _Paths {
   static const RESET_PASSWORD = '/reset-password';
   static const USER_PROFILE_CONTROLLER = '/user-profile-controller';
   static const Y = '/y';
+  static const EDIT_PROFILE = '/edit-profile';
 }

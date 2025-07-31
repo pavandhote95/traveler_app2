@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,51 +15,63 @@ class CommunityTab extends StatefulWidget {
   State<CommunityTab> createState() => _CommunityTabState();
 }
 
-class _CommunityTabState extends State<CommunityTab> {
+class _CommunityTabState extends State<CommunityTab> with WidgetsBindingObserver {
   final controller = Get.put(CommunityController());
+  bool isKeyboardVisible = false;
 
-  @override  
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    final bottomInset = WidgetsBinding.instance.window.viewInsets.bottom;
+    final newValue = bottomInset > 0.0;
+    if (newValue != isKeyboardVisible) {
+      setState(() {
+        isKeyboardVisible = newValue;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final iskeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
       backgroundColor: AppColors.mainBg,
       body: SafeArea(
         child: Obx(() {
-          if (controller.posts.isEmpty) {
+          if (controller.filteredPosts.isEmpty) {
             return const Center(
               child: CircularProgressIndicator(color: AppColors.buttonBg),
             );
           }
-      
-          return SwipeCards(
-            matchEngine: controller.matchEngine,
-            itemBuilder: (context, index) {
-              // Use modulo to loop through posts
-              final postIndex = index % controller.posts.length;
-              return _buildPostCard(controller.posts[postIndex], postIndex);
-            },
-            onStackFinished: () {
-              // No need to call restartPosts here since we use modulo for infinite looping
-              controller.reset();
-            },
-            upSwipeAllowed: false,
-            fillSpace: true,
+
+          return Stack(
+            children: [
+              SwipeCards(
+                matchEngine: controller.matchEngine,
+                itemBuilder: (context, index) {
+                  if (controller.filteredPosts.isEmpty) return const SizedBox();
+                  final postIndex = index % controller.filteredPosts.length;
+                  return _buildPostCard(controller.filteredPosts[postIndex], postIndex);
+                },
+                onStackFinished: () {
+                  controller.reset();
+                },
+                upSwipeAllowed: false,
+                fillSpace: true,
+              ),
+            ],
           );
         }),
-      ),
-      floatingActionButton:iskeyboard ? SizedBox.shrink() : FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-            ),
-            builder: (context) => BottomSheetQuestionsView(),
-          );
-        },
-        backgroundColor: AppColors.buttonBg,
-        child: const Icon(Icons.add, color: Colors.black, size: 30),
       ),
     );
   }
@@ -68,18 +79,17 @@ class _CommunityTabState extends State<CommunityTab> {
   Widget _buildPostCard(PostModel post, int index) {
     final lines = post.question.split('\n');
     final isExpanded = controller.isExpanded[index] ?? false;
-  //  bool isExpanded = false;
     final maxline = 3;
     final displayText = isExpanded || lines.length <= 4
         ? post.question
         : lines.take(4).join('\n');
 
     return SizedBox(
-      height: 650,
+      height: MediaQuery.of(context).size.height * 0.85,
       child: Card(
         elevation: 5,
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        color:  AppColors.cardBg,
+        color: AppColors.cardBg,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14),
           side: const BorderSide(color: AppColors.buttonBg, width: 0.2),
@@ -108,7 +118,6 @@ class _CommunityTabState extends State<CommunityTab> {
                             Text(
                               'Kunal Patel',
                               style: GoogleFonts.openSans(
-                           
                                 fontWeight: FontWeight.w700,
                                 fontSize: 18,
                                 color: AppColors.nameText,
@@ -125,9 +134,7 @@ class _CommunityTabState extends State<CommunityTab> {
                         Text(
                           '${post.location} · ${post.createdAt.substring(0, 10)}',
                           style: GoogleFonts.inter(
-                               
-                                fontWeight: FontWeight.w400,
-                          
+                            fontWeight: FontWeight.w400,
                             fontSize: 14,
                             color: AppColors.buttonBg,
                           ),
@@ -135,149 +142,90 @@ class _CommunityTabState extends State<CommunityTab> {
                       ],
                     ),
                     const Spacer(),
-                    const Icon(Icons.more_horiz, color:Colors.white),
+                    const Icon(Icons.more_horiz, color: Colors.white),
                   ],
                 ),
                 const SizedBox(height: 16),
-                // Question text with Show More
+
+                // Question
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // RichText(
-                        //   text: TextSpan(
-                        //     children: [
-                        //       TextSpan(
-                        //         text:
-                        //         displayText,
-                        //         style: GoogleFonts.inter(
-                        //                 fontSize: 19,
-                        //           color: AppColors.postText,
-                        //           fontWeight: FontWeight.w500
-                        //         ),
-                        //       ),
-                        //         TextSpan(
-                        //           recognizer: TapGestureRecognizer()
-                        //             ..onTap = () {
-                        //               // controller.toggleExpanded(index)
-                        //               // setState(() {
-                        //               //   isExpanded = !isExpanded;
-                        //               // });
-                        //             },
-                        //           text: isExpanded ? '\nShow Less' : '\nShow More',
-                        //           style: TextStyle(
-                        //             fontFamily: 'SFPro',
-                        //             fontSize: 15,
-                        //             color: AppColors.showMoreText,
-                        //             fontWeight: FontWeight.w600,
-                        //           ),
-                        //
-                        //         ),
-                        //
-                        //     ],
-                        //   ),
-                        // ),
-                    
-                        Text(
-                          displayText,
-                          maxLines: isExpanded ? 5 : maxline,
-                          overflow: isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
-                          style: GoogleFonts.openSans(
-                            fontSize: 19,
-                            color: AppColors.postText,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                             controller.toggleExpanded(index);
-                            });
-                          },
-                          child: Text(
-                            isExpanded ? 'Show Less' : 'Show More',
-                            style: GoogleFonts.inter(
-                              fontSize: 15,
-                              color: AppColors.showMoreText,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                    
-                      ],
+                    Text(
+                      displayText,
+                      maxLines: isExpanded ? 5 : maxline,
+                      overflow: isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+                      style: GoogleFonts.openSans(
+                        fontSize: 19,
+                        color: AppColors.postText,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                    const SizedBox(height: 16),
-                    // Post image
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: Image.network(
-                        post.image,
-                 
-                        width: double.infinity,
-               
+                    const SizedBox(height: 4),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          controller.toggleExpanded(index);
+                        });
+                      },
+                      child: Text(
+                        isExpanded ? 'Show Less' : 'Show More',
+                        style: GoogleFonts.inter(
+                          fontSize: 15,
+                          color: AppColors.showMoreText,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 16),
-                // Likes / Comments / Share Row
+
+                // Image
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Image.network(
+                    post.image,
+                    width: double.infinity,
+                  ),
+                ),
+                const SizedBox(height: 16),
+
+                // Likes/Reply/Share
                 Row(
                   children: [
-                    Container(
-                      width: 27,
-                      height: 27,
-                      child: Image.asset(
-                        'assets/icons/fav.png',
-             // optional: apply white tint
-                        fit: BoxFit.contain,
-                      ),
-                    ),
+                    Image.asset('assets/icons/fav.png', width: 27, height: 27),
                     const SizedBox(width: 8),
-                    Text(
-                      '124 Likes', // Placeholder
-                      style: TextStyle(
-                        fontFamily: 'SFPro',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
+                    const Text('124 Likes',
+                        style: TextStyle(
+                          fontFamily: 'SFPro',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        )),
                     const SizedBox(width: 20),
-                    Container(
-                      width: 27,
-                      height: 27,
-                      child: Image.asset(
-                        'assets/icons/message.png',
-                 // optional: apply white tint
-                  
-                      ),
-                    ),
+                    Image.asset('assets/icons/message.png', width: 27, height: 27),
                     const SizedBox(width: 8),
-                    Text(
-                      'Reply',
-                      style: TextStyle(
-                        color: AppColors.iconReply,
-                        fontFamily: 'SFPro',
-                        fontSize: 16
-                      ),
-                    ),
+                    const Text('Reply',
+                        style: TextStyle(
+                          color: AppColors.iconReply,
+                          fontFamily: 'SFPro',
+                          fontSize: 16,
+                        )),
                     const Spacer(),
                     const Icon(Icons.share_outlined, color: AppColors.iconShare),
                   ],
                 ),
                 const SizedBox(height: 16),
-                // Comment section (hardcoded sample)
+
+                // Hardcoded comment
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const CircleAvatar(
                       radius: 22,
-                      backgroundImage: NetworkImage(
-                        'https://randomuser.me/api/portraits/men/12.jpg',
-                      ),
+                      backgroundImage:
+                          NetworkImage('https://randomuser.me/api/portraits/men/12.jpg'),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -289,24 +237,23 @@ class _CommunityTabState extends State<CommunityTab> {
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text(
                               'Tanya Dutta',
                               style: TextStyle(
                                 fontFamily: 'SFPro',
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.commentorName,
-                                fontSize: 18
+                                fontSize: 18,
                               ),
                             ),
-                            const SizedBox(height: 6),
+                            SizedBox(height: 6),
                             Text(
                               "it's my dream to visit there someday!",
                               style: TextStyle(
-                                            
-                               fontWeight: FontWeight.w500,
-                            fontFamily: 'SFPro',
-                      fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'SFPro',
+                                fontSize: 16,
                                 color: AppColors.commentText,
                               ),
                             ),
@@ -317,15 +264,15 @@ class _CommunityTabState extends State<CommunityTab> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                // Add comment input
+
+                // Add Comment
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const CircleAvatar(
                       radius: 20,
-                      backgroundImage: NetworkImage(
-                        "https://randomuser.me/api/portraits/men/1.jpg",
-                      ),
+                      backgroundImage:
+                          NetworkImage("https://randomuser.me/api/portraits/men/1.jpg"),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -335,8 +282,8 @@ class _CommunityTabState extends State<CommunityTab> {
                           color: const Color.fromARGB(255, 16, 28, 33),
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        child: TextField(
-                          style: const TextStyle(
+                        child: const TextField(
+                          style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'SFPro',
                           ),

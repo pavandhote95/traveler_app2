@@ -123,5 +123,5 @@ class CustomToast {
       textColor: Colors.white,
       isTop: isTop,
     );
-  }
+  }R
   }
