@@ -69,6 +69,27 @@ class _CommunityTabState extends State<CommunityTab> with WidgetsBindingObserver
                 upSwipeAllowed: false,
                 fillSpace: true,
               ),
+              !isKeyboardVisible
+    ? Positioned(
+        bottom: 16,
+        right: 16,
+        child: FloatingActionButton(
+          onPressed: () {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              builder: (context) => BottomSheetQuestionsView(),
+            );
+          },
+          backgroundColor: AppColors.buttonBg,
+          child: const Icon(Icons.add, color: Colors.black, size: 30),
+        ),
+      )
+    : const SizedBox.shrink(),
+
             ],
           );
         }),
@@ -89,7 +110,7 @@ class _CommunityTabState extends State<CommunityTab> with WidgetsBindingObserver
       child: Card(
         elevation: 5,
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        color: AppColors.cardBg,
+        color: AppColors. centerright,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14),
           side: const BorderSide(color: AppColors.buttonBg, width: 0.2),
@@ -308,6 +329,7 @@ class _CommunityTabState extends State<CommunityTab> with WidgetsBindingObserver
                     ),
                   ],
                 ),
+                
               ],
             ),
           ),

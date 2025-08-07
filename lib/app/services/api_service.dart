@@ -6,9 +6,7 @@ import 'package:http/http.dart' as http;
 
 class ApiService extends GetxService {
   final String baseUrl = 'https://kotiboxglobaltech.com/travel_app/api';
-  
 
-  // ✅ Register User
   Future<http.Response> registerUser(Map<String, dynamic> body) async {
     final url = Uri.parse('$baseUrl/register');
     try {

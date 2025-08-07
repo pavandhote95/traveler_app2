@@ -9,7 +9,6 @@ import '../controllers/user_profile_controller.dart';
 
 class UserProfileView extends GetView<UserProfileController> {
   UserProfileView({super.key});
-
   final UserProfileController controller = Get.put(UserProfileController());
 
   @override
@@ -208,7 +207,10 @@ Widget _buildStatColumn(String label, int value) {
       ),
       child: Column(
         children: [
-          _buildOptionTile(Icons.person, "Edit Profile", () {}),
+          _buildOptionTile(Icons.person, "Edit Profile", () {
+        
+            
+          }),
           _buildDivider(),
           _buildOptionTile(Icons.settings, "Settings", () {}),
           _buildDivider(),

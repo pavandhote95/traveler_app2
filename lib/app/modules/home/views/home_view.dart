@@ -5,20 +5,21 @@ import 'package:travel_app2/app/modules/dashboard/controllers/dashboard_controll
 import 'package:travel_app2/app/modules/home/controllers/community_controller.dart';
 import 'package:travel_app2/app/modules/home/views/Tabes/CommunityTab.dart';
 import 'package:travel_app2/app/widgets/custom_appbar.dart';
+
+
 class HomeView extends GetView<DashboardController> {
   final DashboardController dashboardController = Get.find();
-  
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF081B22),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80),
-        child: Obx(() {
+        child: Obx(() { 
           return dashboardController.showSearchBar.value
               ? AppBar(
                   toolbarHeight: 110,
-                  backgroundColor: AppColors.centerright,
+                  backgroundColor: Colors.black,
                   elevation: 0,
                   automaticallyImplyLeading: false,
              title: Padding(
@@ -30,8 +31,10 @@ class HomeView extends GetView<DashboardController> {
       final communityController = Get.find<CommunityController>();
       communityController.searchPosts(value);
     },
+
     decoration: InputDecoration(
       hintText: 'Search posts, places...',
+
       filled: true,
       fillColor: AppColors.cardBg,
       prefixIcon: const Icon(Icons.search),
@@ -59,17 +62,16 @@ class HomeView extends GetView<DashboardController> {
     ),
   ),
 ),
-              
-                  
+                         
                 )
               : AppBar(
                   automaticallyImplyLeading: false,
-                  backgroundColor: AppColors.mainBg,
-                  elevation: 5,
+                  backgroundColor: Colors.black,
+                  elevation: 0,
                   flexibleSpace: Container(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [AppColors.centerleft, AppColors.centerright],
+                        colors: [Colors.black,],
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                       ),

@@ -24,7 +24,7 @@ class DashboardView extends GetView<DashboardController> {
 Widget build(BuildContext context) {
   final isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
   return Scaffold(
-    backgroundColor: const Color.fromARGB(255, 8, 37, 47),
+    backgroundColor: Colors.black,
 
     body: Obx(() => _pages[controller.selectedIndex.value]),
 
@@ -76,7 +76,7 @@ Widget build(BuildContext context) {
           child: BottomAppBar(
             shape: const CircularNotchedRectangle(),
             notchMargin: 12,
-            color: const Color.fromARGB(255, 3, 21, 26),
+            color: Colors.black,
             child: SizedBox(
               height: 60,
               child: Row(
@@ -98,6 +98,7 @@ Widget build(BuildContext context) {
 
   Widget _buildTabIcon(IconData icon, int index) {
     bool isActive = controller.selectedIndex.value == index;
+    
     Color iconColor = isActive
         ? AppColors.buttonBg
         : Colors.white.withOpacity(0.5);

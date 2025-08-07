@@ -1,15 +1,15 @@
 import 'package:get/get.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:travel_app2/app/services/api_service.dart';
-
 import '../views/community_model.dart';
 
+
 class CommunityController extends GetxController {
-  RxList<PostModel> allPosts = <PostModel>[].obs; // Store all posts (from fetchPosts)
-  RxList<PostModel> locationPosts = <PostModel>[].obs; // Store location-based posts
-  RxList<PostModel> filteredPosts = <PostModel>[].obs; // Store filtered posts for display
+  RxList<PostModel> allPosts = <PostModel>[].obs; 
+  RxList<PostModel> locationPosts = <PostModel>[].obs; 
+  RxList<PostModel> filteredPosts = <PostModel>[].obs;
   RxInt currentIndex = 0.obs;
-  RxBool isTravelingMode = false.obs; // Track toggle state (Home vs Traveling)
+  RxBool isTravelingMode = false.obs; 
   Map<int, bool> isExpanded = {};
   late MatchEngine matchEngine;
   final ApiService apiService = Get.find<ApiService>();
