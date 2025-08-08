@@ -17,17 +17,9 @@ class UserProfileView extends GetView<UserProfileController> {
       backgroundColor: AppColors.mainBg,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: AppColors.mainBg,
-        elevation: 5,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.centerleft, AppColors.centerright],
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-            ),
-          ),
-        ),
+        backgroundColor: AppColors.appbar,
+        elevation: 0,
+
         title: Text("My Profile",
             style:
                 GoogleFonts.openSans(color: AppColors.titleText, fontSize: 20)),
@@ -59,9 +51,9 @@ class UserProfileView extends GetView<UserProfileController> {
           Row(
             children: [
               const CircleAvatar(
-                radius: 40,
-                backgroundImage: CachedNetworkImageProvider(
-                  'https://randomuser.me/api/portraits/men/10.jpg',
+                radius: 26,
+                backgroundImage: NetworkImage(
+                  'https://randomuser.me/api/portraits/men/11.jpg',
                 ),
               ),
               const SizedBox(width: 24),
@@ -84,7 +76,7 @@ class UserProfileView extends GetView<UserProfileController> {
           ),
           const SizedBox(height: 16),
           Text(
-            "Pavan Dhote",
+            "Bidyawant",
             style: GoogleFonts.poppins(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -135,11 +127,7 @@ Widget _buildStatColumn(String label, int value) {
     height: 72,
     child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.white24),
-        borderRadius: BorderRadius.circular(8),
-        color: Colors.white.withOpacity(0.05),
-      ),
+
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -207,10 +195,7 @@ Widget _buildStatColumn(String label, int value) {
       ),
       child: Column(
         children: [
-          _buildOptionTile(Icons.person, "Edit Profile", () {
-        
-            
-          }),
+
           _buildDivider(),
           _buildOptionTile(Icons.settings, "Settings", () {}),
           _buildDivider(),

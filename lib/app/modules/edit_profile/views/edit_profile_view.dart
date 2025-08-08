@@ -94,9 +94,12 @@ class EditProfileView extends StatelessWidget {
               radius: 50,
               backgroundImage: imageFile != null
                   ? FileImage(imageFile)
-                  : const NetworkImage('https://randomuser.me/api/portraits/men/10.jpg') as ImageProvider,
+                  : const NetworkImage(
+                'https://randomuser.me/api/portraits/men/11.jpg',
+              ) as ImageProvider,
             );
           }),
+
           Positioned(
             bottom: 0,
             right: 4,

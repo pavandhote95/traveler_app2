@@ -3,8 +3,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app2/app/constants/app_color.dart';
 import 'package:travel_app2/app/constants/my_toast.dart';
+import 'package:travel_app2/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:travel_app2/app/modules/home/controllers/community_controller.dart';
+import 'package:travel_app2/app/routes/app_pages.dart';
 import 'package:travel_app2/app/widgets/custom_appbar_controller.dart';
+
+import '../modules/dashboard/controllers/dashboard_controller.dart';
 
 class HeaderWidget extends StatelessWidget {
   HeaderWidget({Key? key}) : super(key: key);
@@ -19,10 +23,16 @@ class HeaderWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         // Profile Avatar
-        const CircleAvatar(
-          radius: 26,
-          backgroundImage: NetworkImage(
-            'https://randomuser.me/api/portraits/men/11.jpg',
+        InkWell(
+          onTap: (){
+            final dashboardController = Get.find<DashboardController>();
+            dashboardController.selectedIndex.value = 4;
+          },
+          child: const CircleAvatar(
+            radius: 26,
+            backgroundImage: NetworkImage(
+              'https://randomuser.me/api/portraits/men/11.jpg',
+            ),
           ),
         ),
         const SizedBox(width: 12),
@@ -73,14 +83,11 @@ class HeaderWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Mode Text
-              Text(
-                isToggled.value ? "Traveling" : "Home",
-                style: GoogleFonts.openSans(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: isToggled.value ? AppColors.buttonBg:AppColors.titleText
-                ),
-              ),
+              Icon(
+                isToggled.value ? Icons.flight : Icons.home,
+               color: AppColors.icons,
+                size: 31,
+            ),
               const SizedBox(width: 6),
               // Switch with custom theme
               Theme(

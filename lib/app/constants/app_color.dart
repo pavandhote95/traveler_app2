@@ -23,7 +23,7 @@ class AppColors {
   static const Color commentPlaceholder = Color(0xFF777777); // Comment: Placeholder
 static const Color centerleft = Color(0xFF01121c);
   static const Color centerright = Color(0xFF001B26);
-  static const Color appbar = Color(0xFF01121c);
+  static const Color appbar = Colors.black;
   // ✅ Status Colors
   static const Color success = Color(0xFF10B981);
   static const Color warning = Color(0xFFF59E0B);
@@ -34,6 +34,7 @@ static const Color centerleft = Color(0xFF01121c);
   static const Color iconReply = Color(0xFF00E0FF);        // Reply icon (same as Like)
   static const Color iconShare = Color(0xFFB0B0B0);        // Share icon (subtle gray)
   static const Color buttonBg =  Color(0xFF00D1D8); // FAB background (aqua)
+  static const Color icons =  Color(0xFF00D1D8); // FAB background (aqua)
 
   // Optionally you can add a glow or shadow color if needed later
 }

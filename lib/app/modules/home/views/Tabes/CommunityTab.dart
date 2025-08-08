@@ -106,7 +106,7 @@ class _CommunityTabState extends State<CommunityTab> with WidgetsBindingObserver
         : lines.take(4).join('\n');
 
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.85,
+      height: MediaQuery.of(context).size.height * 0.67,
       child: Card(
         elevation: 5,
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -177,7 +177,7 @@ class _CommunityTabState extends State<CommunityTab> with WidgetsBindingObserver
                       maxLines: isExpanded ? 5 : maxline,
                       overflow: isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
                       style: GoogleFonts.openSans(
-                        fontSize: 19,
+                        fontSize: 17,
                         color: AppColors.postText,
                         fontWeight: FontWeight.w500,
                       ),
@@ -207,7 +207,9 @@ class _CommunityTabState extends State<CommunityTab> with WidgetsBindingObserver
                   borderRadius: BorderRadius.circular(5),
                   child: Image.network(
                     post.image,
+                    height: 180,
                     width: double.infinity,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 const SizedBox(height: 16),

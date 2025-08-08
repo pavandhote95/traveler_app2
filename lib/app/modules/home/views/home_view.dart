@@ -68,15 +68,7 @@ class HomeView extends GetView<DashboardController> {
                   automaticallyImplyLeading: false,
                   backgroundColor: Colors.black,
                   elevation: 0,
-                  flexibleSpace: Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.black,],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                    ),
-                  ),
+
                   title: HeaderWidget(),
                   toolbarHeight: 110,
                 );

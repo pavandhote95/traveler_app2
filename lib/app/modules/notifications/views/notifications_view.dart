@@ -14,17 +14,9 @@ Widget build(BuildContext context) {
     backgroundColor: AppColors.mainBg,
     appBar: AppBar(
       automaticallyImplyLeading: false,
-                  backgroundColor: AppColors.mainBg,
-                  elevation: 5,
-                  flexibleSpace: Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [AppColors.centerleft, AppColors.centerright],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                    ),
-                  ),
+                  backgroundColor: AppColors.appbar,
+                  elevation: 0,
+
       foregroundColor: Colors.white,
 
       title: Text(
