@@ -85,7 +85,7 @@ class UserProfileView extends GetView<UserProfileController> {
           ),
           const SizedBox(height: 4),
           Text(
-            "Traveler | Explorer | Blogger",
+            "Traveler",
             style: GoogleFonts.poppins(
               fontSize: 13,
               color: Colors.grey.shade400,

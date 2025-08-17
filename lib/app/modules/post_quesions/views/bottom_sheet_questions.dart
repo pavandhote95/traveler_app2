@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:travel_app2/app/constants/app_color.dart';
@@ -7,37 +6,48 @@ import 'package:travel_app2/app/constants/custom_button.dart';
 import 'package:travel_app2/app/modules/post_quesions/controllers/bottom_sheet_controller.dart';
 
 class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
-  BottomSheetQuestionsView({Key? key}) : super(key: key) {
-    Get.put(BottomSheetQuestionsController());
-  }
+  BottomSheetQuestionsController controller = Get.put(BottomSheetQuestionsController());
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xFF0F2027),
+      decoration: BoxDecoration(
+        color: const Color(0xFF0F2027),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 10,
+            offset: const Offset(0, -2),
+          ),
+        ],
+      ),
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-        left: 16,
-        right: 16,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+        left: 20,
+        right: 20,
         top: 24,
       ),
       child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-      
+            _buildHeader(),
+            const SizedBox(height: 16),
             _buildTextField(),
             const SizedBox(height: 20),
             _buildImagePicker(),
             const SizedBox(height: 20),
             _buildDropdown(["Japan", "India", "USA"]),
-            const SizedBox(height: 30),
+            const SizedBox(height: 24),
             SafeArea(
               child: CustomButton(
                 isLoading: controller.isLoading,
                 onPressed: controller.submitPost,
                 text: "Post",
-                textColor: Colors.black,
+                textColor: Colors.white,
+
               ),
             ),
             const SizedBox(height: 16),
@@ -47,26 +57,48 @@ class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
     );
   }
 
+  Widget _buildHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text(
+          "Create a Post",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        IconButton(
+          onPressed: () => Get.back(),
+          icon: const Icon(Icons.close, color: Colors.white70, size: 24),
+        ),
+      ],
+    );
+  }
 
   Widget _buildTextField() {
     return TextField(
       onChanged: controller.updateQuestion,
       maxLines: 5,
-      style: const TextStyle(color: Colors.white),
+      style: const TextStyle(color: Colors.white, fontSize: 16),
       decoration: InputDecoration(
-        hintText: "Ask a question post something",
+        hintText: "What's on your mind?",
         hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 16),
         filled: true,
         fillColor: const Color(0xFF1F1F1F),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
+        ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.grey),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.buttonBg),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: AppColors.buttonBg, width: 1.5),
         ),
       ),
     );
@@ -74,81 +106,127 @@ class BottomSheetQuestionsView extends GetView<BottomSheetQuestionsController> {
 
   Widget _buildDropdown(List<String> items) {
     return Obx(() => DropdownButtonFormField<String>(
-          value: controller.selectedLocation?.value == '' ? null : controller.selectedLocation?.value,
-          dropdownColor: const Color(0xFF1F1F1F),
-          style: const TextStyle(color: Colors.white),
-          decoration: InputDecoration(
-            labelText: "Add Location (optional)",
-            labelStyle: const TextStyle(color: AppColors.buttonBg),
-            filled: true,
-            fillColor: const Color(0xFF1F1F1F),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.buttonBg),
-            ),
-          ),
-          items: items
-              .map((item) => DropdownMenuItem(value: item, child: Text(item)))
-              .toList(),
-          onChanged: controller.updateLocation,
-        ));
+      value: controller.selectedLocation.value.isEmpty
+          ? null
+          : controller.selectedLocation.value,
+      dropdownColor: const Color(0xFF1F1F1F),
+      style: const TextStyle(color: Colors.white, fontSize: 16),
+      decoration: InputDecoration(
+        labelText: "Location",
+        labelStyle: TextStyle(color: Colors.grey.shade400, fontSize: 16),
+        floatingLabelStyle: TextStyle(color: AppColors.buttonBg, fontSize: 14),
+        filled: true,
+        fillColor: const Color(0xFF1F1F1F),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: AppColors.buttonBg, width: 1.5),
+        ),
+      ),
+      icon: const Icon(Icons.arrow_drop_down, color: Colors.white70),
+      items: items
+          .map((item) => DropdownMenuItem(
+        value: item,
+        child: Text(item, style: const TextStyle(color: Colors.white)),
+      ))
+          .toList(),
+      onChanged: controller.updateLocation,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please select a location';
+        }
+        return null;
+      },
+    ));
   }
 
   Widget _buildImagePicker() {
     return Obx(() {
-      final image = controller.selectedImage.value;
-      return GestureDetector(
-        onTap: controller.pickImage,
-        child: image == null
-            ? Container(
-                height: 50,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1F1F1F),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: const Center(
-                  child: Text(
-                    "+ Add Image",
-                    style: TextStyle(color: AppColors.buttonBg),
-                  ),
-                ),
-              )
-            : Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.file(
-                      File(image.path),
-                      width: double.infinity,
-                      height: 180,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: GestureDetector(
-                      onTap: controller.clearImage,
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.black54,
-                        ),
-                        child: const Icon(Icons.close, color: Colors.white, size: 20),
-                      ),
-                    ),
-                  ),
-                ],
+      final images = controller.selectedImages;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GestureDetector(
+            onTap: controller.pickImages,
+            child: Container(
+              height: 56,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: const Color(0xFF1F1F1F),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.grey.shade700, width: 1),
               ),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.add_photo_alternate, color: AppColors.buttonBg, size: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      "Add Images",
+                      style: TextStyle(color: AppColors.buttonBg, fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          if (images.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            SizedBox(
+              height: 120,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: images.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 12.0),
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Image.file(
+                            images[index],
+                            width: 120,
+                            height: 120,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Positioned(
+                          top: 8,
+                          right: 8,
+                          child: GestureDetector(
+                            onTap: () => controller.selectedImages.removeAt(index),
+                            child: Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black.withOpacity(0.6),
+                              ),
+                              child: const Icon(
+                                Icons.close,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ],
       );
     });
   }

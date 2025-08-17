@@ -6,7 +6,6 @@ import 'package:travel_app2/app/modules/home/controllers/community_controller.da
 import 'package:travel_app2/app/modules/home/views/Tabes/CommunityTab.dart';
 import 'package:travel_app2/app/widgets/custom_appbar.dart';
 
-
 class HomeView extends GetView<DashboardController> {
   final DashboardController dashboardController = Get.find();
 @override
@@ -43,6 +42,7 @@ class HomeView extends GetView<DashboardController> {
         onPressed: () {
           dashboardController.showSearchBar.value = false;
           dashboardController.searchController.clear();
+
           Get.find<CommunityController>().searchPosts('');
         },
       ),
